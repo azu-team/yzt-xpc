@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "申请认证",
+  "usingComponents": {
+    "my-select": "/components/xfl-select/xfl-select"
+  }
+}

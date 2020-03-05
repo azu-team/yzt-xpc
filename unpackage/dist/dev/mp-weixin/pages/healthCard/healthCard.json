@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "健康申报",
+  "usingComponents": {
+    "link-area": "/components/w-picker/w-picker"
+  }
+}

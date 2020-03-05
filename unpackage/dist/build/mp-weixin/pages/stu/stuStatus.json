@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "查看学习情况",
+  "usingComponents": {
+    "tabs": "/components/ms-tabs/ms-tabs"
+  }
+}

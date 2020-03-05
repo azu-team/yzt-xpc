@@ -1,0 +1,38 @@
+.container {
+	min-height: 100vh;
+	background-color: #f4f8ff;
+}
+.m-title {
+	padding: 30upx 0 0 40upx;
+}
+.m-content {
+	padding: 20upx 40upx;
+	.u-list {
+		padding: 20upx 40upx;
+		background-color: #ffffff;
+		border-radius: 30upx;
+		margin-bottom: 20upx;
+		box-shadow: 0 5upx 5upx #eee;
+		border: solid 1upx $main-borer-color;
+		.u-list-title {
+			font-size: 32upx;
+			color: $uni-text-color;
+			border-bottom: solid 1px $main-borer-color;
+			padding-bottom: 20upx;
+		}
+		.u-list-desc {
+			font-size: 28upx;
+			color: $uni-text-second-color;
+			.cell {
+				display: inline-block;
+				width: 40%;
+				margin: 20upx 0 0 40upx;
+				white-space: nowrap;
+				&.one_line {
+					display: block;
+					width: 100%;
+				}
+			}
+		}
+	}
+}

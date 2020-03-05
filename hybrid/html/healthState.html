@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>健康申报</title>
+	<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 13.33vw;
+        }
+
+        body {
+
+            margin: 0;
+            padding: 0;
+            background-color: #F6FBFE;
+        }
+
+        .g-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.35rem;
+            padding: 0.1rem 0.2rem;
+            background-color: #0195FF;
+            color: #fff;
+        }
+
+        .m-title,
+        .m-q {
+            padding: 0.2rem 0 0.3rem 0.2rem;
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #E7F4FE;
+            margin-bottom: 0.2rem;
+        }
+
+        .u-title1 {
+            font-size: 0.35rem;
+            color: #3F3F3F;
+            font-weight: bold;
+        }
+
+        .u-title2 {
+            font-size: 0.3rem;
+            margin-top: 0.25rem;
+            color: #797979;
+        }
+
+        .m-q {
+            font-size: 0.2rem;
+        }
+
+        .u-q-title {
+            font-size: 0.32rem;
+            font-weight: bold;
+            color: #3F3F3F;
+        }
+
+        .icon {
+            display: inline-block;
+            font-size: 0.2rem;
+            color: #25A5FF;
+            border: solid 1px #25A5FF;
+            border-radius: 0.2rem;
+            padding: 0 0.1rem;
+        }
+
+        .g-bottom {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .f-btn {
+            display: inline-block;
+            width: 80%;
+            text-align: center;
+            padding: 0.2rem;
+            font-size: 0.35rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #0195FF;
+            border-radius: 0.05rem;
+        }
+
+        .u-radio-box {
+            padding-top: 0.15rem;
+            font-size: 0.3rem;
+            color: #BBBBBB;
+        }
+
+        input[type='radio'] {
+            display: none;
+        }
+
+        input[type='radio']+label::before {
+            content: '';
+            display: inline-block;
+            background-color: #fff;
+            border: solid 1px #DBDBDB;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            vertical-align: middle;
+            padding: 3px;
+            margin-right: 5px;
+        }
+
+        input[type='radio']:checked+label::before {
+            background-color: #25A5FF;
+            background-clip: content-box;
+            padding: 3px;
+        }
+
+        .m-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* background: rgba(0, 0, 0, 0.3); */
+            z-index: 100;
+            display: none;
+        }
+
+        .u-content {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 2rem;
+            height: 2rem;
+            /* background-color: #cccccc; */
+        }
+
+        .loading {
+            width: 100%;
+            height: 0.5rem;
+            text-align: center;
+        }
+
+        .loading span {
+            display: inline-block;
+            width: 0.1rem;
+            height: 100%;
+            background: lightgreen;
+            animation: load 1.04s ease infinite;
+        }
+
+        .loading span:last-child {
+            margin-right: 0px;
+        }
+
+        @keyframes load {
+            0% {
+                opacity: 1;
+                transform: scale(1.2);
+                -webkit-transform: scale(1.2);
+            }
+
+            100% {
+                opacity: .2;
+                transform: scale(.2);
+                -webkit-transform: scale(.2);
+            }
+        }
+
+        .loading span:nth-child(1) {
+            animation-delay: 0.13s;
+            -webkit-animation-delay: 0.13s;
+        }
+
+        .loading span:nth-child(2) {
+            animation-delay: 0.26s;
+            -webkit-animation-delay: 0.26s;
+        }
+
+        .loading span:nth-child(3) {
+            animation-delay: 0.39s;
+            -webkit-animation-delay: 0.39s;
+        }
+
+        .loading span:nth-child(4) {
+            animation-delay: 0.52s;
+            -webkit-animation-delay: 0.52s;
+        }
+
+        .result-tips {
+            animation: zoomIn 0.3s ease;
+            font-size: 0.3rem;
+            text-align: center;
+            background: #ccc;
+            padding: 0.1rem 0;
+            color: #fff;
+            border-radius: 0.1rem;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                -webkit-transform: scale3d(0.3, 0.3, 0.3);
+                transform: scale3d(0.3, 0.3, 0.3);
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* .loading span:nth-child(5) {
+            animation-delay: 0.65s ;
+            -webkit-animation-delay: 0.65s;
+        } */
+    </style>
+</head>
+
+<body>
+    <!-- <div class="g-top-bar">
+        <svg t="1581385949608"  viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            p-id="2253" width="16" height="16">
+            <path
+                d="M708.42516 957.314205c-13.715373 0-27.426653-5.215792-37.895075-15.678074L277.717627 548.823674c-20.925588-20.893866-20.925588-54.821583 0-75.747171L670.530085 80.225159c20.931728-20.925588 54.821583-20.925588 75.752288 0 20.925588 20.893866 20.925588 54.821583 0 75.747171L391.359874 510.934738l354.922499 354.915335c20.925588 20.931728 20.925588 54.821583 0 75.753311C735.852836 952.098413 722.135416 957.314205 708.42516 957.314205L708.42516 957.314205zM708.42516 957.314205"
+                p-id="2254" fill="#ffffff"></path>
+        </svg>
+        <span>智能填表</span>
+        <span> </span>
+    </div> -->
+    <div class="g-center">
+        <div class="m-title">
+            <div class="u-title1">学生每日健康打卡</div>
+            <div class="u-title2">请大家认真填写</div>
+        </div>
+        <form id="form">
+            <div class="m-q q1">
+                <div class="u-q-title">1.目前健康状态 <span class="icon">单选</span> </div>
+                <div class="u-radio-box">
+                    <input type="radio" id="radio_health_1" name="additionalProp1" value="0" checked /> <label
+                        for="radio_health_1">健康</label>
+                </div>
+                <div class="u-radio-box">
+                    <input type="radio" id="radio_health_2" name="additionalProp1" value="1" /> <label
+                        for="radio_health_2">有发烧、咳嗽等症状</label>
+                </div>
+                <div class="u-radio-box">
+                    <input type="radio" id="radio_health_3" name="additionalProp1" value="2" /> <label
+                        for="radio_health_3">其他症状</label>
+                </div>
+            </div>
+            <div class="m-q q2">
+                <div class="u-q-title">2.是否有就诊住院 <span class="icon">单选</span> </div>
+                <div class="u-radio-box">
+                    <input type="radio" id="radio_isTreat_1" name="additionalProp2" value="0" checked /> <label
+                        for="radio_isTreat_1">无</label>
+                </div>
+                <div class="u-radio-box">
+                    <input type="radio" id="radio_isTreat_2" name="additionalProp2" value="1" /> <label
+                        for="radio_isTreat_2">有</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="g-bottom">
+        <div class="f-btn" onclick="tokenClick()">
+            保存
+        </div>
+    </div>
+    <div class="m-mask">
+        <div class="u-content">
+        </div>
+    </div>
+
+</body>
+<script>
+    let xhr = new XMLHttpRequest(),
+        loading = `<div class="loading">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>`,
+        success = `<div class="result-tips ">
+            <svg t="1581406793670" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2895" width="32" height="32"><path d="M335.872 734.208 108.544 506.88c-24.576-24.576-65.536-24.576-90.112 0-24.576 24.576-24.576 65.536 0 90.112l271.36 271.36c20.48 20.48 52.224 24.576 75.776 10.24 6.144-3.072 11.264-7.168 16.384-11.264l622.592-622.592c24.576-24.576 24.576-65.536 0-90.112-24.576-24.576-65.536-24.576-90.112 0L335.872 734.208z" p-id="2896" fill="#ffffff"></path></svg>
+            <div>提交成功</div>
+            </div>`,
+        error = `<div class="result-tips ">
+            <svg t="1581406863975"  viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5669" width="32" height="32"><path d="M842.947458 778.116917 576.847937 512.013303 842.946434 245.883083c8.67559-8.674567 13.447267-20.208251 13.43908-32.477692-0.008186-12.232602-4.7727-23.715121-13.414521-32.332383-8.655124-8.677637-20.149922-13.450337-32.384571-13.4575-12.286838 0-23.808242 4.771677-32.474622 13.434987L512.019443 447.143876 245.88206 181.050496c-8.66331-8.66331-20.175505-13.434987-32.416294-13.434987-12.239765 0-23.75196 4.770653-32.414247 13.43294-8.66024 8.636704-13.428847 20.12434-13.437034 32.356942-0.008186 12.269441 4.76349 23.803125 13.437034 32.476669l266.135336 266.13022L181.050496 778.11794c-8.664334 8.66331-13.43601 20.173458-13.43601 32.41527 0 12.239765 4.7727 23.752983 13.437034 32.417317 8.662287 8.66331 20.173458 13.43294 32.413224 13.43294 12.240789 0 23.754007-4.770653 32.416294-13.43294l266.134313-266.100544 266.101567 266.100544c8.66331 8.66331 20.185738 13.43294 32.4429 13.43294 12.265348-0.008186 23.74889-4.771677 32.369222-13.412474C860.81643 825.081555 860.821547 795.991006 842.947458 778.116917z" p-id="5670" fill="#ffffff"></path></svg>
+            <div>提交失败</div>
+            </div>`,
+        maskDom = document.querySelector('.m-mask'),
+        maskContentDom = document.querySelector('.u-content'),
+        userid = ''
+    // xhr.open('POST', 'http://61.132.95.169:10105/campusapp/userhealth/answer')
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            let results = JSON.parse(xhr.responseText)
+            if (results.status == 200) {
+                // 提交成功
+                maskContentDom.innerHTML = success;
+                document.querySelector('.f-btn').style.display = 'none'
+            } else {
+                // 提交失败
+                maskContentDom.innerHTML = error;
+
+            }
+        }
+    }
+    xhr.onloadend = function () {
+        setTimeout(() => {
+            maskDom.style.display = 'none'
+        }, 1000);
+    }
+
+    //token按钮按钮点击事件
+    function tokenClick() {
+        if(userid){
+            handleSubmit(userid)
+        }else{
+            window.location.href = "xpc://com.pthink.EducationPengCheng?action=nativeGetToken&method=jsGetToken";
+        }
+        //method 后是原生需要调用的方法jsGetToken,需要在js里实现这个方法,获取用户信息
+    }
+    //获取当前用户的token 并发送请求
+    function jsGetToken(str) {
+        userid = str.toString()
+        
+    }
+
+    function handleSubmit(userid){
+        xhr.open('post', 'http://61.132.95.169:10105/campusapp/userhealth/answer', true)
+        xhr.timeout = 5000
+        xhr.setRequestHeader('Content-Type','application/json')
+        let form = document.querySelector('#form')
+        xhr.send(JSON.stringify({
+            userid,
+            results: [serialize(form)]
+        }));
+        maskContentDom.innerHTML = loading
+        maskDom.style.display = 'block';
+    }
+
+    function serialize(form) {
+        let parts = {},
+            field = null,
+            i,
+            len,
+            j,
+            optLen,
+            option,
+            optValue;
+        for (i = 0, len = form.elements.length; i < len; i++) {
+            field = form.elements[i];
+            switch (field.type) {
+                case "select-one":
+                case "select-multiple":
+                    if (field.name.length) {
+                        for (j = 0, optLen = field.options.length; j < optLen; j++) {
+                            option = field.options[j];
+                            if (option.selected) {
+                                optValue = "";
+                                if (option.hasAttribute) {
+                                    optValue = (option.hasAttribute("value") ?
+                                        option.value : option.text);
+                                } else {
+                                    optValue = (option.attributes["value"].specified ?
+                                        option.value : option.text);
+                                }
+                                parts[encodeURIComponent(field.name)] = encodeURIComponent(optValue)
+                            }
+                        }
+                    }
+                    break;
+                case undefined: //字段集
+                case "file": //文件输入
+                case "submit": //提交按钮
+                case "reset": //重置按钮
+                case "button": //自定义按钮
+                    break;
+                case "radio": //单选按钮
+                case "checkbox": //复选框
+                    if (!field.checked) {
+                        break;
+                    }
+                    /* 执行默认操作 */
+                    default:
+                        //不包含没有名字的表单字段
+                        if (field.name.length) {
+                            parts[encodeURIComponent(field.name)] = encodeURIComponent(field.value)
+                        }
+            }
+        }
+        return parts;
+    }
+</script>
+
+</html>

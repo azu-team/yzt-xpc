@@ -1,0 +1,27 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/healthCard/healthCard",
+    "pages/idConfirm/idConfirm",
+    "pages/idConfirm/baseInfo",
+    "pages/stu/stuLearning",
+    "pages/stu/stuStatus",
+    "pages/teacher/teaTeaching",
+    "pages/teacher/teaStatistic",
+    "pages/edu/eduTeachingStatistic",
+    "pages/edu/eduLearningStatistic",
+    "pages/common/quickHelp",
+    "pages/common/healthStatus",
+    "pages/common/safeStatus"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8",
+    "enablePullDownRefresh": false
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap28.json"
+}
