@@ -189,10 +189,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
+      nodes: "<div><span>\u5BCC\u6587\u672C\u5185\u5BB9</span><span style=\"color:red;\">\u521D\u59CBHTML</span></div>", //富文本内容
+      contactArr: [
+      {
+        name: '赵某某', phone: '15154546565' },
+      {
+        name: '钱某某', phone: '15154546565' },
+      {
+        name: '孙某某', phone: '15154546565' }],
+
+
       form: {
         additionalProp1: '0',
         additionalProp2: '0',

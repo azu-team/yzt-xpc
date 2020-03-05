@@ -242,40 +242,6 @@ export default {
 		background-color: #f6fbfe;
 		min-height: 100vh;
 	}
-	.m-tip{
-		background-color: #FFFFFF;
-		padding: 20upx 20upx;
-		margin-bottom: 20upx;
-		border-bottom: solid 1upx #e7f4fe;
-		.u-grid{
-			.left,.right{
-				display: inline-block;
-				vertical-align: top;
-				font-size: 30upx;
-				color: $uni-text-color;
-			}
-			.left{
-				width: 40%;
-				text-align: center;
-			}
-			.right{
-				width: 60%;
-				text-align: center;
-				.list-item{
-					display: flex;
-					justify-content: space-around;
-					align-items: center;
-					margin-bottom: 10upx;
-					.name{
-						font-weight: bold;
-					}
-					.phone{
-						color: #25A5FF;
-					}
-				}
-			}
-		}
-	}
 	.m-top {
 		padding: 20upx 0 30upx 20upx;
 		background-color: #ffffff;

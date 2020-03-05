@@ -17,13 +17,14 @@
 			margin-left: 15upx;
 		}
 	}
-	.u-content{
+	.u-content {
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
 		font-size: 30upx;
 		padding: 20upx 0;
-		.f-record,.f-audio{
+		.f-record,
+		.f-audio {
 			width: 140upx;
 			height: 140upx;
 			display: inline-flex;
@@ -32,21 +33,22 @@
 			border-radius: 20upx;
 			box-shadow: 0 0 10upx #eee;
 			color: $uni-text-color;
-			&.recording{
+			&.recording {
 				background-color: #ff3333;
-				color: #FFFFFF;
+				color: #ffffff;
 			}
 		}
-		.f-audio.disabled{
+		.f-audio.disabled {
 			opacity: 0.6;
 		}
-		.input{
+		.input {
 			width: 90%;
 			border-bottom: solid 1rpx #ccc;
 			color: $uni-text-color;
 		}
 	}
-	.radio-group,radio-group{
+	.radio-group,
+	radio-group {
 		padding-left: 50upx;
 	}
 	.u-list-cell {
@@ -73,6 +75,41 @@
 				background-color: #25a5ff;
 				background-clip: content-box;
 				padding: 6upx;
+			}
+		}
+	}
+}
+.m-tip {
+	background-color: #ffffff;
+	padding: 20upx 20upx;
+	margin-bottom: 20upx;
+	border-bottom: solid 1upx #e7f4fe;
+	.u-grid {
+		.left,
+		.right {
+			display: inline-block;
+			vertical-align: top;
+			font-size: 30upx;
+			color: $uni-text-color;
+		}
+		.left {
+			width: 40%;
+			text-align: center;
+		}
+		.right {
+			width: 60%;
+			text-align: center;
+			.list-item {
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+				margin-bottom: 10upx;
+				.name {
+					font-weight: bold;
+				}
+				.phone {
+					color: #25a5ff;
+				}
 			}
 		}
 	}

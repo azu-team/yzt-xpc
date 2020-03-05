@@ -1,5 +1,19 @@
 <template>
 	<view class="container">
+		<view class="m-tip">
+			<view class="u-grid">
+				<view class="left">安全告知书</view>
+				<view class="right">
+					<rich-text :nodes="nodes"></rich-text>
+				</view>
+			</view>
+			<view class="u-grid">
+				<view class="left">紧急联系人</view>
+				<view class="right">
+					<view class="list-item" v-for="(item,index) in contactArr" :key="index"><text class="name">{{item.name}}</text> <text class="phone" @tap="handleCall(item.phone)">{{item.phone}}</text></view>
+				</view>
+			</view>
+		</view>
 		<view class="m-list">
 			<view class="u-q-title">
 				<text>1.安全预警原因</text>
@@ -58,6 +72,16 @@
 export default {
 	data() {
 		return {
+			nodes:`<div><span>富文本内容</span><span style="color:red;">初始HTML</span></div>`,//富文本内容
+			contactArr:[
+				{
+					name:'赵某某',phone:'15154546565',
+				},{
+					name:'钱某某',phone:'15154546565',
+				},{
+					name:'孙某某',phone:'15154546565',
+				},
+			],
 			form: {
 				additionalProp1: '0',
 				additionalProp2: '0',

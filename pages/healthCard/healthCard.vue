@@ -113,12 +113,12 @@
 		<!-- <link-area @choseVal="choseValue" :lotusAddressData="lotusAddressData"></link-area> -->
 		<link-area 
 			mode="region"
-			:level="3"
 			@confirm="handleChoose"
 			@cancel="handleCancelChoose"
 			ref="linkage"
-			:hideArea="true"
-			themeColor="#f00"></link-area>
+			:hideArea="false"
+			:areaCode="['11', '1101', '110101']"
+			themeColor="#25a5ff"></link-area>
 		<!-- <link-area 
 			mode="date" 
 			startYear="2017" 

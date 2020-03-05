@@ -59,7 +59,8 @@ view.data-v-6db353ea, text.data-v-6db353ea, image.data-v-6db353ea, label.data-v-
     font-size: 30rpx;
     padding: 20rpx 0;
 }
-.m-list .u-content .f-record.data-v-6db353ea, .m-list .u-content .f-audio.data-v-6db353ea {
+.m-list .u-content .f-record.data-v-6db353ea,
+    .m-list .u-content .f-audio.data-v-6db353ea {
       width: 140rpx;
       height: 140rpx;
       display: -webkit-inline-box;
@@ -75,9 +76,10 @@ view.data-v-6db353ea, text.data-v-6db353ea, image.data-v-6db353ea, label.data-v-
       box-shadow: 0 0 10rpx #eee;
       color: #333;
 }
-.m-list .u-content .f-record.recording.data-v-6db353ea, .m-list .u-content .f-audio.recording.data-v-6db353ea {
+.m-list .u-content .f-record.recording.data-v-6db353ea,
+      .m-list .u-content .f-audio.recording.data-v-6db353ea {
         background-color: #ff3333;
-        color: #FFFFFF;
+        color: #ffffff;
 }
 .m-list .u-content .f-audio.disabled.data-v-6db353ea {
       opacity: 0.6;
@@ -87,7 +89,8 @@ view.data-v-6db353ea, text.data-v-6db353ea, image.data-v-6db353ea, label.data-v-
       border-bottom: solid 1rpx #ccc;
       color: #333;
 }
-.m-list .radio-group.data-v-6db353ea, .m-list radio-group.data-v-6db353ea {
+.m-list .radio-group.data-v-6db353ea,
+  .m-list radio-group.data-v-6db353ea {
     padding-left: 50rpx;
 }
 .m-list .u-list-cell .u-radio.data-v-6db353ea {
@@ -115,17 +118,14 @@ view.data-v-6db353ea, text.data-v-6db353ea, image.data-v-6db353ea, label.data-v-
       background-clip: content-box;
       padding: 6rpx;
 }
-.container.data-v-6db353ea {
-  background-color: #f6fbfe;
-  min-height: 100vh;
-}
 .m-tip.data-v-6db353ea {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 20rpx 20rpx;
   margin-bottom: 20rpx;
   border-bottom: solid 1rpx #e7f4fe;
 }
-.m-tip .u-grid .left.data-v-6db353ea, .m-tip .u-grid .right.data-v-6db353ea {
+.m-tip .u-grid .left.data-v-6db353ea,
+  .m-tip .u-grid .right.data-v-6db353ea {
     display: inline-block;
     vertical-align: top;
     font-size: 30rpx;
@@ -154,7 +154,11 @@ view.data-v-6db353ea, text.data-v-6db353ea, image.data-v-6db353ea, label.data-v-
         font-weight: bold;
 }
 .m-tip .u-grid .right .list-item .phone.data-v-6db353ea {
-        color: #25A5FF;
+        color: #25a5ff;
+}
+.container.data-v-6db353ea {
+  background-color: #f6fbfe;
+  min-height: 100vh;
 }
 .m-top.data-v-6db353ea {
   padding: 20rpx 0 30rpx 20rpx;

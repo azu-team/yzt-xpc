@@ -59,7 +59,8 @@ view.data-v-07c7575f, text.data-v-07c7575f, image.data-v-07c7575f, label.data-v-
     font-size: 30rpx;
     padding: 20rpx 0;
 }
-.m-list .u-content .f-record.data-v-07c7575f, .m-list .u-content .f-audio.data-v-07c7575f {
+.m-list .u-content .f-record.data-v-07c7575f,
+    .m-list .u-content .f-audio.data-v-07c7575f {
       width: 140rpx;
       height: 140rpx;
       display: -webkit-inline-box;
@@ -75,9 +76,10 @@ view.data-v-07c7575f, text.data-v-07c7575f, image.data-v-07c7575f, label.data-v-
       box-shadow: 0 0 10rpx #eee;
       color: #333;
 }
-.m-list .u-content .f-record.recording.data-v-07c7575f, .m-list .u-content .f-audio.recording.data-v-07c7575f {
+.m-list .u-content .f-record.recording.data-v-07c7575f,
+      .m-list .u-content .f-audio.recording.data-v-07c7575f {
         background-color: #ff3333;
-        color: #FFFFFF;
+        color: #ffffff;
 }
 .m-list .u-content .f-audio.disabled.data-v-07c7575f {
       opacity: 0.6;
@@ -87,7 +89,8 @@ view.data-v-07c7575f, text.data-v-07c7575f, image.data-v-07c7575f, label.data-v-
       border-bottom: solid 1rpx #ccc;
       color: #333;
 }
-.m-list .radio-group.data-v-07c7575f, .m-list radio-group.data-v-07c7575f {
+.m-list .radio-group.data-v-07c7575f,
+  .m-list radio-group.data-v-07c7575f {
     padding-left: 50rpx;
 }
 .m-list .u-list-cell .u-radio.data-v-07c7575f {
@@ -114,6 +117,44 @@ view.data-v-07c7575f, text.data-v-07c7575f, image.data-v-07c7575f, label.data-v-
       background-color: #25a5ff;
       background-clip: content-box;
       padding: 6rpx;
+}
+.m-tip.data-v-07c7575f {
+  background-color: #ffffff;
+  padding: 20rpx 20rpx;
+  margin-bottom: 20rpx;
+  border-bottom: solid 1rpx #e7f4fe;
+}
+.m-tip .u-grid .left.data-v-07c7575f,
+  .m-tip .u-grid .right.data-v-07c7575f {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 30rpx;
+    color: #333;
+}
+.m-tip .u-grid .left.data-v-07c7575f {
+    width: 40%;
+    text-align: center;
+}
+.m-tip .u-grid .right.data-v-07c7575f {
+    width: 60%;
+    text-align: center;
+}
+.m-tip .u-grid .right .list-item.data-v-07c7575f {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: space-around;
+              justify-content: space-around;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+              align-items: center;
+      margin-bottom: 10rpx;
+}
+.m-tip .u-grid .right .list-item .name.data-v-07c7575f {
+        font-weight: bold;
+}
+.m-tip .u-grid .right .list-item .phone.data-v-07c7575f {
+        color: #25a5ff;
 }
 .container.data-v-07c7575f {
   background-color: #f6fbfe;

@@ -35,5 +35,15 @@
 	margin-right: 20rpx;
 	border-radius: 10rpx;
 }
+.g-btn{
+	display: inline-block;
+	padding: 5rpx 10rpx;
+	border-radius: 15rpx;
+	font-size: 30rpx;
+	border: 1rpx solid #d9ecff;
+	color: #409eff;
+	background-color: #ecf5ff;
+	white-space: nowrap;
+}
 /*每个页面公共css */
 
