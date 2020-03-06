@@ -2,32 +2,10 @@
 	<view class="bg">
 		<view class="container">
 			<view class="title">
-				{{ formStatus == 1 ? '选择身份' : '填报信息' }}
-				<view class="u-tips" v-if="formStatus != 1" @tap="handleBack">重选身份</view>
+				 填报信息
+				<view class="u-tips"  @tap="handleBack">上一步</view>
 			</view>
-			<view v-if="formStatus == 1">
-				<view class="m-line">
-					<view class="u-title">
-						<image class="icon" src="../../static/mp-weixin/type.png" mode="aspectFit"></image>
-						我是
-					</view>
-					<view class="u-content">
-						<my-select
-							:list="typeList"
-							:clearable="false"
-							:showItemNum="5"
-							:listShow="false"
-							:isCanInput="false"
-							:style_Container="'height: 2em; font-size: 28upx;'"
-							:placeholder="'选择身份'"
-							:selectHideType="'hideAll'"
-							:initValue="typeList[0].value"
-							@change="handleSelectChange($event, 'type')"
-						></my-select>
-					</view>
-				</view>
-			</view>
-			<view v-else-if="formStatus != 1 && form.type <= 2">
+			<view v-if="form.type <= 2">
 				<view class="m-line">
 					<view class="u-title">学籍号</view>
 					<view class="u-content"><input class="u-input" type="text" v-model="form.XJH" placeholder="请输入学籍号" /></view>
@@ -38,7 +16,10 @@
 				</view>
 				<view class="m-line">
 					<view class="u-title">出生日期</view>
-					<view class="u-content"><input class="u-input" type="text" v-model="form.CSRQ" placeholder="例如19790307" /></view>
+					<view class="u-content">
+						<!-- <input class="u-input" type="text" v-model="form.CSRQ" placeholder="例如19790307" /> -->
+						<text @tap="showChoose('form','CSRQ')">{{form.CSRQ || '选择日期'}}</text>
+						</view>
 				</view>
 				<view class="m-line">
 					<view class="u-title">性别</view>
@@ -151,10 +132,13 @@
 				</view>
 				<view class="m-line">
 					<view class="u-title">确认时间</view>
-					<view class="u-content"><input class="u-input" type="text" v-model="form.QRSJ" placeholder="YYYYMMDDHHMISS" /></view>
+					<view class="u-content">
+						<text @tap="showChoose('form','QRSJ')">{{form.QRSJ || '选择日期'}}</text>
+						<!-- <input class="u-input" type="text" v-model="form.QRSJ" placeholder="YYYYMMDDHHMISS" /> -->
+						</view>
 				</view>
 			</view>
-			<view  v-else-if="formStatus != 1 && form.type == 3">
+			<view  v-else-if="form.type == 3">
 				<view class="m-line">
 				    <view class="u-title">教育身份类别</view>
 				    <view class="u-content">
@@ -178,7 +162,10 @@
 				</view>
 				<view class="m-line">
 				    <view class="u-title">出生日期</view>
-				    <view class="u-content"><input class="u-input" type="text" v-model="jsForm.CSRQ" placeholder="例如19790307" /></view>
+				    <view class="u-content">
+						<text @tap="showChoose('jsForm','CSRQ')">{{jsForm.CSRQ || '选择日期'}}</text>
+						<!-- <input class="u-input" type="text" v-model="jsForm.CSRQ" placeholder="例如19790307" /> -->
+						</view>
 				</view>
 				<view class="m-line">
 				    <view class="u-title">性别</view>
@@ -243,10 +230,13 @@
 				</view>
 				<view class="m-line">
 				    <view class="u-title">确认时间</view>
-				    <view class="u-content"><input class="u-input" type="text" v-model="jsForm.QRSJ" placeholder="YYYYMMDDHHMISS" /></view>
+				    <view class="u-content">
+						<text @tap="showChoose('jsForm','QRSJ')">{{jsForm.QRSJ || '选择日期'}}</text>
+						<!-- <input class="u-input" type="text" v-model="jsForm.QRSJ" placeholder="YYYYMMDDHHMISS" /> -->
+						</view>
 				</view>
 			</view>
-			<view  v-else-if="formStatus != 1 && form.type == 4">
+			<view  v-else-if="form.type == 4">
 				<view class="m-line">
 				    <view class="u-title">教育身份号</view>
 				    <view class="u-content"><input class="u-input" type="text" v-model="eduForm.ESN" placeholder="请输入教育身份号" /></view>
@@ -282,23 +272,37 @@
 			</view>
 
 			<view class="m-bottom">
-				<button class="u-btn" open-type="getUserInfo" @tap="next" v-show="formStatus == 1"><text>下一步</text></button>
-				<button class="u-btn" open-type="getUserInfo" @tap="handleConfirm" v-show="formStatus != 1"><text>认证</text></button>
+				<button class="u-btn" open-type="getUserInfo" @tap="handleConfirm" ><text>认证</text></button>
 			</view>
+			<link-area
+				mode="date"
+				startYear="2010" 
+				endYear="2030"
+				:current="true" 
+				:disabledAfter="false"
+				@confirm="handleChoose"
+				@cancel="handleCancelChoose"
+				ref="linkage"
+				themeColor="#25a5ff"></link-area>
 		</view>
 	</view>
 </template>
 <script>
 import mySelect from '../../components/xfl-select/xfl-select.vue';
 import { typeList, relationList, idTypeList, sexList ,eduTypeList,	jsTypeList} from '../../utils/selectLists.js';
+import {http_root} from '../../utils/config.js'
 export default {
 	components: { mySelect },
+	props:{
+		type:[String,Number],
+	},
 	data() {
 		return {
-			formStatus: '1', //表填填写的进度，1 为 身份选择  2 为信息录入
+			tempFilePath:'',//临时附件路径
+			formStatus: '1', //表填填写的进度，1 为 身份选择  2 为信息录入 作废
 			form: {
 				//学生表单数据
-				type: typeList[0].id,
+				type: this.type,
 				XJH: '', //学籍号
 				XM: '', //姓名
 				CSRQ: '', //出生日期
@@ -343,16 +347,34 @@ export default {
 			eduTypeList:eduTypeList,
 			jsTypeList:jsTypeList,
 			relationList: relationList,
-			typeList: typeList
+			typeList: typeList,
+			timeFormName:'',
+			timeFormKey:'',
 		};
 	},
 	methods: {
+		handleCancelChoose(){
+			this.$refs.linkage.hide()
+		},
+		showChoose(timeFormName,timeFormKey){
+			this.timeFormName = timeFormName
+			this.timeFormKey = timeFormKey
+			this.$refs.linkage.show()
+		},
+		handleChoose({checkArr,checkValue,defaultVal,result}){
+			this.$refs.linkage.hide()
+			// this.region = result
+			// this.form.field02 = result
+			this[this.timeFormName][this.timeFormKey] = checkArr[0].join('')
+			console.log(this.timeFormName,this.timeFormKey,arguments,'arguments')
+		},
 		handleChooseImg(formName,keyName){
 			uni.chooseImage({
 				count:1,
 			  success: ({tempFilePaths,tempFiles}) => {
 				  // 图片大小小于40k
 				  if(tempFiles[0].size < 40 * 1024 ){
+					  this.tempFilePath = tempFilePaths[0]
 					  uni.getFileSystemManager().readFile({
 						  filePath:tempFilePaths[0],
 						  encoding:'base64',
@@ -371,11 +393,10 @@ export default {
 			})
 		},
 		handleBack() {
-			this.formStatus = 1;
+			this.$emit('switchStatus')
 		},
 		next() {
 			uni.setStorageSync('idType', 1);
-			this.formStatus = 2;
 		},
 		handleSelectChange({ index, newVal, oldVal, orignItem }, formType,formName) {
 			if(formName){
@@ -399,17 +420,39 @@ export default {
 					...this.eduForm
 				}
 			}
+			let fileParams = {
+					...params,
+					USERID:uni.getStorageSync('userId')
+				}
+			// delete fileParams.SZXP
+			// console.log(fileParams,'file')
+			// uni.uploadFile({
+			// 	url:http_root+'/UserAuth/createEsn',//服务器地址
+			// 	filePath:this.tempFilePath,//文件地址
+			// 	name:'SZXP',//服务器中文件对应的key值
+			// 	formData:fileParams,//上传的额外参数
+			// 	success:(res)=>{
+			// 		console.log(res,'上传成功')
+			// 	}
+			// })
 			this.$HTTP({
-				url:'/UserAuth/esnActivate',
+				url:'/UserAuth/createEsn',
 				params,
 				successCallback:({data})=>{
 					console.log(data,'esn')
-					if(data.code == '0000'){
+					if(data.code == '0'){
 						// 接口响应成功
 						// esn 认证成功返回的esn号码
-						uni.setStorageSync('userInfo', wxUserInfo);
+						// uni.setStorageSync('userInfo', wxUserInfo);
 						uni.setStorageSync('idType', this.form.type);
-						uni.navigateBack();
+						uni.showToast({
+							title:'认证成功',
+							mask:true,
+							duration:1500
+						})
+						setTimeout(()=>{
+							uni.navigateBack();
+						},1500)
 					}else{
 						uni.showToast({
 							title: `${data.code}:${data.msg}`,
@@ -421,9 +464,6 @@ export default {
 			})
 		},
 		handleConfirm() {
-			console.log(this.form,'form')
-			console.log(this.jsForm,'jsForm')
-			console.log(this.eduForm,'eduForm')
 			if(this.form.type <= 2){
 				// 学生权限，需要添加默认参数 1 学生 20 家长
 				this.form.ZYSFLB = this.form.type == 1? "1" : "20"

@@ -156,6 +156,38 @@ view.data-v-7510a902, text.data-v-7510a902, image.data-v-7510a902, label.data-v-
 .m-tip .u-grid .right .list-item .phone.data-v-7510a902 {
         color: #25a5ff;
 }
+.m-line.data-v-7510a902 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  padding: 5rpx 40rpx;
+  padding-top: 50rpx;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.m-line .u-title.data-v-7510a902 {
+    width: 35%;
+    color: #303133;
+    font-size: 32rpx;
+}
+.m-line .u-title .icon.data-v-7510a902 {
+      width: 50rpx;
+      height: 40rpx;
+      vertical-align: middle;
+      margin-right: 10rpx;
+}
+.m-line .u-content.data-v-7510a902 {
+    width: 60%;
+    font-size: 32rpx;
+}
+.m-line .u-content .img.data-v-7510a902 {
+      width: 60%;
+      height: 145rpx;
+}
 .container.data-v-7510a902 {
   background-color: #f6fbfe;
   min-height: 100vh;

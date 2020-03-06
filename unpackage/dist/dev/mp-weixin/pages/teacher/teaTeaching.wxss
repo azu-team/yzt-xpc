@@ -54,7 +54,7 @@ view.data-v-9274e880, text.data-v-9274e880, image.data-v-9274e880, label.data-v-
     padding: 20rpx 0;
     margin-bottom: 30rpx;
     border-radius: 10rpx;
-    box-shadow: 0 0 15rpx #CCCCCC;
+    box-shadow: 0 0 15rpx #cccccc;
 }
 .m-content .u-list .u-left.data-v-9274e880 {
       font-size: 0;

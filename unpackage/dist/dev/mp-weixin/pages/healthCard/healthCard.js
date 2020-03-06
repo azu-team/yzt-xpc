@@ -133,8 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var linkArea = function linkArea() {return Promise.all(/*! import() | components/w-picker/w-picker */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/w-picker/w-picker")]).then(__webpack_require__.bind(null, /*! ../../components/w-picker/w-picker.vue */ 123));};var _default =
-
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var linkArea = function linkArea() {return Promise.all(/*! import() | components/w-picker/w-picker */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/w-picker/w-picker")]).then(__webpack_require__.bind(null, /*! ../../components/w-picker/w-picker.vue */ 120));};var _default =
 
 
 
@@ -282,18 +281,18 @@ __webpack_require__.r(__webpack_exports__);
 
       region: '选择位置',
       form: {
-        additionalProp1: '0',
-        additionalProp2: '0',
-        additionalProp3: '0',
-        additionalProp4: '0',
-        additionalProp5: '0',
-        additionalProp6: '0',
-        additionalProp7: '',
-        additionalProp8: '',
-        additionalProp9: '0',
-        additionalProp10: '0',
-        additionalProp11: '0' },
-
+        field07: '0',
+        field08: '0',
+        field09: '0',
+        field10: '0',
+        field11: '0',
+        field12: '0',
+        field13: '',
+        field14: '',
+        a: '0', // 暂时获取页面数据
+        b: '0', // 暂时获取页面数据
+        c: '0' // 暂时获取页面数据
+      },
       list1: [
       {
         value: '0',
@@ -336,11 +335,11 @@ __webpack_require__.r(__webpack_exports__);
       yesOrNo: [
       {
         value: '0',
-        name: '无' },
+        name: '否' },
 
       {
         value: '1',
-        name: '有' }],
+        name: '是' }],
 
 
       vehicleList: [
@@ -366,19 +365,41 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     text1: function text1() {
       var textArr = ['飞机-航班号', '火车-车次', '汽车-起止地点', '轮船-起止地点'];
-      return this.form.additionalProp8 ? textArr[this.form.additionalProp8] : '';
+      return this.form.field14 ? textArr[this.form.field14] : '';
     },
     text2: function text2() {
       var textArr = ['飞机-起降地点', '火车-乘车区间', '汽车-是否司机'];
-      return this.form.additionalProp8 < 3 ? textArr[this.form.additionalProp8] : '';
+      return this.form.field14 < 3 ? textArr[this.form.field14] : '';
     },
     text3: function text3() {
       var textArr = ['飞机-座位号', '火车-车厢及座位号'];
-      return this.form.additionalProp8 < 2 ? textArr[this.form.additionalProp8] : '';
+      return this.form.field14 < 2 ? textArr[this.form.field14] : '';
     } },
 
   onLoad: function onLoad(e) {},
   methods: {
+    validate: function validate() {
+      switch (this.form.field14) {
+        case '0':{
+            this.form.field15 = this.form.a;
+            this.form.field16 = this.form.b;
+            this.form.field17 = this.form.c;
+          };break;
+        case '1':{
+            this.form.field18 = this.form.a;
+            this.form.field19 = this.form.b;
+            this.form.field20 = this.form.c;
+          };break;
+        case '2':{
+            this.form.field21 = this.form.a;
+            this.form.field22 = this.form.b;
+          };break;
+        case '3':{
+            this.form.field23 = this.form.a;
+          };break;}
+
+      this.send();
+    },
     handleCancelChoose: function handleCancelChoose() {
       this.$refs.linkage.hide();
     },
@@ -387,41 +408,41 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleChoose: function handleChoose(_ref) {var checkArr = _ref.checkArr,checkValue = _ref.checkValue,defaultVal = _ref.defaultVal,result = _ref.result;
       this.$refs.linkage.hide();
+      this.form.field06 = checkValue.join(',');
       this.region = result;
-    },
-    choseValue: function choseValue(res) {
-      //res数据源包括已选省市区与省市区code
-      console.log(res);
-      this.lotusAddressData.visible = res.visible; //visible为显示与关闭组件标识true显示false隐藏
-      //res.isChose = 1省市区已选 res.isChose = 0;未选
-      if (res.isChose) {
-        this.lotusAddressData.provinceName = res.province; //省
-        this.lotusAddressData.cityName = res.city; //市
-        this.lotusAddressData.townName = res.town; //区
-        this.region = "".concat(res.province, " ").concat(res.city, " ").concat(res.town); //region为已选的省市区的值
-      }
-    },
-    confirmCallback: function confirmCallback() {
-      console.log(arguments, '参数');
-      // let ads=this.$store.state.user_address;
     },
     handleRadioChange: function handleRadioChange(evt, name) {
       this.form[name] = evt.target.value;
     },
     send: function send() {
-      var params = JSON.stringify({
-        userid: '123',
-        results: this.form });
+      // field03	用户所属学校
+      // 以上字段暂未确定
+      var params = _objectSpread({},
+      this.form, {
+        field01: uni.getStorageSync('userId'),
+        field02: uni.getStorageSync('idType')
 
+        // 去除多余属性
+      });delete params.a;
+      delete params.b;
+      delete params.c;
       this.$HTTP({
-        url: '/campusapp/userhealth/answer',
-        root: 'http://61.132.95.169:10105',
+        url: '/healthForDay/save',
         params: params,
-        successCallback: function successCallback(res) {
-          console.log(res, 'res');
-          uni.showToast({
-            title: '提交成功!' });
+        successCallback: function successCallback(_ref2) {var data = _ref2.data;
+          if (data.code == 0) {
+            uni.showToast({
+              title: '提交成功!' });
 
+            setTimeout(function () {
+              uni.navigateBack();
+            }, 1500);
+          } else {
+            uni.showToast({
+              title: data.msg,
+              icon: 'none' });
+
+          }
         } });
 
     } } };exports.default = _default;

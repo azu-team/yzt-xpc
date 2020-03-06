@@ -2,19 +2,19 @@
 	<view class="container">
 		<view class="m-list">
 			<view class="u-q-title"><text>1.目前健康状态</text> <text class="icon">单选</text> </view>
-			<radio-group @change="handleRadioChange($event,'additionalProp1')">
+			<radio-group @change="handleRadioChange($event,'field02')">
 				<label class="u-list-cell" v-for="(item,index) in list1" :key="index">
-					<view class="u-radio"><radio :value="item.value" :checked="form.additionalProp1 == item.value" /></view>
-					<view :class="{ 'u-text': true, active: form.additionalProp1 == item.value }">{{ item.name }}</view>
+					<view class="u-radio"><radio :value="item.value" :checked="form.field02 == item.value" /></view>
+					<view :class="{ 'u-text': true, active: form.field02 == item.value }">{{ item.name }}</view>
 				</label>
 			</radio-group>
 		</view>
 		<view class="m-list">
 			<view class="u-q-title"><text>2.导致风险原因</text> <text class="icon">单选</text> </view>
-			<radio-group @change="handleRadioChange($event,'additionalProp2')">
+			<radio-group @change="handleRadioChange($event,'field05')">
 				<label class="u-list-cell" v-for="(item, index) in list2" :key="index">
-					<view class="u-radio"><radio :value="item.value" :checked="form.additionalProp2 == item.value" /></view>
-					<view :class="{ 'u-text': true, active: form.additionalProp2 == item.value }">{{ item.name }}</view>
+					<view class="u-radio"><radio :value="item.value" :checked="form.field05 == item.value" /></view>
+					<view :class="{ 'u-text': true, active: form.field05 == item.value }">{{ item.name }}</view>
 				</label>
 			</radio-group>
 		</view>
@@ -27,9 +27,10 @@
 export default {
 	data() {
 		return {
+			region:'选择位置',
 			form:{
-				additionalProp1:'0',
-				additionalProp2:'0',
+				field02:'0',
+				field05:'0',
 			},
 			list1: [
 				{
@@ -69,24 +70,35 @@ export default {
 		};
 	},
 	onLoad(e) {},
+	mounted(){
+	},
 	methods: {
 		handleRadioChange(evt,name){
 			this.form[name] = evt.target.value
 		},
 		send(){
-			let params = JSON.stringify({
-				userid:'123',
-				results:this.form
-			})
+			// 缺少key值 field01 用户id
+			let params = {
+				...this.form,
+				field01:uni.getStorageSync('userId')
+			}
 			this.$HTTP({
-				url:'/campusapp/userhealth/answer',
-				root:'http://61.132.95.169:10105',
+				url:'/healthCollect/save',
 				params,
-				successCallback:(res)=>{
-					console.log(res,'res')
-					uni.showToast({
-						title:'提交成功!'
-					})
+				successCallback: ({data}) => {
+					if(data.code == 0){
+						uni.showToast({
+							title:'提交成功!'
+						})
+						setTimeout(()=>{
+							uni.navigateBack()
+						},1500)
+					}else{
+						uni.showToast({
+							title:data.msg,
+							icon:'none'
+						})
+					}
 				}
 			})
 		}

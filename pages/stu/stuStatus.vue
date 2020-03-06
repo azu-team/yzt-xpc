@@ -3,13 +3,18 @@
 		<view class="c-title"><tabs :list="list" v-model="active"></tabs></view>
 		<!-- <view class="m-title">当前学习进度</view> -->
 		<view class="m-content">
-			<view class="u-list" v-for="(item, index) in dataArr" :key="index">
-				<view class="u-list-title">{{ item.userName }}-{{ item.className }}</view>
-				<view class="u-list-desc">
-					<view class="cell">授课老师:{{ item.teacher }}</view>
-					<view class="cell">当前进度:{{ item.progress }}</view>
-					<view class="cell">最近上课时间:{{ item.lastTime }}</view>
+			<view class="" v-show="active == '0'">
+				<view class="u-list" v-for="(item, index) in dataArr" :key="index">
+					<view class="u-list-title">{{ item.userName }}-{{ item.className }}</view>
+					<view class="u-list-desc">
+						<view class="cell">授课老师:{{ item.teacher }}</view>
+						<view class="cell">当前进度:{{ item.progress }}</view>
+						<view class="cell">最近上课时间:{{ item.lastTime }}</view>
+					</view>
 				</view>
+			</view>
+			<view class="" v-show="active == '1'">
+				<view class="">学生成绩,暂未确定显示方式</view>
 			</view>
 		</view>
 	</view>
@@ -22,10 +27,10 @@ export default {
 		return {
 			list: [
 				{
-					title: '学习进度'
+					title: '学习情况统计'
 				},
 				{
-					title: '学习结果'
+					title: '学习成绩'
 				}
 			],
 			active: '0',

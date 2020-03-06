@@ -9,20 +9,28 @@
 			</view>
 		</view>
 		<view class="m-list">
+			<view class="m-line">
+				<view class="u-title">所在区县</view>
+				<view class="u-content">
+					<text @tap="showChoose">{{region}}</text>
+				</view>
+			</view>
+		</view>
+		<view class="m-list">
 			<view class="u-q-title"><text>1.是否需要援助</text> <text class="icon">单选</text> </view>
-			<radio-group @change="handleRadioChange($event,'additionalProp1')">
+			<radio-group @change="handleRadioChange($event,'field06')">
 				<label class="u-list-cell" v-for="(item,index) in list1" :key="index">
-					<view class="u-radio"><radio :value="item.value" :checked="form.additionalProp1 == item.value" /></view>
-					<view :class="{ 'u-text': true, active: form.additionalProp1 == item.value }">{{ item.name }}</view>
+					<view class="u-radio"><radio :value="item.value" :checked="form.field06 == item.value" /></view>
+					<view :class="{ 'u-text': true, active: form.field06 == item.value }">{{ item.name }}</view>
 				</label>
 			</radio-group>
 		</view>
 		<view class="m-list">
 			<view class="u-q-title"><text>2.是否受伤</text> <text class="icon">单选</text> </view>
-			<radio-group @change="handleRadioChange($event,'additionalProp2')">
+			<radio-group @change="handleRadioChange($event,'field07')">
 				<label class="u-list-cell" v-for="(item, index) in list2" :key="index">
-					<view class="u-radio"><radio :value="item.value" :checked="form.additionalProp2 == item.value" /></view>
-					<view :class="{ 'u-text': true, active: form.additionalProp2 == item.value }">{{ item.name }}</view>
+					<view class="u-radio"><radio :value="item.value" :checked="form.field07 == item.value" /></view>
+					<view :class="{ 'u-text': true, active: form.field07 == item.value }">{{ item.name }}</view>
 				</label>
 			</radio-group>
 		</view>
@@ -37,12 +45,20 @@
 			<view class="u-q-title"><text>4.求助具体要求</text></view>
 			<view class="u-content">
 				<editor id="editor" class="ql-container" placeholder="请输入具体要求" @ready="onEditorReady"></editor>
-				<!-- <input class="input" type="text" v-model="form.requireContent" /> -->
+				<!-- <input class="input" type="text" v-model="form.field09" /> -->
 			</view>
 		</view>
 		<view class="m-bottom">
 			<view class="u-btn" @click="validate"><text>提交</text></view>
 		</view>
+		<link-area
+			mode="region"
+			@confirm="handleChoose"
+			@cancel="handleCancelChoose"
+			ref="linkage"
+			:hideArea="false"
+			:areaCode="['11', '1101', '110101']"
+			themeColor="#25a5ff"></link-area>
 	</view>
 </template>
 
@@ -55,24 +71,25 @@ innerAudioContext.autoplay = true;
 export default {
 	data() {
 		return {
+			region:'选择位置',
 			editorCtx:'',//文本域上下文
 			contactArr:[
-				{
-					name:'赵某某',phone:'15154546565',
-				},{
-					name:'钱某某',phone:'15154546565',
-				},{
-					name:'孙某某',phone:'15154546565',
-				},
+				// {
+				// 	name:'赵某某',phone:'15154546565',
+				// },{
+				// 	name:'钱某某',phone:'15154546565',
+				// },{
+				// 	name:'孙某某',phone:'15154546565',
+				// },
 			],
 			recordStatus:'1',// 录音状态 1 就绪 2 正在录制 3 已有一份音频文件
 			audioStatus:'播放文件',
 			text: 'uni-app',
 			voicePath: '',
 			form:{
-				additionalProp1:'0',
-				additionalProp2:'0',
-				requireContent:''
+				field06:'0',
+				field07:'无',
+				field09:''
 			},
 			list1: [
 				{
@@ -91,10 +108,10 @@ export default {
 			],
 			list2:[
 				{
-					value:'0',
+					value:'无',
 					name:'无'
 				},{
-					value:'1',
+					value:'有',
 					name:'有'
 				}
 			]
@@ -118,6 +135,17 @@ export default {
 		})
 	},
 	methods: {
+		handleCancelChoose(){
+			this.$refs.linkage.hide()
+		},
+		showChoose(){
+			this.$refs.linkage.show()
+		},
+		handleChoose({checkArr,checkValue,defaultVal,result}){
+			this.$refs.linkage.hide()
+			this.region = result
+			this.form.field02 = result
+		},
 		onEditorReady() {
 		    uni.createSelectorQuery().select('#editor').context((res) => {
 		        this.editorCtx = res.context
@@ -134,7 +162,7 @@ export default {
 		validate(){
 			this.editorCtx.getContents({
 				success:(data)=>{
-					this.form.requireContent = data.text
+					this.form.field09 = data.text
 				},
 				fail:()=>{
 					uni.showToast({
@@ -147,23 +175,6 @@ export default {
 					this.sendData()
 				}
 			})
-		},
-		sendData(){
-			// let params = JSON.stringify({
-			// 	userid:'123',
-			// 	results:this.form
-			// })
-			// this.$HTTP({
-			// 	url:'/campusapp/userhealth/answer',
-			// 	root:'http://61.132.95.169:10105',
-			// 	params,
-			// 	successCallback:(res)=>{
-			// 		console.log(res,'res')
-			// 		uni.showToast({
-			// 			title:'提交成功!'
-			// 		})
-			// 	}
-			// })
 		},
 		judgeAuthorize() {
 			uni.getSetting({
@@ -220,17 +231,42 @@ export default {
 			}
 		},
 		sendData(){
-			// 上传数据
-			uni.uploadFile({
-				url:'',//服务器地址
-				filePath:'',//文件地址
-				name:'',//服务器中文件对应的key值
-				formData:{
-				},//上传的额外参数
-				success:(res)=>{
-					console.log(res,'上传成功')
+			// 缺少key值  field01 用户id
+			// field08 语音信息
+			let params = {
+				...this.form,
+				field01:uni.getStorageSync('userId')
+			}
+			this.$HTTP({
+				url:'/getHelp/save',
+				params,
+				successCallback: ({data}) => {
+					if(data.code == 0){
+						uni.showToast({
+							title:'提交成功!'
+						})
+						setTimeout(()=>{
+							uni.navigateBack()
+						},1500)
+					}else{
+						uni.showToast({
+							title:data.msg,
+							icon:'none'
+						})
+					}
 				}
 			})
+			// 上传数据
+			// uni.uploadFile({
+			// 	url:'',//服务器地址
+			// 	filePath:'',//文件地址
+			// 	name:'',//服务器中文件对应的key值
+			// 	formData:{
+			// 	},//上传的额外参数
+			// 	success:(res)=>{
+			// 		console.log(res,'上传成功')
+			// 	}
+			// })
 		}
 	}
 };

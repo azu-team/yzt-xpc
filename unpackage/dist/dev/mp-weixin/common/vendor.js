@@ -1551,7 +1551,7 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
-/***/ 128:
+/***/ 125:
 /*!******************************************************************************!*\
   !*** C:/Users/azu/Desktop/yzt_xcx/components/w-picker/city-data/province.js ***!
   \******************************************************************************/
@@ -1701,7 +1701,7 @@ provinceData;exports.default = _default;
 
 /***/ }),
 
-/***/ 129:
+/***/ 126:
 /*!**************************************************************************!*\
   !*** C:/Users/azu/Desktop/yzt_xcx/components/w-picker/city-data/city.js ***!
   \**************************************************************************/
@@ -3215,7 +3215,7 @@ cityData;exports.default = _default;
 
 /***/ }),
 
-/***/ 130:
+/***/ 127:
 /*!**************************************************************************!*\
   !*** C:/Users/azu/Desktop/yzt_xcx/components/w-picker/city-data/area.js ***!
   \**************************************************************************/
@@ -15768,7 +15768,7 @@ areaData;exports.default = _default;
 
 /***/ }),
 
-/***/ 131:
+/***/ 128:
 /*!********************************************************************!*\
   !*** C:/Users/azu/Desktop/yzt_xcx/components/w-picker/w-picker.js ***!
   \********************************************************************/
@@ -16550,6 +16550,231 @@ function normalizeComponent (
 
 /***/ }),
 
+/***/ 143:
+/*!*********************************************************!*\
+  !*** C:/Users/azu/Desktop/yzt_xcx/utils/selectLists.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.jsTypeList = exports.eduTypeList = exports.sexList = exports.idTypeList = exports.relationList = exports.typeList = void 0;var typeList = [//登录人身份
+{
+  value: '学生',
+  id: '1' },
+
+{
+  value: '家长',
+  id: '2' },
+
+{
+  value: '教师',
+  id: '3' },
+
+{
+  value: '行政管理人员',
+  id: '4' }],
+
+
+relationList = [//亲属关系
+{
+  value: '父亲',
+  id: '51' },
+
+{
+  value: '母亲',
+  id: '52' },
+
+{
+  value: '公公',
+  id: '53' },
+
+{
+  value: '婆婆',
+  id: '54' },
+
+{
+  value: '岳父',
+  id: '55' },
+
+{
+  value: '岳母',
+  id: '56' },
+
+{
+  value: '继父或养父',
+  id: '57' },
+
+{
+  value: '继母或养母',
+  id: '58' },
+
+{
+  value: '其他父母关系',
+  id: '59' },
+
+{
+  value: '祖父母或外祖父母',
+  id: '60' },
+
+{
+  value: '祖父',
+  id: '61' },
+
+{
+  value: '祖母',
+  id: '62' },
+
+{
+  value: '外祖父',
+  id: '63' },
+
+{
+  value: '外祖母',
+  id: '64' },
+
+{
+  value: '配偶的祖父母或外祖父母',
+  id: '65' },
+
+{
+  value: '曾祖父',
+  id: '66' },
+
+{
+  value: '曾祖母',
+  id: '67' },
+
+{
+  value: '配偶的曾祖父母',
+  id: '68' },
+
+{
+  value: '其他祖父母或外祖父母关系',
+  id: '69' },
+
+{
+  value: '伯父',
+  id: '81' },
+
+{
+  value: '伯母',
+  id: '82' },
+
+{
+  value: '叔父',
+  id: '83' },
+
+{
+  value: '婶母',
+  id: '84' },
+
+{
+  value: '舅父',
+  id: '85' },
+
+{
+  value: '舅母',
+  id: '86' },
+
+{
+  value: '姨父',
+  id: '87' },
+
+{
+  value: '姨母',
+  id: '88' },
+
+{
+  value: '姑父',
+  id: '89' },
+
+{
+  value: '姑母',
+  id: '90' },
+
+{
+  value: '其他亲属',
+  id: '97' },
+
+{
+  value: '非亲属',
+  id: '99' }],
+
+
+idTypeList = [//身份证类型
+{
+  value: '居民身份证',
+  id: '1' },
+
+{
+  value: '台湾居民来往大陆通行证',
+  id: '8' },
+
+{
+  value: '护照',
+  id: 'A' },
+
+{
+  value: '军官证',
+  id: '2' },
+
+{
+  value: '士兵证',
+  id: '3' },
+
+{
+  value: '文职干部证',
+  id: '4' },
+
+{
+  value: '部队离退休证',
+  id: '5' },
+
+{
+  value: '香港特区护照/身份证明',
+  id: '6' },
+
+{
+  value: '澳门特区护照/身份证明',
+  id: '7' }],
+
+
+sexList = [//性别
+{
+  value: '男',
+  id: '1' },
+
+{
+  value: '女',
+  id: '2' }],
+
+
+eduTypeList = [
+{
+  value: '学生',
+  id: '1' },
+{
+  value: '教师',
+  id: '2' },
+{
+  value: '家长',
+  id: '20' },
+{
+  value: '行政管理人员',
+  id: '21' }],
+
+
+jsTypeList = [
+{
+  value: '教师',
+  id: '2' },
+{
+  value: '行政管理人员',
+  id: '21' }];exports.jsTypeList = jsTypeList;exports.eduTypeList = eduTypeList;exports.sexList = sexList;exports.idTypeList = idTypeList;exports.relationList = relationList;exports.typeList = typeList;
+
+/***/ }),
+
 /***/ 15:
 /*!**************************************************!*\
   !*** C:/Users/azu/Desktop/yzt_xcx/utils/http.js ***!
@@ -16615,7 +16840,7 @@ api;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.http_root = void 0;var http_root = 'http://192.168.1.102:8015/';exports.http_root = http_root;
+Object.defineProperty(exports, "__esModule", { value: true });exports.http_root = void 0;var http_root = 'http://192.168.1.102:8015';exports.http_root = http_root;
 
 /***/ }),
 
@@ -22681,231 +22906,6 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 39:
-/*!*********************************************************!*\
-  !*** C:/Users/azu/Desktop/yzt_xcx/utils/selectLists.js ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.jsTypeList = exports.eduTypeList = exports.sexList = exports.idTypeList = exports.relationList = exports.typeList = void 0;var typeList = [//登录人身份
-{
-  value: '学生',
-  id: '1' },
-
-{
-  value: '家长',
-  id: '2' },
-
-{
-  value: '教师',
-  id: '3' },
-
-{
-  value: '行政管理人员',
-  id: '4' }],
-
-
-relationList = [//亲属关系
-{
-  value: '父亲',
-  id: '51' },
-
-{
-  value: '母亲',
-  id: '52' },
-
-{
-  value: '公公',
-  id: '53' },
-
-{
-  value: '婆婆',
-  id: '54' },
-
-{
-  value: '岳父',
-  id: '55' },
-
-{
-  value: '岳母',
-  id: '56' },
-
-{
-  value: '继父或养父',
-  id: '57' },
-
-{
-  value: '继母或养母',
-  id: '58' },
-
-{
-  value: '其他父母关系',
-  id: '59' },
-
-{
-  value: '祖父母或外祖父母',
-  id: '60' },
-
-{
-  value: '祖父',
-  id: '61' },
-
-{
-  value: '祖母',
-  id: '62' },
-
-{
-  value: '外祖父',
-  id: '63' },
-
-{
-  value: '外祖母',
-  id: '64' },
-
-{
-  value: '配偶的祖父母或外祖父母',
-  id: '65' },
-
-{
-  value: '曾祖父',
-  id: '66' },
-
-{
-  value: '曾祖母',
-  id: '67' },
-
-{
-  value: '配偶的曾祖父母',
-  id: '68' },
-
-{
-  value: '其他祖父母或外祖父母关系',
-  id: '69' },
-
-{
-  value: '伯父',
-  id: '81' },
-
-{
-  value: '伯母',
-  id: '82' },
-
-{
-  value: '叔父',
-  id: '83' },
-
-{
-  value: '婶母',
-  id: '84' },
-
-{
-  value: '舅父',
-  id: '85' },
-
-{
-  value: '舅母',
-  id: '86' },
-
-{
-  value: '姨父',
-  id: '87' },
-
-{
-  value: '姨母',
-  id: '88' },
-
-{
-  value: '姑父',
-  id: '89' },
-
-{
-  value: '姑母',
-  id: '90' },
-
-{
-  value: '其他亲属',
-  id: '97' },
-
-{
-  value: '非亲属',
-  id: '99' }],
-
-
-idTypeList = [//身份证类型
-{
-  value: '居民身份证',
-  id: '1' },
-
-{
-  value: '台湾居民来往大陆通行证',
-  id: '8' },
-
-{
-  value: '护照',
-  id: 'A' },
-
-{
-  value: '军官证',
-  id: '2' },
-
-{
-  value: '士兵证',
-  id: '3' },
-
-{
-  value: '文职干部证',
-  id: '4' },
-
-{
-  value: '部队离退休证',
-  id: '5' },
-
-{
-  value: '香港特区护照/身份证明',
-  id: '6' },
-
-{
-  value: '澳门特区护照/身份证明',
-  id: '7' }],
-
-
-sexList = [//性别
-{
-  value: '男',
-  id: '1' },
-
-{
-  value: '女',
-  id: '2' }],
-
-
-eduTypeList = [
-{
-  value: '学生',
-  id: '1' },
-{
-  value: '教师',
-  id: '2' },
-{
-  value: '家长',
-  id: '20' },
-{
-  value: '行政管理人员',
-  id: '21' }],
-
-
-jsTypeList = [
-{
-  value: '教师',
-  id: '2' },
-{
-  value: '行政管理人员',
-  id: '21' }];exports.jsTypeList = jsTypeList;exports.eduTypeList = eduTypeList;exports.sexList = sexList;exports.idTypeList = idTypeList;exports.relationList = relationList;exports.typeList = typeList;
-
-/***/ }),
-
 /***/ 4:
 /*!***********************************************!*\
   !*** C:/Users/azu/Desktop/yzt_xcx/pages.json ***!
@@ -23824,7 +23824,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@alpha","_id":"@dcloudio/uni-stat@2
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/healthCard/healthCard": { "navigationBarTitleText": "健康申报", "usingComponents": { "link-area": "/components/w-picker/w-picker" }, "usingAutoImportComponents": {} }, "pages/idConfirm/idConfirm": { "navigationBarTitleText": "申请认证", "usingComponents": { "my-select": "/components/xfl-select/xfl-select" }, "usingAutoImportComponents": {} }, "pages/idConfirm/baseInfo": { "navigationBarTitleText": "个人信息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/stu/stuLearning": { "navigationBarTitleText": "在线学习", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/stu/stuStatus": { "navigationBarTitleText": "查看学习情况", "usingComponents": { "tabs": "/components/ms-tabs/ms-tabs" }, "usingAutoImportComponents": {} }, "pages/teacher/teaTeaching": { "navigationBarTitleText": "在线授课", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/teacher/teaStatistic": { "navigationBarTitleText": "查看授课情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/edu/eduTeachingStatistic": { "navigationBarTitleText": "所辖区域授课情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/edu/eduLearningStatistic": { "navigationBarTitleText": "所辖区域学习情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/common/quickHelp": { "navigationBarTitleText": "一键求助", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/common/healthStatus": { "navigationBarTitleText": "健康情况收集", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/common/safeStatus": { "navigationBarTitleText": "安全情况", "usingComponents": { "w-picker": "/components/w-picker/w-picker" }, "usingAutoImportComponents": { "w-picker": "/components/w-picker/w-picker" } } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "enablePullDownRefresh": false } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/healthCard/healthCard": { "navigationBarTitleText": "健康申报", "usingComponents": { "link-area": "/components/w-picker/w-picker" }, "usingAutoImportComponents": {} }, "pages/idConfirm/idConfirm": { "navigationBarTitleText": "申请认证", "usingComponents": { "sign-in": "/pages/idConfirm/signIn", "sign-up": "/pages/idConfirm/signUp" }, "usingAutoImportComponents": {} }, "pages/idConfirm/baseInfo": { "navigationBarTitleText": "个人信息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/stu/stuLearning": { "navigationBarTitleText": "在线学习", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/stu/stuStatus": { "navigationBarTitleText": "查看学习情况", "usingComponents": { "tabs": "/components/ms-tabs/ms-tabs" }, "usingAutoImportComponents": {} }, "pages/teacher/teaTeaching": { "navigationBarTitleText": "在线授课", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/teacher/teaStatistic": { "navigationBarTitleText": "查看授课情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/edu/eduTeachingStatistic": { "navigationBarTitleText": "所辖区域授课情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/edu/eduLearningStatistic": { "navigationBarTitleText": "所辖区域学习情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/common/quickHelp": { "navigationBarTitleText": "一键求助", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/common/healthStatus": { "navigationBarTitleText": "健康情况收集", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/common/safeStatus": { "navigationBarTitleText": "安全情况", "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "enablePullDownRefresh": false } };exports.default = _default;
 
 /***/ }),
 
@@ -23840,7 +23840,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 88:
+/***/ 85:
 /*!********************************************************************!*\
   !*** C:/Users/azu/Desktop/yzt_xcx/components/u-charts/u-charts.js ***!
   \********************************************************************/

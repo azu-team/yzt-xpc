@@ -156,6 +156,38 @@ view.data-v-25ac2bf3, text.data-v-25ac2bf3, image.data-v-25ac2bf3, label.data-v-
 .m-tip .u-grid .right .list-item .phone.data-v-25ac2bf3 {
         color: #25a5ff;
 }
+.m-line.data-v-25ac2bf3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  padding: 5rpx 40rpx;
+  padding-top: 50rpx;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.m-line .u-title.data-v-25ac2bf3 {
+    width: 35%;
+    color: #303133;
+    font-size: 32rpx;
+}
+.m-line .u-title .icon.data-v-25ac2bf3 {
+      width: 50rpx;
+      height: 40rpx;
+      vertical-align: middle;
+      margin-right: 10rpx;
+}
+.m-line .u-content.data-v-25ac2bf3 {
+    width: 60%;
+    font-size: 32rpx;
+}
+.m-line .u-content .img.data-v-25ac2bf3 {
+      width: 60%;
+      height: 145rpx;
+}
 .container.data-v-25ac2bf3 {
   background-color: #f6fbfe;
   min-height: 100vh;

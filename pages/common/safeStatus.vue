@@ -15,14 +15,22 @@
 			</view>
 		</view>
 		<view class="m-list">
+			<view class="m-line">
+				<view class="u-title">所在区县</view>
+				<view class="u-content">
+					<text @tap="showChoose">{{region}}</text>
+				</view>
+			</view>
+		</view>
+		<view class="m-list">
 			<view class="u-q-title">
 				<text>1.安全预警原因</text>
 				<text class="icon">单选</text>
 			</view>
-			<radio-group @change="handleRadioChange($event, 'additionalProp1')">
+			<radio-group @change="handleRadioChange($event, 'field03')">
 				<label class="u-list-cell" v-for="(item, index) in list1" :key="index">
-					<view class="u-radio"><radio :value="item.value" :checked="form.additionalProp1 == item.value" /></view>
-					<view :class="{ 'u-text': true, active: form.additionalProp1 == item.value }">{{ item.name }}</view>
+					<view class="u-radio"><radio :value="item.value" :checked="form.field03 == item.value" /></view>
+					<view :class="{ 'u-text': true, active: form.field03 == item.value }">{{ item.name }}</view>
 				</label>
 			</radio-group>
 		</view>
@@ -31,10 +39,10 @@
 				<text>2.安全预警级别</text>
 				<text class="icon">单选</text>
 			</view>
-			<radio-group @change="handleRadioChange($event, 'additionalProp2')">
+			<radio-group @change="handleRadioChange($event, 'field04')">
 				<label class="u-list-cell" v-for="(item, index) in list2" :key="index">
-					<view class="u-radio"><radio :value="item.value" :checked="form.additionalProp2 == item.value" /></view>
-					<view :class="{ 'u-text': true, active: form.additionalProp2 == item.value }">{{ item.name }}</view>
+					<view class="u-radio"><radio :value="item.value" :checked="form.field04 == item.value" /></view>
+					<view :class="{ 'u-text': true, active: form.field04 == item.value }">{{ item.name }}</view>
 				</label>
 			</radio-group>
 		</view>
@@ -43,10 +51,10 @@
 				<text>3.当前状态</text>
 				<text class="icon">单选</text>
 			</view>
-			<radio-group @change="handleRadioChange($event, 'additionalProp3')">
+			<radio-group @change="handleRadioChange($event, 'field05')">
 				<label class="u-list-cell" v-for="(item, index) in list3" :key="index">
-					<view class="u-radio"><radio :value="item.value" :checked="form.additionalProp3 == item.value" /></view>
-					<view :class="{ 'u-text': true, active: form.additionalProp3 == item.value }">{{ item.name }}</view>
+					<view class="u-radio"><radio :value="item.value" :checked="form.field05 == item.value" /></view>
+					<view :class="{ 'u-text': true, active: form.field05 == item.value }">{{ item.name }}</view>
 				</label>
 			</radio-group>
 		</view>
@@ -55,10 +63,10 @@
 				<text>4.安全情况</text>
 				<text class="icon">单选</text>
 			</view>
-			<radio-group @change="handleRadioChange($event, 'additionalProp4')">
+			<radio-group @change="handleRadioChange($event, 'field06')">
 				<label class="u-list-cell" v-for="(item, index) in list4" :key="index">
-					<view class="u-radio"><radio :value="item.value" :checked="form.additionalProp4 == item.value" /></view>
-					<view :class="{ 'u-text': true, active: form.additionalProp4 == item.value }">{{ item.name }}</view>
+					<view class="u-radio"><radio :value="item.value" :checked="form.field06 == item.value" /></view>
+					<view :class="{ 'u-text': true, active: form.field06 == item.value }">{{ item.name }}</view>
 				</label>
 			</radio-group>
 		</view>
@@ -66,27 +74,36 @@
 		<view class="m-bottom">
 			<view class="u-btn" @click="send"><text>提交</text></view>
 		</view>
+		<link-area
+			mode="region"
+			@confirm="handleChoose"
+			@cancel="handleCancelChoose"
+			ref="linkage"
+			:hideArea="false"
+			:areaCode="['11', '1101', '110101']"
+			themeColor="#25a5ff"></link-area>
 	</view>
 </template>
 <script>
 export default {
 	data() {
 		return {
-			nodes:`<div><span>富文本内容</span><span style="color:red;">初始HTML</span></div>`,//富文本内容
+			region:'选择位置',
+			nodes:``,//富文本内容
 			contactArr:[
-				{
-					name:'赵某某',phone:'15154546565',
-				},{
-					name:'钱某某',phone:'15154546565',
-				},{
-					name:'孙某某',phone:'15154546565',
-				},
+				// {
+				// 	name:'赵某某',phone:'15154546565',
+				// },{
+				// 	name:'钱某某',phone:'15154546565',
+				// },{
+				// 	name:'孙某某',phone:'15154546565',
+				// },
 			],
 			form: {
-				additionalProp1: '0',
-				additionalProp2: '0',
-				additionalProp3: '0',
-				additionalProp4: '0'
+				field03: '0',
+				field04: '0',
+				field05: '0',
+				field06: '0'
 			},
 			list1: [
 				{
@@ -161,23 +178,42 @@ export default {
 	},
 	onLoad(e) {},
 	methods: {
+		handleCancelChoose(){
+			this.$refs.linkage.hide()
+		},
+		showChoose(){
+			this.$refs.linkage.show()
+		},
+		handleChoose({checkArr,checkValue,defaultVal,result}){
+			this.$refs.linkage.hide()
+			this.region = result
+			this.form.field02 = result
+		},
 		handleRadioChange(evt, name) {
 			this.form[name] = evt.target.value;
 		},
 		send() {
-			let params = JSON.stringify({
-				userid: '123',
-				results: this.form
-			});
+			let params = {
+				...this.form,
+				field01:uni.getStorageSync('userId')
+			}
 			this.$HTTP({
-				url: '/campusapp/userhealth/answer',
-				root: 'http://61.132.95.169:10105',
+				url: '/safeData/save',
 				params,
-				successCallback: res => {
-					console.log(res, 'res');
-					uni.showToast({
-						title: '提交成功!'
-					});
+				successCallback: ({data}) => {
+					if(data.code == 0){
+						uni.showToast({
+							title:'提交成功!'
+						})
+						setTimeout(()=>{
+							uni.navigateBack()
+						},1500)
+					}else{
+						uni.showToast({
+							title:data.msg,
+							icon:'none'
+						})
+					}
 				}
 			});
 		}

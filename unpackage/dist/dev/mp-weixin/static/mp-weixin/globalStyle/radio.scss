@@ -114,3 +114,29 @@
 		}
 	}
 }
+.m-line {
+	display: flex;
+	padding: 5upx 40upx;
+	padding-top: 50upx;
+	justify-content: space-between;
+	align-items: center;
+	.u-title {
+		width: 35%;
+		color: #303133;
+		font-size: 32upx;
+		.icon {
+			width: 50upx;
+			height: 40upx;
+			vertical-align: middle;
+			margin-right: 10upx;
+		}
+	}
+	.u-content {
+		width: 60%;
+		font-size: 32upx;
+		.img {
+			width: 60%;
+			height: 145upx;
+		}
+	}
+}

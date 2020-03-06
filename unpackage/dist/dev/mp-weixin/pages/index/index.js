@@ -163,103 +163,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   data: function data() {
     return {
       hasUserInfo: false,
-      idType: '1',
-      cardArr: [
-      {
-        name: '身份认证',
-        imgUrl: '../../static/mp-weixin/pic1.png',
-        path: '/pages/idConfirm/idConfirm' },
-
-      {
-        name: '学生每日健康打卡',
-        imgUrl: '../../static/mp-weixin/pic2.png',
-        path: '/pages/healthCard/healthCard' },
-
-      {
-        name: '在线学习',
-        imgUrl: '../../static/mp-weixin/pic3.png',
-        path: '/pages/stu/stuLearning' },
-
-      {
-        name: '查看学习情况',
-        imgUrl: '../../static/mp-weixin/pic4.png',
-        path: '/pages/stu/stuStatus' },
-
-      {
-        name: '在线授课',
-        imgUrl: '../../static/mp-weixin/pic2.png',
-        path: '/pages/teacher/teaTeaching' },
-
-      {
-        name: '查看授课情况',
-        imgUrl: '../../static/mp-weixin/pic3.png',
-        path: '/pages/teacher/teaStatistic' },
-
-
-      {
-        name: '查看与统计所辖区域授课情况',
-        imgUrl: '../../static/mp-weixin/pic4.png',
-        path: '/pages/edu/eduTeachingStatistic' },
-
-      {
-        name: '查看与统计所辖区域学习情况',
-        imgUrl: '../../static/mp-weixin/pic1.png',
-        path: '/pages/edu/eduLearningStatistic' },
-
-      {
-        name: '个人信息',
-        imgUrl: '../../static/mp-weixin/pic2.png',
-        path: '/pages/idConfirm/baseInfo' },
-
-      {
-        name: '一键求助',
-        imgUrl: '../../static/mp-weixin/pic3.png',
-        path: '/pages/common/quickHelp' },
-
-      {
-        name: '健康情况收集',
-        imgUrl: '../../static/mp-weixin/pic4.png',
-        path: '/pages/common/healthStatus' },
-
-      {
-        name: '安全情况',
-        imgUrl: '../../static/mp-weixin/pic1.png',
-        path: '/pages/common/safeStatus' }] };
-
-
+      idType: '1' };
 
   },
   onShow: function onShow() {
     // 防止重复赋值
     var idType = uni.getStorageSync('idType');
-    console.log(idType);
-    if (idType && idType == 1) {
+    if (idType && idType == '1') {
       // 学生与家长权限一致，标识不同需要单独处理
-      idType = 2;
-    } else {
-      idType = 1;
+      idType = '2';
     }
-    if (idType != this.idType) this.idType = idType;
-
+    if (idType != this.idType) this.idType = idType || '1';
+    // this.idType = 4
   },
-  onLoad: function onLoad() {
+  mounted: function mounted() {
+    console.log('mounted');
+    this.getOpenId();
   },
   computed: {
     moduleArr: function moduleArr() {
       var moduleCon = {
-        1: [
+        '1': [
         {
           name: '身份认证',
           imgUrl: '../../static/mp-weixin/pic1.png',
           path: '/pages/idConfirm/idConfirm' }],
 
 
-        2: [
+        '2': [
         {
           name: '个人信息',
           imgUrl: '../../static/mp-weixin/pic2.png',
@@ -296,7 +233,7 @@ var _default =
           path: '/pages/common/safeStatus' }],
 
 
-        3: [
+        '3': [
         {
           name: '个人信息',
           imgUrl: '../../static/mp-weixin/pic2.png',
@@ -313,7 +250,7 @@ var _default =
           path: '/pages/teacher/teaStatistic' }],
 
 
-        4: [
+        '4': [
         {
           name: '个人信息',
           imgUrl: '../../static/mp-weixin/pic2.png',
@@ -335,6 +272,49 @@ var _default =
     } },
 
   methods: {
+    getOpenId: function getOpenId() {var _this = this;
+      uni.showLoading({
+        title: '正在验证...',
+        mask: true });
+
+      uni.login({
+        provider: 'weixin',
+        success: function success(_ref) {var code = _ref.code;
+          _this.$HTTP({
+            url: '/UserAuth/openid',
+            params: {
+              code: code },
+
+            successCallback: function successCallback(_ref2) {var data = _ref2.data;
+              if (data.code == '0') {
+                var resData = data.data;
+                // userId必定存在
+                uni.setStorageSync('userId', resData.userId);
+                if (resData.state == '0') {
+                  // 已认证
+                  uni.setStorageSync('userInfo', resData);
+                  uni.setStorageSync('idType', resData.zysflb);
+                  _this.idType = resData.zysflb;
+                } else if (resData.state == '1') {
+                  // 跳转注册部分
+                  uni.navigateTo({
+                    url: '/pages/idConfirm/idConfirm' });
+
+                }
+              } else {
+                uni.showToast({
+                  title: data.msg,
+                  icon: 'none' });
+
+              }
+            },
+            completeCallback: function completeCallback() {
+              uni.hideLoading();
+            } });
+
+        } });
+
+    },
     // 退出清缓存
     handleUserOut: function handleUserOut() {
       uni.removeStorageSync('idType');

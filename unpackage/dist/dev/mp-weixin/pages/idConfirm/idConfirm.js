@@ -131,7 +131,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var signIn = function signIn() {return __webpack_require__.e(/*! import() | pages/idConfirm/signIn */ "pages/idConfirm/signIn").then(__webpack_require__.bind(null, /*! ./signIn.vue */ 40));};var signUp = function signUp() {return Promise.all(/*! import() | pages/idConfirm/signUp */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/idConfirm/signUp")]).then(__webpack_require__.bind(null, /*! ./signUp.vue */ 169));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var signIn = function signIn() {return __webpack_require__.e(/*! import() | pages/idConfirm/signIn */ "pages/idConfirm/signIn").then(__webpack_require__.bind(null, /*! ./signIn.vue */ 131));};var signUp = function signUp() {return Promise.all(/*! import() | pages/idConfirm/signUp */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/idConfirm/signUp")]).then(__webpack_require__.bind(null, /*! ./signUp.vue */ 138));};var _default =
 
 
 
@@ -146,11 +146,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   components: { signIn: signIn, signUp: signUp },
   data: function data() {
     return {
-      showSignIn: true };
+      showSignIn: true,
+      formType: '1' };
 
   },
   methods: {
-    handleSignIn: function handleSignIn() {
+    handleSignIn: function handleSignIn(formType) {
+      this.formType = formType;
       this.showSignIn = false;
     },
     handleSignUp: function handleSignUp() {

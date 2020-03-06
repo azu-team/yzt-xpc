@@ -2,8 +2,8 @@
 	<view class="container">
 		<view class="m-title">选择学习平台</view>
 		<view class="m-content">
-			<view class="u-list" v-for="(item, index) in dataArr" :key="index">
-				<view class="u-left"><image class="icon" src="/static/mp-weixin/dingding.png" mode="aspectFit"></image></view>
+			<view class="u-list" v-for="(item, index) in dataArr" :key="index" @tap="handleNav(item)">
+				<view class="u-left"><image class="icon" :src="item.logoUrl" mode="aspectFit"></image></view>
 				<view class="u-right">{{ item.name }}</view>
 			</view>
 		</view>
@@ -15,30 +15,42 @@ export default {
 		return {
 			dataArr: [
 				{
-					name: '网易云课堂',
-					value: '1'
+					name: '腾讯课堂',
+					value: '1',
+					logoUrl:'/static/mp-weixin/tencent.png',
 				},
 				{
 					name: '钉钉',
-					value: '2'
+					value: '2',
+					logoUrl:'/static/mp-weixin/dingding.png',
 				},
 				{
-					name: '腾讯课堂',
-					value: '3'
+					name: '凤凰职教云',
+					value: '3',
+					logoUrl:'/static/mp-weixin/fenghuang.png',
 				},
 				{
-					name: '云朵课堂',
-					value: '4'
+					name: '智慧职教',
+					value: '4',
+					logoUrl:'/static/mp-weixin/zhihui.png',
 				},
 				{
-					name: '环球网校',
-					value: '4'
+					name: '超星泛雅',
+					value: '5',
+					logoUrl:'/static/mp-weixin/chaoxing.png',
 				}
 			]
 		};
 	},
 	onLoad(evt) {},
-	methods: {}
+	methods: {
+		handleNav(){
+			uni.showToast({
+				title:'暂未开通',
+				icon:'none'
+			})
+		}
+	}
 };
 </script>
 <style lang="scss" scoped>

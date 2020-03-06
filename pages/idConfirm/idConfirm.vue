@@ -3,7 +3,7 @@
 		<sign-in @switchStatus="handleSignIn"></sign-in>
 	</view>
 	<view  v-else>
-		<sign-up @switchStatus="handleSignUp"></sign-up>
+		<sign-up @switchStatus="handleSignUp" :type="formType"></sign-up>
 	</view>
 </template>
 <script>
@@ -14,10 +14,12 @@ export default {
 	data() {
 		return {
 			showSignIn:true,
+			formType:'1'
 		};
 	},
 	methods: {
-		handleSignIn(){
+		handleSignIn(formType){
+			this.formType = formType;
 			this.showSignIn = false;
 		},
 		handleSignUp(){
