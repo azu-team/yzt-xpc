@@ -272,11 +272,11 @@
 			</view>
 
 			<view class="m-bottom">
-				<button class="u-btn" open-type="getUserInfo" @tap="handleConfirm" ><text>认证</text></button>
+				<button class="u-btn"  @tap="handleConfirm" ><text>认证</text></button>
 			</view>
 			<link-area
 				mode="date"
-				startYear="2010" 
+				startYear="1970" 
 				endYear="2030"
 				:current="true" 
 				:disabledAfter="false"
@@ -366,7 +366,6 @@ export default {
 			// this.region = result
 			// this.form.field02 = result
 			this[this.timeFormName][this.timeFormKey] = checkArr[0].join('')
-			console.log(this.timeFormName,this.timeFormKey,arguments,'arguments')
 		},
 		handleChooseImg(formName,keyName){
 			uni.chooseImage({
@@ -437,9 +436,8 @@ export default {
 			// })
 			this.$HTTP({
 				url:'/UserAuth/createEsn',
-				params,
+				params:fileParams,
 				successCallback:({data})=>{
-					console.log(data,'esn')
 					if(data.code == '0'){
 						// 接口响应成功
 						// esn 认证成功返回的esn号码
@@ -460,6 +458,9 @@ export default {
 							duration:3000
 						})
 					}
+				},
+				completeCallback:()=>{
+					// uni.hideLoading()
 				}
 			})
 		},
@@ -470,20 +471,22 @@ export default {
 			}else if(this.form.type == 4){
 				this.eduForm.ZYSFLB = "21"
 			}
-			
-			uni.getUserInfo({
-				provider: 'weixin',
-				success: res => {
-					// 获取微信授权信息之后进行接口请求
-					this.saveInfo(res);
-				},
-				fail: () => {
-					uni.showToast({
-						title: '请同意授权用户信息!',
-						icon: 'none'
-					});
-				}
-			});
+			// uni.showLoading({
+			// 	title:'正在认证...'
+			// })
+			this.saveInfo();
+			// uni.getUserInfo({
+			// 	provider: 'weixin',
+			// 	success: res => {
+			// 		// 获取微信授权信息之后进行接口请求
+			// 	},
+			// 	fail: () => {
+			// 		uni.showToast({
+			// 			title: '请同意授权用户信息!',
+			// 			icon: 'none'
+			// 		});
+			// 	}
+			// });
 		},
 		judgeAuthSetting() {
 			uni.getSetting({

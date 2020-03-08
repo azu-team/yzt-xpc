@@ -25,17 +25,20 @@ let api = function({
 				'content-type': "application/json"
 			},
 			success: res => {
+				if(showLoading){
+					uni.hideLoading()
+				}
 				successCallback && successCallback(res)
 				resolve(res);
 			},
 			fail: res => {
+				if(showLoading){
+					uni.hideLoading()
+				}
 				failCallback && failCallback(res)
 				reject(res);
 			},
 			complete: () => {
-				if(showLoading){
-					uni.hideLoading()
-				}
 				completeCallback && completeCallback();
 			}
 		})

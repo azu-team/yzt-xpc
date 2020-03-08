@@ -202,7 +202,7 @@
 				this.$refs[str].show();
 			},
 			onConfirm(val){
-				console.log(val);
+				// console.log(val);
 				//如果页面需要调用多个mode类型，可以根据mode处理结果渲染到哪里;
 				// switch(this.mode){
 				// 	case "date":

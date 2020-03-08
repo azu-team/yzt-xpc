@@ -130,7 +130,6 @@ export default {
 	mounted() {
 		this.judgeAuthorize()
 		innerAudioContext.onEnded(()=>{
-			console.log('结束了')
 			this.audioStatus = '播放文件'
 		})
 	},

@@ -46,7 +46,8 @@
 				</view>
 			</view>
 			<view class="m-bottom">
-				<button class="u-btn" open-type="getUserInfo" @tap="handleConfirm">
+				<!-- open-type="getUserInfo" -->
+				<button class="u-btn"  @tap="handleConfirm">
 					<text>下一步{{form.ESN?'(人脸识别)':''}}</text></button>
 			</view>
 			<!-- #ifdef MP-WEIXIN -->
@@ -160,10 +161,6 @@ export default {
 			
 		},
 		sendData(){
-			uni.showLoading({
-				title: '正在验证...',
-				mask: true
-			});
 			// 判断用户state，决定下一步是填写基本资料还是返回到首页切换身份
 			this.$HTTP({
 				url: '/UserAuth/register',
@@ -172,14 +169,12 @@ export default {
 					USERID:uni.getStorageSync('userId')
 				},
 				successCallback:({data})=>{
-					uni.hideLoading()
 					if(data.code=='0'){
 						this.$emit('switchStatus', this.form.ZYSFLX)
 						return;
 					}
 					if(data.code == '0000'){
 						let resData = data.data
-						// uni.setStorageSync('userId', resData.userId);
 						if(resData.state == '0'){
 							// 激活成功
 							uni.setStorageSync('userInfo', resData);

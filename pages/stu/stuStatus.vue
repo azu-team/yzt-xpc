@@ -5,17 +5,16 @@
 		<view class="m-content">
 			<view class="" v-show="active == '0'">
 				<view class="u-list" v-for="(item, index) in dataArr" :key="index">
-					<view class="u-list-title">{{ item.userName }}-{{ item.className }}</view>
-					<view class="u-list-desc">
-						<view class="cell">授课老师:{{ item.teacher }}</view>
-						<view class="cell">当前进度:{{ item.progress }}</view>
-						<view class="cell">最近上课时间:{{ item.lastTime }}</view>
+					<view class="u-list-title">{{ item.title }} <view @tap="handleCollapse(item,index)" :class="{'u-dot':true, 'active':item.isActive}"></view></view>
+					<view :class="{'u-list-desc':true,active:item.isActive}">
+						<view class="cell" v-for="(params, idx) in paramsArr" :key="idx">
+							<text>{{ params.name }}</text>
+							:  {{ item[params.key] }}
+						</view>
 					</view>
 				</view>
 			</view>
-			<view class="" v-show="active == '1'">
-				<view class="">学生成绩,暂未确定显示方式</view>
-			</view>
+			<view class="" v-show="active == '1'"><view class="m-tips">暂无学生具体成绩</view></view>
 		</view>
 	</view>
 </template>
@@ -25,6 +24,39 @@ export default {
 	components: { tabs },
 	data() {
 		return {
+			paramsArr:[
+				{
+					name:'以上课时总量',
+					key:'yskszl'
+				},{
+					name:'在线时长',
+					key:'zxsc'
+				},{
+					name:'掉线次数',
+					key:'dxcs'
+				},{
+					name:'课前预习次数',
+					key:'kqyx'
+				},{
+					name:'课后作业次数',
+					key:'khzycs'
+				},{
+					name:'问题数量',
+					key:'wtsl'
+				},{
+					name:'活跃次数',
+					key:'hycs'
+				},{
+					name:'考试次数',
+					key:'kscs'
+				},{
+					name:'拒收次数',
+					key:'jscs'
+				},{
+					name:'被点名次数',
+					key:'bdmcs'
+				},
+			],
 			list: [
 				{
 					title: '学习情况统计'
@@ -36,11 +68,42 @@ export default {
 			active: '0',
 			dataArr: [
 				{
-					userName: '上课人',
-					className: '语文',
-					progress: '50%',
-					lastTime: '2020-02-26',
-					teacher: '王某'
+					title: '整体情况',
+					yskszl: '10',
+					zxsc: '20',
+					dxcs: '15',
+					kqyx: '25',
+					khzycs: '4',
+					wtsl: '011',
+					hycs: '25',
+					kscs: '2',
+					jscs: '6',
+					bdmcs: '111',
+					isActive:true,
+				},{
+					title: '腾讯',
+					yskszl: '10',
+					zxsc: '20',
+					dxcs: '15',
+					kqyx: '25',
+					khzycs: '4',
+					wtsl: '011',
+					hycs: '25',
+					kscs: '2',
+					jscs: '6',
+					bdmcs: '111'
+				},{
+					title: '凤凰',
+					yskszl: '10',
+					zxsc: '20',
+					dxcs: '15',
+					kqyx: '25',
+					khzycs: '4',
+					wtsl: '011',
+					hycs: '25',
+					kscs: '2',
+					jscs: '6',
+					bdmcs: '111'
 				}
 			]
 		};
@@ -50,29 +113,17 @@ export default {
 			immediate:true,
 			handler(val) {
 				if (val == '0') {
-					// 学习进度
-					this.dataArr = new Array(6).fill({
-						userName: '上课人',
-						className: '语文',
-						progress: '50%',
-						lastTime: '2020-02-26',
-						teacher: '王某'
-					});
 				} else if (val == '1') {
-					//学习结果
-					this.dataArr = new Array(3).fill({
-						userName: '上课人',
-						className: '语文',
-						progress: '50%',
-						lastTime: '2020-02-26',
-						teacher: '王某'
-					});
+
 				}
 			}
 		}
 	},
 	onLoad(evt) {},
 	methods: {
+		handleCollapse(item,index){
+			this.$set(item,'isActive',!item.isActive)
+		},
 		getData() {}
 	}
 };
@@ -81,7 +132,7 @@ export default {
 .c-title {
 	position: sticky;
 	top: 0;
-	z-index: 2;
+	z-index: 10;
 }
 @import '../../assets/style/list.scss';
 </style>

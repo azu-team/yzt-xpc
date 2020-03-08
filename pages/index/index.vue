@@ -34,10 +34,9 @@ export default {
 			idType = '2';
 		}
 		if (idType != this.idType) this.idType = idType || '1';
-		// this.idType = 4
+		// this.idType = 2
 	},
 	mounted() {
-		console.log('mounted');
 		this.getOpenId();
 	},
 	computed: {
@@ -127,22 +126,20 @@ export default {
 	},
 	methods: {
 		getOpenId() {
-			uni.showLoading({
-				title: '正在验证...',
-				mask: true
-			});
 			uni.login({
 				provider: 'weixin',
 				success: ({ code }) => {
+					
 					this.$HTTP({
 						url: '/UserAuth/openid',
 						params: {
 							code
 						},
 						successCallback: ({ data }) => {
+							
 							if (data.code == '0') {
 								let resData = data.data;
-								// userId必定存在
+								// userId必定存在 保存
 								uni.setStorageSync('userId', resData.userId);
 								if (resData.state == '0') {
 									// 已认证
@@ -162,10 +159,19 @@ export default {
 								});
 							}
 						},
-						completeCallback: () => {
-							uni.hideLoading();
+						failCallback:({data})=>{
+							uni.showToast({
+								title:'非合法域名',
+								icon:'none'
+							})
 						}
 					});
+				},
+				fail:()=>{
+					uni.showToast({
+						title:'微信获取信息失败',
+						icon:'none'
+					})
 				}
 			});
 		},

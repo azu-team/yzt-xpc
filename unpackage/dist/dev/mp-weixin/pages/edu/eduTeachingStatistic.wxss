@@ -1,21 +1,21 @@
 
-page.data-v-656cd266 {
+page.data-v-494d5962 {
 	background: #f2f2f2;
 	width: 750rpx;
 	overflow-x: hidden;
 }
-.qiun-padding.data-v-656cd266 {
+.qiun-padding.data-v-494d5962 {
 	padding: 2%;
 	width: 96%;
 }
-.qiun-wrap.data-v-656cd266 {
+.qiun-wrap.data-v-494d5962 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
 	-webkit-flex-wrap: wrap;
 	        flex-wrap: wrap;
 }
-.qiun-rows.data-v-656cd266 {
+.qiun-rows.data-v-494d5962 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -24,7 +24,7 @@ page.data-v-656cd266 {
 	-webkit-flex-direction: row !important;
 	        flex-direction: row !important;
 }
-.qiun-columns.data-v-656cd266 {
+.qiun-columns.data-v-494d5962 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -33,19 +33,19 @@ page.data-v-656cd266 {
 	-webkit-flex-direction: column !important;
 	        flex-direction: column !important;
 }
-.qiun-common-mt.data-v-656cd266 {
+.qiun-common-mt.data-v-494d5962 {
 	margin-top: 10rpx;
 }
-.qiun-bg-white.data-v-656cd266 {
+.qiun-bg-white.data-v-494d5962 {
 	background: #ffffff;
 }
-.qiun-title-bar.data-v-656cd266 {
+.qiun-title-bar.data-v-494d5962 {
 	width: 96%;
 	padding: 10rpx 2%;
 	-webkit-flex-wrap: nowrap;
 	        flex-wrap: nowrap;
 }
-.qiun-title-dot-light.data-v-656cd266 {
+.qiun-title-dot-light.data-v-494d5962 {
 	border-left: 10rpx solid #0ea391;
 	padding-left: 10rpx;
 	font-size: 32rpx;
@@ -53,44 +53,44 @@ page.data-v-656cd266 {
 }
 
 /* 通用样式 */
-.qiun-charts.data-v-656cd266 {
+.qiun-charts.data-v-494d5962 {
 	width: 750rpx;
 	height: 500rpx;
 	background-color: #ffffff;
 }
-.charts.data-v-656cd266 {
+.charts.data-v-494d5962 {
 	width: 750rpx;
 	height: 500rpx;
 	background-color: #ffffff;
 }
 
 /* 横屏样式 */
-.qiun-charts-rotate.data-v-656cd266 {
+.qiun-charts-rotate.data-v-494d5962 {
 	width: 700rpx;
 	height: 1100rpx;
 	background-color: #ffffff;
 	padding: 25rpx;
 }
-.charts-rotate.data-v-656cd266 {
+.charts-rotate.data-v-494d5962 {
 	width: 700rpx;
 	height: 1100rpx;
 	background-color: #ffffff;
 }
 
 /* 圆弧进度样式 */
-.qiun-charts3.data-v-656cd266 {
+.qiun-charts3.data-v-494d5962 {
 	width: 750rpx;
 	height: 250rpx;
 	background-color: #ffffff;
 	position: relative;
 }
-.charts3.data-v-656cd266 {
+.charts3.data-v-494d5962 {
 	position: absolute;
 	width: 250rpx;
 	height: 250rpx;
 	background-color: #ffffff;
 }
-.qiun-tip.data-v-656cd266 {
+.qiun-tip.data-v-494d5962 {
 	display: block;
 	width: auto;
 	overflow: hidden;

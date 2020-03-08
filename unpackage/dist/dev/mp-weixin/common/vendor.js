@@ -754,7 +754,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1551,10 +1551,10 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
-/***/ 125:
-/*!******************************************************************************!*\
-  !*** C:/Users/azu/Desktop/yzt_xcx/components/w-picker/city-data/province.js ***!
-  \******************************************************************************/
+/***/ 126:
+/*!********************************************************************************!*\
+  !*** C:/Users/15895/Desktop/yzt-xpc/components/w-picker/city-data/province.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1701,10 +1701,10 @@ provinceData;exports.default = _default;
 
 /***/ }),
 
-/***/ 126:
-/*!**************************************************************************!*\
-  !*** C:/Users/azu/Desktop/yzt_xcx/components/w-picker/city-data/city.js ***!
-  \**************************************************************************/
+/***/ 127:
+/*!****************************************************************************!*\
+  !*** C:/Users/15895/Desktop/yzt-xpc/components/w-picker/city-data/city.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3215,10 +3215,10 @@ cityData;exports.default = _default;
 
 /***/ }),
 
-/***/ 127:
-/*!**************************************************************************!*\
-  !*** C:/Users/azu/Desktop/yzt_xcx/components/w-picker/city-data/area.js ***!
-  \**************************************************************************/
+/***/ 128:
+/*!****************************************************************************!*\
+  !*** C:/Users/15895/Desktop/yzt-xpc/components/w-picker/city-data/area.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15768,10 +15768,10 @@ areaData;exports.default = _default;
 
 /***/ }),
 
-/***/ 128:
-/*!********************************************************************!*\
-  !*** C:/Users/azu/Desktop/yzt_xcx/components/w-picker/w-picker.js ***!
-  \********************************************************************/
+/***/ 129:
+/*!**********************************************************************!*\
+  !*** C:/Users/15895/Desktop/yzt-xpc/components/w-picker/w-picker.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16550,235 +16550,10 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ 143:
-/*!*********************************************************!*\
-  !*** C:/Users/azu/Desktop/yzt_xcx/utils/selectLists.js ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.jsTypeList = exports.eduTypeList = exports.sexList = exports.idTypeList = exports.relationList = exports.typeList = void 0;var typeList = [//登录人身份
-{
-  value: '学生',
-  id: '1' },
-
-{
-  value: '家长',
-  id: '2' },
-
-{
-  value: '教师',
-  id: '3' },
-
-{
-  value: '行政管理人员',
-  id: '4' }],
-
-
-relationList = [//亲属关系
-{
-  value: '父亲',
-  id: '51' },
-
-{
-  value: '母亲',
-  id: '52' },
-
-{
-  value: '公公',
-  id: '53' },
-
-{
-  value: '婆婆',
-  id: '54' },
-
-{
-  value: '岳父',
-  id: '55' },
-
-{
-  value: '岳母',
-  id: '56' },
-
-{
-  value: '继父或养父',
-  id: '57' },
-
-{
-  value: '继母或养母',
-  id: '58' },
-
-{
-  value: '其他父母关系',
-  id: '59' },
-
-{
-  value: '祖父母或外祖父母',
-  id: '60' },
-
-{
-  value: '祖父',
-  id: '61' },
-
-{
-  value: '祖母',
-  id: '62' },
-
-{
-  value: '外祖父',
-  id: '63' },
-
-{
-  value: '外祖母',
-  id: '64' },
-
-{
-  value: '配偶的祖父母或外祖父母',
-  id: '65' },
-
-{
-  value: '曾祖父',
-  id: '66' },
-
-{
-  value: '曾祖母',
-  id: '67' },
-
-{
-  value: '配偶的曾祖父母',
-  id: '68' },
-
-{
-  value: '其他祖父母或外祖父母关系',
-  id: '69' },
-
-{
-  value: '伯父',
-  id: '81' },
-
-{
-  value: '伯母',
-  id: '82' },
-
-{
-  value: '叔父',
-  id: '83' },
-
-{
-  value: '婶母',
-  id: '84' },
-
-{
-  value: '舅父',
-  id: '85' },
-
-{
-  value: '舅母',
-  id: '86' },
-
-{
-  value: '姨父',
-  id: '87' },
-
-{
-  value: '姨母',
-  id: '88' },
-
-{
-  value: '姑父',
-  id: '89' },
-
-{
-  value: '姑母',
-  id: '90' },
-
-{
-  value: '其他亲属',
-  id: '97' },
-
-{
-  value: '非亲属',
-  id: '99' }],
-
-
-idTypeList = [//身份证类型
-{
-  value: '居民身份证',
-  id: '1' },
-
-{
-  value: '台湾居民来往大陆通行证',
-  id: '8' },
-
-{
-  value: '护照',
-  id: 'A' },
-
-{
-  value: '军官证',
-  id: '2' },
-
-{
-  value: '士兵证',
-  id: '3' },
-
-{
-  value: '文职干部证',
-  id: '4' },
-
-{
-  value: '部队离退休证',
-  id: '5' },
-
-{
-  value: '香港特区护照/身份证明',
-  id: '6' },
-
-{
-  value: '澳门特区护照/身份证明',
-  id: '7' }],
-
-
-sexList = [//性别
-{
-  value: '男',
-  id: '1' },
-
-{
-  value: '女',
-  id: '2' }],
-
-
-eduTypeList = [
-{
-  value: '学生',
-  id: '1' },
-{
-  value: '教师',
-  id: '2' },
-{
-  value: '家长',
-  id: '20' },
-{
-  value: '行政管理人员',
-  id: '21' }],
-
-
-jsTypeList = [
-{
-  value: '教师',
-  id: '2' },
-{
-  value: '行政管理人员',
-  id: '21' }];exports.jsTypeList = jsTypeList;exports.eduTypeList = eduTypeList;exports.sexList = sexList;exports.idTypeList = idTypeList;exports.relationList = relationList;exports.typeList = typeList;
-
-/***/ }),
-
 /***/ 15:
-/*!**************************************************!*\
-  !*** C:/Users/azu/Desktop/yzt_xcx/utils/http.js ***!
-  \**************************************************/
+/*!****************************************************!*\
+  !*** C:/Users/15895/Desktop/yzt-xpc/utils/http.js ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16810,17 +16585,20 @@ var api = function api(_ref)
         'content-type': "application/json" },
 
       success: function success(res) {
+        if (showLoading) {
+          uni.hideLoading();
+        }
         successCallback && successCallback(res);
         resolve(res);
       },
       fail: function fail(res) {
+        if (showLoading) {
+          uni.hideLoading();
+        }
         failCallback && failCallback(res);
         reject(res);
       },
       complete: function complete() {
-        if (showLoading) {
-          uni.hideLoading();
-        }
         completeCallback && completeCallback();
       } });
 
@@ -16833,14 +16611,15 @@ api;exports.default = _default;
 /***/ }),
 
 /***/ 16:
-/*!****************************************************!*\
-  !*** C:/Users/azu/Desktop/yzt_xcx/utils/config.js ***!
-  \****************************************************/
+/*!******************************************************!*\
+  !*** C:/Users/15895/Desktop/yzt-xpc/utils/config.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.http_root = void 0;var http_root = 'http://192.168.1.102:8015';exports.http_root = http_root;
+Object.defineProperty(exports, "__esModule", { value: true });exports.http_root = void 0; // const http_root = 'http://192.168.1.102:8015'
+var http_root = 'https://cc.pthink.com.cn/jszj';exports.http_root = http_root;
 
 /***/ }),
 
@@ -22376,7 +22155,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -22397,14 +22176,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -22480,7 +22259,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -22907,14 +22686,239 @@ module.exports = g;
 /***/ }),
 
 /***/ 4:
-/*!***********************************************!*\
-  !*** C:/Users/azu/Desktop/yzt_xcx/pages.json ***!
-  \***********************************************/
+/*!*************************************************!*\
+  !*** C:/Users/15895/Desktop/yzt-xpc/pages.json ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+/***/ }),
+
+/***/ 45:
+/*!***********************************************************!*\
+  !*** C:/Users/15895/Desktop/yzt-xpc/utils/selectLists.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.jsTypeList = exports.eduTypeList = exports.sexList = exports.idTypeList = exports.relationList = exports.typeList = void 0;var typeList = [//登录人身份
+{
+  value: '学生',
+  id: '1' },
+
+{
+  value: '家长',
+  id: '2' },
+
+{
+  value: '教师',
+  id: '3' },
+
+{
+  value: '行政管理人员',
+  id: '4' }],
+
+
+relationList = [//亲属关系
+{
+  value: '父亲',
+  id: '51' },
+
+{
+  value: '母亲',
+  id: '52' },
+
+{
+  value: '公公',
+  id: '53' },
+
+{
+  value: '婆婆',
+  id: '54' },
+
+{
+  value: '岳父',
+  id: '55' },
+
+{
+  value: '岳母',
+  id: '56' },
+
+{
+  value: '继父或养父',
+  id: '57' },
+
+{
+  value: '继母或养母',
+  id: '58' },
+
+{
+  value: '其他父母关系',
+  id: '59' },
+
+{
+  value: '祖父母或外祖父母',
+  id: '60' },
+
+{
+  value: '祖父',
+  id: '61' },
+
+{
+  value: '祖母',
+  id: '62' },
+
+{
+  value: '外祖父',
+  id: '63' },
+
+{
+  value: '外祖母',
+  id: '64' },
+
+{
+  value: '配偶的祖父母或外祖父母',
+  id: '65' },
+
+{
+  value: '曾祖父',
+  id: '66' },
+
+{
+  value: '曾祖母',
+  id: '67' },
+
+{
+  value: '配偶的曾祖父母',
+  id: '68' },
+
+{
+  value: '其他祖父母或外祖父母关系',
+  id: '69' },
+
+{
+  value: '伯父',
+  id: '81' },
+
+{
+  value: '伯母',
+  id: '82' },
+
+{
+  value: '叔父',
+  id: '83' },
+
+{
+  value: '婶母',
+  id: '84' },
+
+{
+  value: '舅父',
+  id: '85' },
+
+{
+  value: '舅母',
+  id: '86' },
+
+{
+  value: '姨父',
+  id: '87' },
+
+{
+  value: '姨母',
+  id: '88' },
+
+{
+  value: '姑父',
+  id: '89' },
+
+{
+  value: '姑母',
+  id: '90' },
+
+{
+  value: '其他亲属',
+  id: '97' },
+
+{
+  value: '非亲属',
+  id: '99' }],
+
+
+idTypeList = [//身份证类型
+{
+  value: '居民身份证',
+  id: '1' },
+
+{
+  value: '台湾居民来往大陆通行证',
+  id: '8' },
+
+{
+  value: '护照',
+  id: 'A' },
+
+{
+  value: '军官证',
+  id: '2' },
+
+{
+  value: '士兵证',
+  id: '3' },
+
+{
+  value: '文职干部证',
+  id: '4' },
+
+{
+  value: '部队离退休证',
+  id: '5' },
+
+{
+  value: '香港特区护照/身份证明',
+  id: '6' },
+
+{
+  value: '澳门特区护照/身份证明',
+  id: '7' }],
+
+
+sexList = [//性别
+{
+  value: '男',
+  id: '1' },
+
+{
+  value: '女',
+  id: '2' }],
+
+
+eduTypeList = [
+{
+  value: '学生',
+  id: '1' },
+{
+  value: '教师',
+  id: '2' },
+{
+  value: '家长',
+  id: '20' },
+{
+  value: '行政管理人员',
+  id: '21' }],
+
+
+jsTypeList = [
+{
+  value: '教师',
+  id: '2' },
+{
+  value: '行政管理人员',
+  id: '21' }];exports.jsTypeList = jsTypeList;exports.eduTypeList = eduTypeList;exports.sexList = sexList;exports.idTypeList = idTypeList;exports.relationList = relationList;exports.typeList = typeList;
 
 /***/ }),
 
@@ -23817,9 +23821,9 @@ module.exports = {"_from":"@dcloudio/uni-stat@alpha","_id":"@dcloudio/uni-stat@2
 /***/ }),
 
 /***/ 7:
-/*!****************************************************************!*\
-  !*** C:/Users/azu/Desktop/yzt_xcx/pages.json?{"type":"style"} ***!
-  \****************************************************************/
+/*!******************************************************************!*\
+  !*** C:/Users/15895/Desktop/yzt-xpc/pages.json?{"type":"style"} ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23829,9 +23833,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 8:
-/*!***************************************************************!*\
-  !*** C:/Users/azu/Desktop/yzt_xcx/pages.json?{"type":"stat"} ***!
-  \***************************************************************/
+/*!*****************************************************************!*\
+  !*** C:/Users/15895/Desktop/yzt-xpc/pages.json?{"type":"stat"} ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23840,10 +23844,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 85:
-/*!********************************************************************!*\
-  !*** C:/Users/azu/Desktop/yzt_xcx/components/u-charts/u-charts.js ***!
-  \********************************************************************/
+/***/ 86:
+/*!**********************************************************************!*\
+  !*** C:/Users/15895/Desktop/yzt-xpc/components/u-charts/u-charts.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

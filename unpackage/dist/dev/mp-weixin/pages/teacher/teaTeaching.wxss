@@ -24,16 +24,16 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-view.data-v-9274e880, text.data-v-9274e880, image.data-v-9274e880, label.data-v-9274e880 {
+view.data-v-2398d178, text.data-v-2398d178, image.data-v-2398d178, label.data-v-2398d178 {
   box-sizing: border-box;
 }
-.container.data-v-9274e880 {
+.container.data-v-2398d178 {
   min-height: 100vh;
 }
-.m-title.data-v-9274e880 {
+.m-title.data-v-2398d178 {
   padding: 30rpx 0 0 40rpx;
 }
-.m-content.data-v-9274e880 {
+.m-content.data-v-2398d178 {
   padding: 20rpx 20rpx;
   display: -webkit-box;
   display: -webkit-flex;
@@ -47,7 +47,7 @@ view.data-v-9274e880, text.data-v-9274e880, image.data-v-9274e880, label.data-v-
   -webkit-flex-wrap: wrap;
           flex-wrap: wrap;
 }
-.m-content .u-list.data-v-9274e880 {
+.m-content .u-list.data-v-2398d178 {
     width: 28%;
     margin: 0 2.5%;
     text-align: center;
@@ -56,15 +56,15 @@ view.data-v-9274e880, text.data-v-9274e880, image.data-v-9274e880, label.data-v-
     border-radius: 10rpx;
     box-shadow: 0 0 15rpx #cccccc;
 }
-.m-content .u-list .u-left.data-v-9274e880 {
+.m-content .u-list .u-left.data-v-2398d178 {
       font-size: 0;
       line-height: 0;
 }
-.m-content .u-list .u-left .icon.data-v-9274e880 {
+.m-content .u-list .u-left .icon.data-v-2398d178 {
         width: 100rpx;
         height: 100rpx;
 }
-.m-content .u-list .u-right.data-v-9274e880 {
+.m-content .u-list .u-right.data-v-2398d178 {
       margin-top: 10rpx;
       font-size: 32rpx;
       color: #303133;
