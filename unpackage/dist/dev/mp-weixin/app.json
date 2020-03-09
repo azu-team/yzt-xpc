@@ -23,7 +23,8 @@
     "enablePullDownRefresh": false
   },
   "usingComponents": {
-    "link-area": "/components/w-picker/w-picker"
+    "link-area": "/components/w-picker/w-picker",
+    "tabs": "/components/ms-tabs/ms-tabs"
   },
-  "sitemapLocation": "sitemap33.json"
+  "sitemapLocation": "sitemap97.json"
 }

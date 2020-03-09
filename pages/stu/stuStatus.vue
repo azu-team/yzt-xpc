@@ -19,9 +19,7 @@
 	</view>
 </template>
 <script>
-import tabs from '../../components/ms-tabs/ms-tabs.vue';
 export default {
-	components: { tabs },
 	data() {
 		return {
 			paramsArr:[

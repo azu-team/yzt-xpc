@@ -104,11 +104,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"components/w-picker/w-picker":1,"pages/idConfirm/signUp":1,"pages/idConfirm/signIn":1,"components/ms-tabs/ms-tabs":1,"components/xfl-select/xfl-select":1};
+/******/ 		var cssChunks = {"components/w-picker/w-picker":1,"components/ms-tabs/ms-tabs":1,"pages/healthCard/healCardAdd":1,"pages/healthCard/healthCardHistory":1,"pages/idConfirm/signUp":1,"pages/idConfirm/signIn":1,"pages/common/quickHelpAdd":1,"components/xfl-select/xfl-select":1,"components/cropper/cropper":1,"pages/idConfirm/cropper":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"components/w-picker/w-picker":"components/w-picker/w-picker","pages/idConfirm/signUp":"pages/idConfirm/signUp","pages/idConfirm/signIn":"pages/idConfirm/signIn","components/ms-tabs/ms-tabs":"components/ms-tabs/ms-tabs","components/xfl-select/xfl-select":"components/xfl-select/xfl-select"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"components/w-picker/w-picker":"components/w-picker/w-picker","components/ms-tabs/ms-tabs":"components/ms-tabs/ms-tabs","pages/healthCard/healCardAdd":"pages/healthCard/healCardAdd","pages/healthCard/healthCardHistory":"pages/healthCard/healthCardHistory","pages/idConfirm/signUp":"pages/idConfirm/signUp","pages/idConfirm/signIn":"pages/idConfirm/signIn","pages/common/quickHelpAdd":"pages/common/quickHelpAdd","pages/common/quickHelpHistory":"pages/common/quickHelpHistory","components/xfl-select/xfl-select":"components/xfl-select/xfl-select","components/cropper/cropper":"components/cropper/cropper","pages/idConfirm/cropper":"pages/idConfirm/cropper"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

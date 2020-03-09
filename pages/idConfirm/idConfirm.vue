@@ -1,9 +1,11 @@
 <template>
-	<view  v-if="showSignIn">
-		<sign-in @switchStatus="handleSignIn"></sign-in>
-	</view>
-	<view  v-else>
-		<sign-up @switchStatus="handleSignUp" :type="formType"></sign-up>
+	<view class="">
+		<view  v-show="showSignIn">
+			<sign-in @switchStatus="handleSignIn"></sign-in>
+		</view>
+		<view  v-show="!showSignIn">
+			<sign-up @switchStatus="handleSignUp" :type="formType"></sign-up>
+		</view>
 	</view>
 </template>
 <script>

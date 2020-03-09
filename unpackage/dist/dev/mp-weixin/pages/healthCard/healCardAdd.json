@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "link-area": "/components/w-picker/w-picker"
+  },
+  "component": true
+}

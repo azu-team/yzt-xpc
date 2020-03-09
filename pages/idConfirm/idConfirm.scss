@@ -43,9 +43,10 @@ $main_text_color: #303133;
 	justify-content: space-between;
 	align-items: center;
 	.u-title {
-		width: 30%;
+		width: 25%;
 		color: $main_text_color;
 		font-size: 32upx;
+		text-align-last: justify;
 		.icon {
 			width: 50upx;
 			height: 40upx;

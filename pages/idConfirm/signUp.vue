@@ -353,6 +353,18 @@ export default {
 		};
 	},
 	methods: {
+		// 查询数据，将已有数据进行填充
+		queryInfo(){
+			 this.$HTTP({
+				 url:'',
+				 params:{
+					 
+				 },
+				 successCallback:({data})=>{
+					 
+				 }
+			 })
+		},
 		handleCancelChoose(){
 			this.$refs.linkage.hide()
 		},
@@ -371,9 +383,11 @@ export default {
 			uni.chooseImage({
 				count:1,
 			  success: ({tempFilePaths,tempFiles}) => {
-				  // 图片大小小于40k
+				  // 图片大小小于40k TODO 图片大小不做处理，直接上传到服务器
 				  if(tempFiles[0].size < 40 * 1024 ){
 					  this.tempFilePath = tempFilePaths[0]
+					  this[formName][keyName] = tempFilePaths[0]
+					  return
 					  uni.getFileSystemManager().readFile({
 						  filePath:tempFilePaths[0],
 						  encoding:'base64',
