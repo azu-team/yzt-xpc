@@ -33,7 +33,7 @@ export default {
 					title: '信息填报'
 				},
 				{
-					title: '求助记录'
+					title: '求助记录(一周)'
 				}
 			],
 			contactArr:[
@@ -62,5 +62,8 @@ export default {
 	.m-tip{
 		position: sticky;
 		top: 0;
+		z-index: 4;
+		background-color: #FFFFFF;
+		margin-bottom: 0;
 	}
 </style>

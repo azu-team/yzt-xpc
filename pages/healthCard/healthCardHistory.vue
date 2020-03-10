@@ -1,25 +1,27 @@
 <template>
 	<view class="m-content">
 		<view class="u-list" v-for="(item, index) in dataArr" :key="index">
-			<view class="u-list-title">
+			<view class="u-list-title" @tap="handleCollapse(item, index)">
 				{{ item.title }}
-				<view @tap="handleCollapse(item, index)" :class="{ 'u-dot': true, active: item.isActive }"></view>
+				<view  :class="{ 'u-dot': true, active: item.isActive }"></view>
 			</view>
 			<view :class="{ 'u-list-desc': true, active: item.isActive }">
 				<view class="cell" v-for="(params, idx) in paramsArr" :key="idx">
-					<text>{{ params.name }}</text>
-					: {{ item[params.key] }}
+					<text>{{ params.name }}</text>: {{ item[params.key] }}
+				</view>
+				<view class="cell" v-if="item.field12">
+					<text>乘坐开始日期</text>:{{item.field13}}
 				</view>
 				<!-- 判断交通工具的类型以及显示的字段 -->
 				<view  v-if="item.field14">
 					<view class="cell">
-						<text>{{'0'}}</text>: {{ item.field15 || item.field18 || item.field21 || item.field23 }}
+						<text>{{vehicleTranslate[item.field14][0]}}</text>: {{ item.field15 || item.field18 || item.field21 || item.field23 }}
 					</view>
 					<view class="cell" v-if="item.field14 != '3'">
-						<text >{{'1'}}</text>: {{item.field16 || item.field19 || item.field22}}
+						<text >{{vehicleTranslate[item.field14][1]}}</text>: {{item.field16 || item.field19 || item.field22}}
 					</view>
 					<view class="cell" v-if="item.field14 != '3' && item.field14 != '2'">
-						<text >{{'2'}}</text>: {{item.field17 || item.field20}}
+						<text >{{vehicleTranslate[item.field14][2]}}</text>: {{item.field17 || item.field20}}
 					</view>
 				</view>
 			</view>
@@ -62,10 +64,6 @@ export default {
 				{
 					name: '是否乘坐长途公交',
 					key: 'field12'
-				},
-				{
-					name: '乘坐开始日期',
-					key: 'field13'
 				},
 				{
 					name: '交通工具',
@@ -121,7 +119,39 @@ export default {
 			}
 		};
 	},
+	mounted(){
+		this.getData()
+	},
 	methods: {
+		getData(){
+			this.$HTTP({
+				url:'/healthForDay/list',
+				showLoading:false,
+				params:{
+					"field01":uni.getStorageSync('userId'),
+					"pageNum":"",
+					"pageSize":"",
+				} ,
+				successCallback:({data})=>{
+					if(data.code == '0'){
+						console.log(data)
+						let arr = data.data.map(item=>{
+							return{
+								...item,
+								title:new Date(item.addTime).Format('yyyy-MM-dd')
+							}
+						})
+						this.dataArr = arr
+					}else{
+						uni.showToast({
+							title:data.msg,
+							icon:'none'
+						})
+					}
+				}
+				
+			})
+		},
 		translateTitle(item,index){
 			return this.vehicleTranslate[item.field14][index]
 		},
@@ -170,7 +200,6 @@ export default {
 				display: inline-block;
 				width: 95%;
 				margin: 20upx 0 0 40upx;
-				// white-space: nowrap;
 				&.one_line {
 					display: block;
 					width: 100%;

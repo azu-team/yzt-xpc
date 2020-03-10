@@ -1,6 +1,6 @@
 <template>
 	<view >
-		<view class="m-list">
+		<view class="m-list first-line">
 			<view class="m-line">
 				<view class="u-title">所在区县</view>
 				<view class="u-content">
@@ -9,7 +9,9 @@
 			</view>
 		</view>
 		<view class="m-list">
-			<view class="u-q-title"><text>1.是否需要援助</text> <text class="icon">单选</text> </view>
+			<view class="u-q-title"><text>1.是否需要援助</text> 
+			<!-- <text class="icon">单选</text> -->
+			</view>
 			<radio-group @change="handleRadioChange($event,'field06')">
 				<label class="u-list-cell" v-for="(item,index) in list1" :key="index">
 					<view class="u-radio"><radio :value="item.value" :checked="form.field06 == item.value" /></view>
@@ -18,7 +20,9 @@
 			</radio-group>
 		</view>
 		<view class="m-list">
-			<view class="u-q-title"><text>2.是否受伤</text> <text class="icon">单选</text> </view>
+			<view class="u-q-title"><text>2.是否受伤</text> 
+			<!-- <text class="icon">单选</text> -->
+			</view>
 			<radio-group @change="handleRadioChange($event,'field07')">
 				<label class="u-list-cell" v-for="(item, index) in list2" :key="index">
 					<view class="u-radio"><radio :value="item.value" :checked="form.field07 == item.value" /></view>
@@ -36,7 +40,7 @@
 		<view class="m-list">
 			<view class="u-q-title"><text>4.求助具体要求</text></view>
 			<view class="u-content">
-				<editor id="editor" class="ql-container" placeholder="请输入具体要求" @ready="onEditorReady"></editor>
+				<editor id="editor"  placeholder="请输入具体要求" @ready="onEditorReady"></editor>
 				<!-- <input class="input" type="text" v-model="form.field09" /> -->
 			</view>
 		</view>
@@ -63,6 +67,7 @@ innerAudioContext.autoplay = true;
 export default {
 	data() {
 		return {
+			canRecord:false,//判断是否有录音权限
 			region:'选择位置',
 			editorCtx:'',//文本域上下文
 			contactArr:[
@@ -138,7 +143,7 @@ export default {
 			this.form.field02 = result
 		},
 		onEditorReady() {
-		    uni.createSelectorQuery().select('#editor').context((res) => {
+			uni.createSelectorQuery().in(this).select('#editor').context((res) => {
 		        this.editorCtx = res.context
 		    }).exec()
 		},
@@ -177,6 +182,7 @@ export default {
 						uni.authorize({
 							scope:'scope.record',
 							success:()=>{
+								this.canRecord = true;
 								this.initPage()
 							},
 							fail:()=>{
@@ -187,6 +193,7 @@ export default {
 								setTimeout(()=> {
 									uni.openSetting({
 										success: res => {
+											this.canRecord = true;
 											this.initPage()
 										}
 									});
@@ -194,6 +201,7 @@ export default {
 							}
 						})
 					}else{
+						this.canRecord = true;
 						this.initPage()
 					}
 				}
@@ -205,6 +213,13 @@ export default {
 			});
 		},
 		handleRecord(){
+			if(!this.canRecord){
+				uni.showToast({
+					title:'请保证当前录音权限正常!',
+					icon:'none'
+				})
+				return
+			};
 			if(this.recordStatus == 1 || this.recordStatus == 3){
 				recorderManager.start();
 				this.recordStatus = 2
@@ -228,6 +243,8 @@ export default {
 				...this.form,
 				field01:uni.getStorageSync('userId')
 			}
+			console.log(params,'params')
+			return;
 			this.$HTTP({
 				url:'/getHelp/save',
 				params,
@@ -265,6 +282,9 @@ export default {
 
 <style lang="scss" scoped>
 	@import '../../static/mp-weixin/globalStyle/radio.scss';
+	.first-line{
+		margin-top: 20upx;
+	}
 	.m-top {
 		padding: 20upx 0 30upx 20upx;
 		background-color: #ffffff;
@@ -288,8 +308,9 @@ export default {
 		box-sizing: border-box;
 	    width: 95%;
 	    height: 60upx;
-	    background-color: #EEEEEE;
+	    background-color: #EEEEEE !important;
 		color: $uni-text-color;
-		padding: 30upx;
+		padding: 30upx !important;
+		border: solid 1upx #EEEEEE;
 	}
 </style>

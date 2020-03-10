@@ -1,9 +1,9 @@
 <template>
 	<view class="m-content">
 		<view class="u-list" v-for="(item, index) in dataArr" :key="index">
-			<view class="u-list-title">
+			<view class="u-list-title" @tap="handleCollapse(item, index)">
 				{{ item.title }}
-				<view @tap="handleCollapse(item, index)" :class="{ 'u-dot': true, active: item.isActive }"></view>
+				<view  :class="{ 'u-dot': true, active: item.isActive }"></view>
 			</view>
 			<view :class="{ 'u-list-desc': true, active: item.isActive }">
 				<view class="cell" v-for="(params, idx) in paramsArr" :key="idx">
@@ -28,20 +28,20 @@ export default {
 					key: 'field02'
 				},
 				{
-					name: '是否需要援助',
+					name: '安全预警原因',
+					key: 'field03'
+				},
+				{
+					name: '安全预警级别',
+					key: 'field04'
+				},
+				{
+					name: '当前状态',
+					key: 'field05'
+				},
+				{
+					name: '安全情况',
 					key: 'field06'
-				},
-				{
-					name: '是否受伤',
-					key: 'field07'
-				},
-				{
-					name: '语音信息',
-					key: 'field08'
-				},
-				{
-					name: '求助具体要求',
-					key: 'field09'
 				}
 			],
 			dataArr: []
@@ -56,7 +56,7 @@ export default {
 		},
 		getData(){
 			this.$HTTP({
-				url:'/getHelp/list',
+				url:'/safeData/list',
 				params:{
 					"field01":uni.getStorageSync('userId'),
 					"pageNum":"",
@@ -82,7 +82,7 @@ export default {
 @import '../../assets/style/list.scss';
 .m-content {
 	padding: 20upx 40upx;
-	height: calc(100vh - 295upx);
+	height: calc(100vh - 130upx);
 	overflow: auto;
 	swiper,swiper-item,{
 		width: 100%;

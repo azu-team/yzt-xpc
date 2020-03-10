@@ -352,7 +352,34 @@ export default {
 			timeFormKey:'',
 		};
 	},
+	mounted(){
+		this.queryUserInfo()
+	},
 	methods: {
+		queryUserInfo(){
+			let url = '',formName = ''
+			if(this.type <= 2){
+				url = '/api/tour/esnAuthStudent/list'
+				formName = 'form'
+			}else if(this.type == 3){
+				url = '/api/tour/esnAuthTeacher/list'
+				formName = 'jsForm'
+			}else if(this.type == 4){
+				url = '/api/tour/esnForSchool/list'
+				formName = 'eduForm'
+			}
+			this.$HTTP({
+				url,
+				params:{
+					"pageNum": "",
+					"pageSize": "",
+					"userid": uni.getStorageSync('userId')
+				},
+				successCallback:res=>{
+					console.log(res,'res')
+				}
+			})
+		},
 		// 查询数据，将已有数据进行填充
 		queryInfo(){
 			 this.$HTTP({

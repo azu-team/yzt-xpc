@@ -134,29 +134,30 @@ export default {
 			// return;
 			// #ifdef MP-WEIXIN
 			// 选择图片
-			this.$refs['cropper'].fSelect();
-			return;
+			// this.$refs['cropper'].fSelect();
+			// return;
 			uni.chooseImage({
 				count: 1,
+				sourceType:['camera'],
 				success: ({ tempFilePaths, tempFiles }) => {
 					// 图片大小小于40k
-					if (tempFiles[0].size < 40 * 1024) {
-						this.tempFilePath = tempFilePaths[0];
-						uni.getFileSystemManager().readFile({
-							filePath: tempFilePaths[0],
-							encoding: 'base64',
-							success: res => {
-								this.form.RLSJ = 'data:image/jpeg;base64,' + res.data;
-								this.sendData();
-							}
-						});
-					} else {
-						uni.showToast({
-							title: '文件大小要小于40k',
-							icon: 'none',
-							duration: 3000
-						});
-					}
+					this.tempFilePath = tempFilePaths[0];
+					// if (tempFiles[0].size < 40 * 1024) {
+					// 	uni.getFileSystemManager().readFile({
+					// 		filePath: tempFilePaths[0],
+					// 		encoding: 'base64',
+					// 		success: res => {
+					// 			this.form.RLSJ = 'data:image/jpeg;base64,' + res.data;
+					// 			this.sendData();
+					// 		}
+					// 	});
+					// } else {
+					// 	uni.showToast({
+					// 		title: '文件大小要小于40k',
+					// 		icon: 'none',
+					// 		duration: 3000
+					// 	});
+					// }
 				}
 			});
 			// wx.checkIsSupportSoterAuthentication({

@@ -6,9 +6,10 @@
 		</view>
 		<view class="m-list">
 			<view class="m-line">
-				<view class="u-title">所在区县</view>
+				<view class="u-title">当前位置</view>
 				<view class="u-content">
-					<text @tap="showChoose('linkage')">{{region}}</text>
+					<!-- <text @tap="showChoose('linkage')">{{ region }}</text> -->
+					<input type="text" v-model="form.field06" placeholder="请输入当前位置" />
 				</view>
 			</view>
 		</view>
@@ -72,11 +73,11 @@
 				</label>
 			</radio-group>
 		</view>
-		<view class="m-list" v-if="form.field12=='1'">
+		<view class="m-list" v-if="form.field12 == '1'">
 			<view class="m-line u-q-title">
 				<view class="u-title">乘坐开始日期</view>
 				<view class="u-content">
-					<text @tap="showChoose('date')">{{form.field13 || '选择日期'}}</text>
+					<text @tap="showChoose('date')">{{ form.field13 || '选择日期' }}</text>
 				</view>
 			</view>
 		</view>
@@ -93,15 +94,15 @@
 			<view class="u-q-title"><text>交通详细信息</text></view>
 			<view class="u-q-content">
 				<view class="m-line">
-					<view class="u-title">{{text1}}</view>
+					<view class="u-title">{{ text1 }}</view>
 					<view class="u-content"><input class="u-input" type="text" v-model="form.a" placeholder="飞机-航班号" /></view>
 				</view>
 				<view class="m-line" v-if="text2">
-					<view class="u-title">{{text2}}</view>
+					<view class="u-title">{{ text2 }}</view>
 					<view class="u-content"><input class="u-input" type="text" v-model="form.b" placeholder="飞机-起降地点" /></view>
 				</view>
 				<view class="m-line" v-if="text3">
-					<view class="u-title">{{text3}}</view>
+					<view class="u-title">{{ text3 }}</view>
 					<view class="u-content"><input class="u-input" type="text" v-model="form.c" placeholder="飞机-座位号" /></view>
 				</view>
 			</view>
@@ -110,42 +111,46 @@
 		<view class="m-bottom">
 			<view class="u-btn" @click="validate"><text>提交</text></view>
 		</view>
-		<link-area 
+		<link-area
 			mode="region"
 			@confirm="handleChoose"
 			@cancel="handleCancelChoose('linkage')"
 			ref="linkage"
 			:hideArea="false"
 			:areaCode="['11', '1101', '110101']"
-			themeColor="#25a5ff"></link-area>
-		<link-area 
-			mode="date" 
-			startYear="2000" 
+			themeColor="#25a5ff"
+		></link-area>
+		<link-area
+			mode="date"
+			startYear="2000"
 			endYear="2030"
-			:current="true" 
+			:current="true"
 			@confirm="handleChooseDate"
 			@cancel="handleCancelChoose('date')"
 			:disabledAfter="true"
-			ref="date" 
+			ref="date"
 			themeColor="#25a5ff"
 		></link-area>
 	</view>
 </template>
 <script>
 // import linkArea from '../../components/linkArea/linkArea.vue'
-import linkArea from '../../components/w-picker/w-picker.vue'
+// import linkArea from '../../components/w-picker/w-picker.vue'
+import amap from '../../utils/amap-wx.js';
 export default {
-	components:{linkArea},
 	data() {
 		return {
-			lotusAddressData:{
-				visible:false,
-				provinceName:'',
-				cityName:'',
-				townName:'',
+			amapPlugin: null,
+			key: 'ce334d5499fb668332c1a65513a54201',
+			lotusAddressData: {
+				visible: false,
+				provinceName: '',
+				cityName: '',
+				townName: ''
 			},
-			region:'选择位置',
+			region: '选择位置',
 			form: {
+				field06: '',
 				field07: '0',
 				field08: '0',
 				field09: '0',
@@ -155,7 +160,7 @@ export default {
 				field13: '',
 				field14: '',
 				a: '0', // 暂时获取页面数据
-				b: '0',// 暂时获取页面数据
+				b: '0', // 暂时获取页面数据
 				c: '0' // 暂时获取页面数据
 			},
 			list1: [
@@ -227,58 +232,74 @@ export default {
 			]
 		};
 	},
-	computed:{
-		text1(){
-			let textArr= ['飞机-航班号','火车-车次','汽车-起止地点','轮船-起止地点']
-			return this.form.field14?textArr[this.form.field14]:''
+	computed: {
+		text1() {
+			let textArr = ['飞机-航班号', '火车-车次', '汽车-起止地点', '轮船-起止地点'];
+			return this.form.field14 ? textArr[this.form.field14] : '';
 		},
-		text2(){
-			let textArr= ['飞机-起降地点','火车-乘车区间','汽车-是否司机']
-			return this.form.field14 < 3?textArr[this.form.field14]:''
+		text2() {
+			let textArr = ['飞机-起降地点', '火车-乘车区间', '汽车-是否司机'];
+			return this.form.field14 < 3 ? textArr[this.form.field14] : '';
 		},
-		text3(){
-			let textArr= ['飞机-座位号','火车-车厢及座位号']
-			return this.form.field14 < 2?textArr[this.form.field14]:''
-		},
+		text3() {
+			let textArr = ['飞机-座位号', '火车-车厢及座位号'];
+			return this.form.field14 < 2 ? textArr[this.form.field14] : '';
+		}
 	},
 	onLoad(e) {},
+	mounted() {
+		this.amapPlugin = new amap.AMapWX({
+			key: this.key
+		});
+		this.judgeAuthorize();
+	},
 	methods: {
-		validate(){
-			switch(this.form.field14){
-				case '0': {
-					this.form.field15 = this.form.a;
-					this.form.field16 = this.form.b;
-					this.form.field17 = this.form.c;
-				} ;break;
-				case '1':{
-					this.form.field18 = this.form.a;
-					this.form.field19 = this.form.b;
-					this.form.field20 = this.form.c;
-				} ;break;
-				case '2':{
-					this.form.field21 = this.form.a;
-					this.form.field22 = this.form.b;
-				} ;break;
-				case '3':{
-					this.form.field23 = this.form.a;
-				} ;break;
+		validate() {
+			
+			return;
+			switch (this.form.field14) {
+				case '0':
+					{
+						this.form.field15 = this.form.a;
+						this.form.field16 = this.form.b;
+						this.form.field17 = this.form.c;
+					}
+					break;
+				case '1':
+					{
+						this.form.field18 = this.form.a;
+						this.form.field19 = this.form.b;
+						this.form.field20 = this.form.c;
+					}
+					break;
+				case '2':
+					{
+						this.form.field21 = this.form.a;
+						this.form.field22 = this.form.b;
+					}
+					break;
+				case '3':
+					{
+						this.form.field23 = this.form.a;
+					}
+					break;
 			}
-			this.send()
+			this.send();
 		},
-		showChoose(refName){
-			this.$refs[refName].show()
+		showChoose(refName) {
+			this.$refs[refName].show();
 		},
-		handleCancelChoose(refName){
-			this.$refs[refName].hide()
+		handleCancelChoose(refName) {
+			this.$refs[refName].hide();
 		},
-		handleChoose({checkArr,checkValue,defaultVal,result}){
-			this.$refs.linkage.hide()
-			this.form.field06 = checkValue.join(',')
-			this.region = result
+		handleChoose({ checkArr, checkValue, defaultVal, result }) {
+			this.$refs.linkage.hide();
+			this.form.field06 = checkValue.join(',');
+			this.region = result;
 		},
-		handleChooseDate({checkArr,checkValue,defaultVal,result}){
-			this.$refs.date.hide()
-			this.form.field13 = checkArr[0].join('')
+		handleChooseDate({ checkArr, checkValue, defaultVal, result }) {
+			this.$refs.date.hide();
+			this.form.field13 = checkArr[0].join('');
 		},
 		handleRadioChange(evt, name) {
 			this.form[name] = evt.target.value;
@@ -288,31 +309,89 @@ export default {
 			// 以上字段暂未确定
 			let params = {
 				...this.form,
-				field01:uni.getStorageSync('userId'),
-				field02:uni.getStorageSync('idType'),
-			}
+				field01: uni.getStorageSync('userId'),
+				field02: uni.getStorageSync('idType')
+			};
 			// 去除多余属性
-			delete params.a
-			delete params.b
-			delete params.c
+			delete params.a;
+			delete params.b;
+			delete params.c;
 			this.$HTTP({
 				url: '/healthForDay/save',
 				params,
-				successCallback: ({data}) => {
-					if(data.code == 0){
+				successCallback: ({ data }) => {
+					if (data.code == 0) {
 						uni.showToast({
-							title:'提交成功!'
-						})
-						setTimeout(()=>{
-							uni.navigateBack()
-						},1500)
-					}else{
+							title: '提交成功!'
+						});
+						setTimeout(() => {
+							uni.navigateBack();
+						}, 1500);
+					} else {
 						uni.showToast({
-							title:data.msg,
-							icon:'none'
-						})
+							title: data.msg,
+							icon: 'none'
+						});
 					}
 				}
+			});
+		},
+		judgeAuthorize() {
+			uni.getSetting({
+				success: info => {
+					if (!info.authSetting['scope.userLocation']) {
+						uni.authorize({
+							scope: 'scope.userLocation',
+							success: () => {
+								// this.initPage()
+								this.amapPlugin.getRegeo({
+									success: data => {
+										this.form.field06 = data[0].name;
+									},
+									fail:(err)=>{
+										console.log(err,'err')
+									}
+								});
+								uni.getLocation({
+									success: res => {
+										console.log(res, '地理位置');
+									}
+								});
+							},
+							fail: () => {}
+						});
+					} else {
+						// this.initPage()
+						uni.getLocation({
+							success: res => {
+								this.amapPlugin.getRegeo({
+									success: data => {
+										console.log(data,'data')
+										this.form.field06 = data[0].name;
+									},
+									fail:(err)=>{
+										console.log(err,'err')
+									}
+								});
+							},
+							fail: () => {
+								uni.showToast({
+									title:'请打开GPS进行定位!',
+									icon:'none',
+									duration:3000
+								})
+							}
+						});
+					}
+				},
+				// complete: () => {
+				// 	this.amapPlugin.getRegeo({
+				// 		success: data => {
+				// 			console.log(data, 'geo');
+				// 			this.form.field06 = data[0].name;
+				// 		}
+				// 	});
+				// }
 			});
 		}
 	}
@@ -348,6 +427,6 @@ export default {
 .u-input {
 	border-bottom: solid 1px #ccc;
 	padding: 0 20upx;
-	color:#303133 ;
+	color: #303133;
 }
 </style>

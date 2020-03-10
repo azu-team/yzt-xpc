@@ -19,11 +19,12 @@
 </template>
 
 <script>
+
 export default {
 	data() {
 		return {
 			hasUserInfo: false,
-			idType: '1'
+			idType: '1',
 		};
 	},
 	onShow() {
@@ -34,10 +35,10 @@ export default {
 			idType = '2';
 		}
 		// if (idType != this.idType) this.idType = idType || '1';
-		this.idType = 2
+		this.idType = 4;
 	},
 	mounted() {
-		// this.getOpenId();
+		this.getOpenId();
 	},
 	computed: {
 		moduleArr() {
@@ -129,14 +130,12 @@ export default {
 			uni.login({
 				provider: 'weixin',
 				success: ({ code }) => {
-					
 					this.$HTTP({
 						url: '/UserAuth/openid',
 						params: {
 							code
 						},
 						successCallback: ({ data }) => {
-							
 							if (data.code == '0') {
 								let resData = data.data;
 								// userId必定存在 保存
@@ -159,19 +158,19 @@ export default {
 								});
 							}
 						},
-						failCallback:({data})=>{
+						failCallback: ({ data }) => {
 							uni.showToast({
-								title:'非合法域名',
-								icon:'none'
-							})
+								title: '非合法域名',
+								icon: 'none'
+							});
 						}
 					});
 				},
-				fail:()=>{
+				fail: () => {
 					uni.showToast({
-						title:'微信获取信息失败',
-						icon:'none'
-					})
+						title: '微信获取信息失败',
+						icon: 'none'
+					});
 				}
 			});
 		},
