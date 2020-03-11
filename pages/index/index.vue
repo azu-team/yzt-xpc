@@ -34,12 +34,13 @@ export default {
 			// 学生与家长权限一致，标识不同需要单独处理
 			idType = '2';
 		}
-		// if (idType != this.idType) this.idType = idType || '1';
-		this.idType = 4;
+		if (idType != this.idType) this.idType = idType || '1';
+		// this.idType = 2;
 	},
 	mounted() {
 		this.getOpenId();
 	},
+	
 	computed: {
 		moduleArr() {
 			let moduleCon = {

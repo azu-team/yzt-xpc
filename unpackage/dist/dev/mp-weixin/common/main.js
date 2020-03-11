@@ -10,11 +10,18 @@
 /* WEBPACK VAR INJECTION */(function(createApp) {__webpack_require__(/*! uni-pages */ 4);__webpack_require__(/*! @dcloudio/uni-stat */ 5);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 9));
-var _http = _interopRequireDefault(__webpack_require__(/*! ./utils/http.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var linkArea = function linkArea() {return Promise.all(/*! import() | components/w-picker/w-picker */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/w-picker/w-picker")]).then(__webpack_require__.bind(null, /*! ./components/w-picker/w-picker.vue */ 121));};var tabs = function tabs() {return __webpack_require__.e(/*! import() | components/ms-tabs/ms-tabs */ "components/ms-tabs/ms-tabs").then(__webpack_require__.bind(null, /*! ./components/ms-tabs/ms-tabs.vue */ 132));};
+var _http = _interopRequireDefault(__webpack_require__(/*! ./utils/http.js */ 15));
+
+
+
+__webpack_require__(/*! ./utils/format.js */ 17);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var linkArea = function linkArea() {return Promise.all(/*! import() | components/w-picker/w-picker */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/w-picker/w-picker")]).then(__webpack_require__.bind(null, /*! ./components/w-picker/w-picker.vue */ 122));};var tabs = function tabs() {return __webpack_require__.e(/*! import() | components/ms-tabs/ms-tabs */ "components/ms-tabs/ms-tabs").then(__webpack_require__.bind(null, /*! ./components/ms-tabs/ms-tabs.vue */ 133));};var uTag = function uTag() {return __webpack_require__.e(/*! import() | components/uni-tag/uni-tag */ "components/uni-tag/uni-tag").then(__webpack_require__.bind(null, /*! ./components/uni-tag/uni-tag.vue */ 140));};
 
 
 _vue.default.component('link-area', linkArea);
 _vue.default.component('tabs', tabs);
+_vue.default.component('uni-tag', uTag);
+
+
 _vue.default.config.productionTip = false;
 _vue.default.prototype.$HTTP = _http.default;
 _App.default.mpType = 'app';

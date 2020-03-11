@@ -6,10 +6,12 @@
 		</view>
 		<view class="m-list">
 			<view class="m-line">
-				<view class="u-title">当前位置</view>
-				<view class="u-content">
+				<view class="u-title" style="width: 25%;">当前区县</view>
+				<view class="u-content" style="width: 70%;display: inline-block;">
 					<!-- <text @tap="showChoose('linkage')">{{ region }}</text> -->
-					<input type="text" v-model="form.field06" placeholder="请输入当前位置" />
+					<!-- <view class=""><input type="text" v-model="form.field06" placeholder="请输入当前位置" /></view> -->
+					<view class=""><text @tap="showChoose('linkage')">{{ region }}</text></view>
+					
 				</view>
 			</view>
 		</view>
@@ -30,6 +32,7 @@
 				<text>2.今日体温</text>
 				<text class="icon">单选</text>
 			</view>
+			
 			<radio-group class="radio-group" @change="handleRadioChange($event, 'field08')">
 				<label class="u-list-cell" v-for="(item, index) in tempList" :key="index">
 					<view class="u-radio"><radio :value="item.value" :checked="form.field08 == item.value" /></view>
@@ -73,7 +76,7 @@
 				</label>
 			</radio-group>
 		</view>
-		<view class="m-list" v-if="form.field12 == '1'">
+		<view class="m-list" v-if="form.field12 == '是'">
 			<view class="m-line u-q-title">
 				<view class="u-title">乘坐开始日期</view>
 				<view class="u-content">
@@ -82,7 +85,9 @@
 			</view>
 		</view>
 		<view class="m-list">
-			<view class="u-q-title"><text>7.交通工具</text></view>
+			<view class="u-q-title"><text>7.交通工具</text>
+				<uni-tag @click="handleClearData" style="display: inline-block;width: 140upx;margin-left: 20upx;" text="清除选项" type="primary" size="small"></uni-tag>
+			</view>
 			<radio-group class="radio-group" @change="handleRadioChange($event, 'field14')">
 				<label class="u-list-cell" v-for="(item, index) in vehicleList" :key="index">
 					<view class="u-radio"><radio :value="item.value" :checked="form.field14 == item.value" /></view>
@@ -136,12 +141,12 @@
 <script>
 // import linkArea from '../../components/linkArea/linkArea.vue'
 // import linkArea from '../../components/w-picker/w-picker.vue'
-import amap from '../../utils/amap-wx.js';
+// import amap from '../../utils/amap-wx.js';
 export default {
 	data() {
 		return {
-			amapPlugin: null,
-			key: 'ce334d5499fb668332c1a65513a54201',
+			// amapPlugin: null,
+			// key: 'ce334d5499fb668332c1a65513a54201',
 			lotusAddressData: {
 				visible: false,
 				provinceName: '',
@@ -151,64 +156,64 @@ export default {
 			region: '选择位置',
 			form: {
 				field06: '',
-				field07: '0',
-				field08: '0',
-				field09: '0',
-				field10: '0',
-				field11: '0',
-				field12: '0',
+				field07: '健康',
+				field08: '37以下',
+				field09: '否',
+				field10: '否',
+				field11: '否',
+				field12: '否',
 				field13: '',
 				field14: '',
-				a: '0', // 暂时获取页面数据
-				b: '0', // 暂时获取页面数据
-				c: '0' // 暂时获取页面数据
+				a: '', // 暂时获取页面数据
+				b: '', // 暂时获取页面数据
+				c: '' // 暂时获取页面数据
 			},
 			list1: [
 				{
-					value: '0',
+					value: '健康',
 					name: '健康',
 					checked: true
 				},
 				{
-					value: '1',
+					value: '有发烧、咳嗽等症状',
 					name: '有发烧、咳嗽等症状'
 				},
 				{
-					value: '2',
+					value: '其他症状',
 					name: '其他症状'
 				}
 			],
 			list2: [
 				{
-					value: '0',
+					value: '无',
 					name: '无'
 				},
 				{
-					value: '1',
+					value: '有',
 					name: '有'
 				}
 			],
 			tempList: [
 				{
-					value: '0',
+					value: '37以下',
 					name: '37以下'
 				},
 				{
-					value: '1',
+					value: '37-38.5',
 					name: '37-38.5'
 				},
 				{
-					value: '2',
+					value: '38.5以上',
 					name: '38.5以上'
 				}
 			],
 			yesOrNo: [
 				{
-					value: '0',
+					value: '否',
 					name: '否'
 				},
 				{
-					value: '1',
+					value: '是',
 					name: '是'
 				}
 			],
@@ -248,21 +253,26 @@ export default {
 	},
 	onLoad(e) {},
 	mounted() {
-		this.amapPlugin = new amap.AMapWX({
-			key: this.key
-		});
-		this.judgeAuthorize();
+		// this.amapPlugin = new amap.AMapWX({
+		// 	key: this.key
+		// });
+		// this.judgeAuthorize();
 	},
 	methods: {
+		handleClearData(){
+			this.form.field14 = ''
+		},
 		validate() {
-			
-			return;
+			let params = {
+				...this.form
+			}
 			switch (this.form.field14) {
 				case '0':
 					{
-						this.form.field15 = this.form.a;
-						this.form.field16 = this.form.b;
-						this.form.field17 = this.form.c;
+						params.field15 = this.form.a;
+						params.field16 = this.form.b;
+						params.field17 = this.form.c;
+						params.field14 = '飞机'
 					}
 					break;
 				case '1':
@@ -270,48 +280,34 @@ export default {
 						this.form.field18 = this.form.a;
 						this.form.field19 = this.form.b;
 						this.form.field20 = this.form.c;
+						params.field14 = '火车'
 					}
 					break;
 				case '2':
 					{
 						this.form.field21 = this.form.a;
 						this.form.field22 = this.form.b;
+						params.field14 = '汽车'
 					}
 					break;
 				case '3':
 					{
 						this.form.field23 = this.form.a;
+						params.field14 = '轮船'
 					}
 					break;
 			}
-			this.send();
+			params.field01 = uni.getStorageSync('userId'),
+			params.field02 = uni.getStorageSync('idType')
+			this.send(params);
 		},
-		showChoose(refName) {
-			this.$refs[refName].show();
-		},
-		handleCancelChoose(refName) {
-			this.$refs[refName].hide();
-		},
-		handleChoose({ checkArr, checkValue, defaultVal, result }) {
-			this.$refs.linkage.hide();
-			this.form.field06 = checkValue.join(',');
-			this.region = result;
-		},
-		handleChooseDate({ checkArr, checkValue, defaultVal, result }) {
-			this.$refs.date.hide();
-			this.form.field13 = checkArr[0].join('');
-		},
-		handleRadioChange(evt, name) {
-			this.form[name] = evt.target.value;
-		},
-		send() {
-			// field03	用户所属学校
+		send(params) {
 			// 以上字段暂未确定
-			let params = {
-				...this.form,
-				field01: uni.getStorageSync('userId'),
-				field02: uni.getStorageSync('idType')
-			};
+			// let params = {
+			// 	...this.form,
+			// 	field01: uni.getStorageSync('userId'),
+			// 	field02: uni.getStorageSync('idType')
+			// };
 			// 去除多余属性
 			delete params.a;
 			delete params.b;
@@ -336,6 +332,25 @@ export default {
 				}
 			});
 		},
+		showChoose(refName) {
+			this.$refs[refName].show();
+		},
+		handleCancelChoose(refName) {
+			this.$refs[refName].hide();
+		},
+		handleChoose({ checkArr, checkValue, defaultVal, result }) {
+			this.$refs.linkage.hide();
+			this.form.field06 = result//checkValue.join(',');
+			this.region = result;
+		},
+		handleChooseDate({ checkArr, checkValue, defaultVal, result }) {
+			this.$refs.date.hide();
+			this.form.field13 = checkArr[0].join('');
+		},
+		handleRadioChange(evt, name) {
+			this.form[name] = evt.target.value;
+		},
+		
 		judgeAuthorize() {
 			uni.getSetting({
 				success: info => {
@@ -347,6 +362,7 @@ export default {
 								this.amapPlugin.getRegeo({
 									success: data => {
 										this.form.field06 = data[0].name;
+										this.form.field05 = data[0].regeocodeData.addressComponent.city
 									},
 									fail:(err)=>{
 										console.log(err,'err')
@@ -358,7 +374,13 @@ export default {
 									}
 								});
 							},
-							fail: () => {}
+							fail: () => {
+								uni.showToast({
+									title:'请打开定位服务以便获取当前位置!',
+									icon:'none',
+									duration:3000
+								})
+							}
 						});
 					} else {
 						// this.initPage()
@@ -366,8 +388,8 @@ export default {
 							success: res => {
 								this.amapPlugin.getRegeo({
 									success: data => {
-										console.log(data,'data')
 										this.form.field06 = data[0].name;
+										this.form.field05 = data[0].regeocodeData.addressComponent.city
 									},
 									fail:(err)=>{
 										console.log(err,'err')
@@ -376,7 +398,7 @@ export default {
 							},
 							fail: () => {
 								uni.showToast({
-									title:'请打开GPS进行定位!',
+									title:'请打开定位服务以便获取当前位置!',
 									icon:'none',
 									duration:3000
 								})

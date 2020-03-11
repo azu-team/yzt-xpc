@@ -9,8 +9,11 @@
 				<view class="cell" v-for="(params, idx) in paramsArr" :key="idx">
 					<text>{{ params.name }}</text>: {{ item[params.key] }}
 				</view>
-				<view class="cell" v-if="item.field12">
+				<view class="cell" v-if="item.field12 == '是'">
 					<text>乘坐开始日期</text>:{{item.field13}}
+				</view>
+				<view class="cell">
+					<text>交通工具</text>:{{item.field14}}
 				</view>
 				<!-- 判断交通工具的类型以及显示的字段 -->
 				<view  v-if="item.field14">
@@ -38,7 +41,7 @@ export default {
 		return {
 			paramsArr: [
 				{
-					name: '所在区县',
+					name: '当前区县',
 					key: 'field06'
 				},
 				{
@@ -64,58 +67,28 @@ export default {
 				{
 					name: '是否乘坐长途公交',
 					key: 'field12'
-				},
-				{
-					name: '交通工具',
-					key: 'field14'
 				}
 			],
 			dataArr: [
-				{
-					title: '2020-03-09',
-					field06: '10',
-					field07: '20',
-					field08: '15',
-					field09: '25',
-					field10: '4',
-					field11: '011',
-					field12: '25',
-					field13: '2',
-					field14: '',
-					isActive: true
-				},
-				{
-					title: '2020-03-08',
-					field06: '10',
-					field07: '20',
-					field08: '15',
-					field09: '25',
-					field10: '4',
-					field11: '011',
-					field12: '25',
-					field13: '2',
-					field14: '',
-					bdmcs: '111'
-				},
-				{
-					title: '2020-03-07',
-					field06: '10',
-					field07: '20',
-					field08: '15',
-					field09: '25',
-					field10: '4',
-					field11: '011',
-					field12: '25',
-					field13: '2',
-					field14: '2',
-					bdmcs: '111'
-				}
+				// {
+				// 	title: '2020-03-09',
+				// 	field06: '10',
+				// 	field07: '20',
+				// 	field08: '15',
+				// 	field09: '25',
+				// 	field10: '4',
+				// 	field11: '011',
+				// 	field12: '25',
+				// 	field13: '2',
+				// 	field14: '',
+				// 	isActive: true
+				// }
 			],
 			vehicleTranslate:{
-				'0':['飞机-航班号','飞机-起降地点','飞机-座位号'],
-				'1':['火车-车次','火车-乘车区间','火车-车厢及座位号'],
-				'2':['汽车-起止地点','汽车-是否司机'],
-				'3':['轮船-起止地点']
+				'飞机':['飞机-航班号','飞机-起降地点','飞机-座位号'],
+				'火车':['火车-车次','火车-乘车区间','火车-车厢及座位号'],
+				'汽车':['汽车-起止地点','汽车-是否司机'],
+				'轮船':['轮船-起止地点']
 			}
 		};
 	},
@@ -134,8 +107,7 @@ export default {
 				} ,
 				successCallback:({data})=>{
 					if(data.code == '0'){
-						console.log(data)
-						let arr = data.data.map(item=>{
+						let arr = data.data.list.map(item=>{
 							return{
 								...item,
 								title:new Date(item.addTime).Format('yyyy-MM-dd')
@@ -151,9 +123,6 @@ export default {
 				}
 				
 			})
-		},
-		translateTitle(item,index){
-			return this.vehicleTranslate[item.field14][index]
 		},
 		handleCollapse(item, index) {
 			this.$set(item, 'isActive', !item.isActive);

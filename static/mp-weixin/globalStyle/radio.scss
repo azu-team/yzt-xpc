@@ -1,3 +1,5 @@
+
+// 候选项样式
 .m-list {
 	padding: 20upx 0 30upx 20upx;
 	background-color: #ffffff;
@@ -79,11 +81,13 @@
 		}
 	}
 }
+// 分栏显示页面最顶部样式
 .m-tip {
 	background-color: #ffffff;
-	padding: 20upx 20upx;
+	padding: 20upx 20upx 0 20upx;
 	margin-bottom: 20upx;
 	border-bottom: solid 1upx #e7f4fe;
+	// 分栏内块格式
 	.u-grid {
 		.left,
 		.right {
@@ -114,10 +118,11 @@
 		}
 	}
 }
+// 单独一行格式
 .m-line {
 	display: flex;
 	padding: 5upx 40upx;
-	padding-top: 50upx;
+	// padding-top: 50upx;
 	justify-content: space-between;
 	align-items: center;
 	.u-title {
@@ -139,4 +144,7 @@
 			height: 145upx;
 		}
 	}
+}
+.first-line{
+	margin-top: 20upx;
 }

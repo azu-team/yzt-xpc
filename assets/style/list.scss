@@ -30,17 +30,16 @@
 		.u-list-desc {
 			font-size: 28upx;
 			color: $uni-text-second-color;
-			transition: height 0.3s; 
-			height: 0;
+			transition: max-height 0.3s; 
+			max-height: 0;
 			overflow: hidden;
 			&.active{
-				height: 270upx;
+				max-height: 270upx;
 			}
 			.cell {
 				display: inline-block;
 				width: 40%;
 				margin: 20upx 0 0 40upx;
-				white-space: nowrap;
 				&.one_line {
 					display: block;
 					width: 100%;

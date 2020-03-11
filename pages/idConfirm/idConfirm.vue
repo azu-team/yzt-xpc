@@ -3,7 +3,7 @@
 		<view  v-show="showSignIn">
 			<sign-in @switchStatus="handleSignIn"></sign-in>
 		</view>
-		<view  v-show="!showSignIn">
+		<view  v-if="!showSignIn">
 			<sign-up @switchStatus="handleSignUp" :type="formType"></sign-up>
 		</view>
 	</view>

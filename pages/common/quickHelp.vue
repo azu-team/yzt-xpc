@@ -14,7 +14,7 @@
 		<view class="" v-show="active == '0'">
 			<add-page ></add-page>
 		</view>
-		<view class="" v-if="active == '1'">
+		<view class="" v-show="active == '1'">
 			<his-page ></his-page>
 		</view>
 	</view>

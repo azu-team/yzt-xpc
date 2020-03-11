@@ -120,7 +120,7 @@ view.data-v-165616a6, text.data-v-165616a6, image.data-v-165616a6, label.data-v-
 }
 .m-tip.data-v-165616a6 {
   background-color: #ffffff;
-  padding: 20rpx 20rpx;
+  padding: 20rpx 20rpx 0 20rpx;
   margin-bottom: 20rpx;
   border-bottom: solid 1rpx #e7f4fe;
 }
@@ -161,7 +161,6 @@ view.data-v-165616a6, text.data-v-165616a6, image.data-v-165616a6, label.data-v-
   display: -webkit-flex;
   display: flex;
   padding: 5rpx 40rpx;
-  padding-top: 50rpx;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
           justify-content: space-between;
@@ -187,6 +186,9 @@ view.data-v-165616a6, text.data-v-165616a6, image.data-v-165616a6, label.data-v-
 .m-line .u-content .img.data-v-165616a6 {
       width: 60%;
       height: 145rpx;
+}
+.first-line.data-v-165616a6 {
+  margin-top: 20rpx;
 }
 .container.data-v-165616a6 {
   background-color: #f6fbfe;

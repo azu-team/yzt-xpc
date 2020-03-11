@@ -7,6 +7,13 @@
 				<view class="u-right">{{ item.value }}</view>
 			</view>
 		</view>
+		<!--  退出当前登录状态，使用按钮形式 -->
+		<view class="m-bottom">
+			<!-- open-type="getUserInfo" -->
+			<button class="u-btn" @tap="quickOut">
+				<text>清空当前登录信息</text>
+			</button>
+		</view>
 	</view>
 </template>
 
@@ -46,6 +53,10 @@ export default {
 		this.getUserInfo();
 	},
 	methods: {
+		quickOut(){
+			uni.removeStorageSync('idType');
+			uni.navigateBack()
+		},
 		findValue(arrName,source){
 			if(!this[arrName]) return ''
 			let target = ''
@@ -119,5 +130,8 @@ export default {
 			font-size: $uni-font-size-lg;
 		}
 	}
+}
+.m-bottom {
+	text-align: center;
 }
 </style>

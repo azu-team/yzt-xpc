@@ -64,7 +64,13 @@ export default {
 				},
 				successCallback:({data})=>{
 					if(data.code == 0){
-						this.dataArr = data.data
+						let arr = data.data.list.map(item=>{
+							return{
+								...item,
+								title:new Date(item.addTime).Format('yyyy-MM-dd')
+							}
+						})
+						this.dataArr = arr
 					}else{
 						uni.showToast({
 							title:data.msg,

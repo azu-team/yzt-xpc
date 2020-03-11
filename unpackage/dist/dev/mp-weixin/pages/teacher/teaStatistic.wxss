@@ -61,19 +61,18 @@ view.data-v-7348f226, text.data-v-7348f226, image.data-v-7348f226, label.data-v-
 .m-content .u-list .u-list-desc.data-v-7348f226 {
       font-size: 28rpx;
       color: #595959;
-      -webkit-transition: height 0.3s;
-      transition: height 0.3s;
-      height: 0;
+      -webkit-transition: max-height 0.3s;
+      transition: max-height 0.3s;
+      max-height: 0;
       overflow: hidden;
 }
 .m-content .u-list .u-list-desc.active.data-v-7348f226 {
-        height: 270rpx;
+        max-height: 270rpx;
 }
 .m-content .u-list .u-list-desc .cell.data-v-7348f226 {
         display: inline-block;
         width: 40%;
         margin: 20rpx 0 0 40rpx;
-        white-space: nowrap;
 }
 .m-content .u-list .u-list-desc .cell.one_line.data-v-7348f226 {
           display: block;

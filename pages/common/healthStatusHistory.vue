@@ -52,7 +52,7 @@ export default {
 				},
 				successCallback:({data})=>{
 					if(data.code == 0){
-						// this.dataArr = data.data
+						this.dataArr = data.list
 					}else{
 						uni.showToast({
 							title:data.msg,

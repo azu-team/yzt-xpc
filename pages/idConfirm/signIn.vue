@@ -66,7 +66,7 @@
 <script>
 import mySelect from '../../components/xfl-select/xfl-select.vue';
 import cropper from "./cropper.vue";
-
+import {http_root} from '../../utils/config.js'
 export default {
 	
 	components: { mySelect , cropper},
@@ -142,6 +142,7 @@ export default {
 				success: ({ tempFilePaths, tempFiles }) => {
 					// 图片大小小于40k
 					this.tempFilePath = tempFilePaths[0];
+					this.sendDataByFile()
 					// if (tempFiles[0].size < 40 * 1024) {
 					// 	uni.getFileSystemManager().readFile({
 					// 		filePath: tempFilePaths[0],
@@ -158,6 +159,12 @@ export default {
 					// 		duration: 3000
 					// 	});
 					// }
+				},
+				fail: () => {
+					// uni.showToast({
+					// 	title:'图片上传错误,请重试',
+					// 	icon:'none'
+					// })
 				}
 			});
 			// wx.checkIsSupportSoterAuthentication({
@@ -177,19 +184,10 @@ export default {
 			// });
 			// #endif
 		},
-		sendData() {
-			// TODO 修改上传方式，传到后台文件
-			// uni.uploadFile({
-			// 	url:http_root+'/UserAuth/createEsn',//服务器地址
-			// 	filePath:this.tempFilePath,//文件地址
-			// 	name:'SZXP',//服务器中文件对应的key值
-			// 	formData:fileParams,//上传的额外参数
-			// 	success:(res)=>{
-			// 		console.log(res,'上传成功')
-			// 	}
-			// })
+		// 不包含附件，直接发请求,注册用户
+		sendData(){
 			this.$HTTP({
-				url: '/UserAuth/register',
+				url: '/UserAuth/registerUser',
 				params: {
 					...this.form,
 					USERID: uni.getStorageSync('userId')
@@ -201,7 +199,7 @@ export default {
 					}
 					if (data.code == '0000') {
 						let resData = data.data;
-						if (resData.state == '0') {
+						if (resData.state == '2') {
 							// 激活成功
 							uni.setStorageSync('userInfo', resData);
 							uni.setStorageSync('idType', resData.zysflb);
@@ -216,6 +214,46 @@ export default {
 					}
 				}
 			});
+		},
+		// 上传附件进行验证
+		sendDataByFile() {
+			uni.showLoading({
+				title:'正在验证',
+				icon:'none'
+			})
+			let fileParams = {
+				...this.form,
+				USERID: uni.getStorageSync('userId')
+			}
+			uni.uploadFile({
+				url:http_root+'/UserAuth/register',//服务器地址
+				filePath:this.tempFilePath,//文件地址
+				name:'RLSJ',//服务器中文件对应的key值
+				formData:fileParams,//上传的额外参数
+				success:({data})=>{
+					uni.hideLoading()
+					data = JSON.parse(data)
+					if (data.code == '0') {
+						this.$emit('switchStatus', this.form.ZYSFLX);
+						return;
+					}
+					if (data.code == '0000') {
+						let resData = data.data;
+						if (resData.state == '2') {
+							// 激活成功
+							uni.setStorageSync('userInfo', resData);
+							uni.setStorageSync('idType', resData.zysflb);
+							uni.navigateBack();
+						}
+					} else {
+						uni.showToast({
+							title: data.code + ' : ' + data.msg,
+							icon: 'none',
+							duration: 3000
+						});
+					}
+				}
+			})
 		},
 		judgeAuthSetting() {
 			uni.getSetting({

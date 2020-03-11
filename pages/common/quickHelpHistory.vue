@@ -1,9 +1,9 @@
 <template>
 	<view class="m-content">
 		<view class="u-list" v-for="(item, index) in dataArr" :key="index">
-			<view class="u-list-title">
+			<view class="u-list-title" @tap="handleCollapse(item, index)">
 				{{ item.title }}
-				<view @tap="handleCollapse(item, index)" :class="{ 'u-dot': true, active: item.isActive }"></view>
+				<view  :class="{ 'u-dot': true, active: item.isActive }"></view>
 			</view>
 			<view :class="{ 'u-list-desc': true, active: item.isActive }">
 				<view class="cell" v-for="(params, idx) in paramsArr" :key="idx">
@@ -24,7 +24,7 @@ export default {
 		return {
 			paramsArr: [
 				{
-					name: '所在区县',
+					name: '填报位置',
 					key: 'field02'
 				},
 				{
@@ -64,7 +64,13 @@ export default {
 				},
 				successCallback:({data})=>{
 					if(data.code == 0){
-						this.dataArr = data.data
+						let arr = data.data.list.map(item=>{
+							return{
+								...item,
+								title:new Date(item.addTime).Format('yyyy-MM-dd')
+							}
+						})
+						this.dataArr = arr
 					}else{
 						uni.showToast({
 							title:data.msg,

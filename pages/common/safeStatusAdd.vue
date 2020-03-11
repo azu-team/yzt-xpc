@@ -37,12 +37,13 @@
 		<view class="m-list">
 			<view class="u-q-title">
 				<text>2.安全预警级别</text>
+				
 				<!-- <text class="icon">单选</text> -->
 			</view>
 			<radio-group @change="handleRadioChange($event, 'field04')">
 				<label class="u-list-cell" v-for="(item, index) in list2" :key="index">
 					<view class="u-radio"><radio :value="item.value" :checked="form.field04 == item.value" /></view>
-					<view :class="{ 'u-text': true, active: form.field04 == item.value }">{{ item.name }}</view>
+					<view :class="{ 'u-text': true, active: form.field04 == item.value }">{{ item.name }}<view :class="['color-seg',item.class]"></view> </view>
 				</label>
 			</radio-group>
 		</view>
@@ -100,77 +101,81 @@ export default {
 				// },
 			],
 			form: {
-				field03: '0',
-				field04: '0',
-				field05: '0',
-				field06: '0'
+				field03: '被盗',
+				field04: '红',
+				field05: '本地居家隔离',
+				field06: '安全'
 			},
 			list1: [
 				{
-					value: '0',
+					value: '被盗',
 					name: '被盗',
 					checked: true
 				},
 				{
-					value: '1',
+					value: '人身伤害',
 					name: '人身伤害'
 				},
 				{
-					value: '2',
+					value: '大量聚集',
 					name: '大量聚集'
 				}
 			],
 			list2: [
 				{
-					value: '0',
-					name: '红'
+					value: '红',
+					name: '红',
+					class:'one'
 				},
 				{
-					value: '1',
-					name: '橙'
+					value: '橙',
+					name: '橙',
+					class:'two'
 				},
 				{
-					value: '2',
-					name: '黄'
+					value: '黄',
+					name: '黄',
+					class:'three'
 				},
 				{
-					value: '3',
-					name: '蓝'
+					value: '蓝',
+					name: '蓝',
+					class:'four'
 				}
 			],
 			list3: [
 				{
-					value: '0',
+					value: '本地居家隔离',
 					name: '本地居家隔离'
 				},
 				{
-					value: '1',
+					value: '返程后居家隔离',
 					name: '返程后居家隔离'
 				},
 				{
-					value: '2',
+					value: '封路暂时不能返程',
 					name: '封路暂时不能返程'
 				},
 				{
-					value: '3',
+					value: '其余原因不能返程',
 					name: '其余原因不能返程'
 				}
 			],
 			list4: [
 				{
-					value: '0',
+					value: '安全',
 					name: '安全'
 				},
 				{
-					value: '1',
+					value: '低风险',
 					name: '低风险'
 				},
 				{
-					value: '2',
+					value: '高风险',
 					name: '高风险'
 				},
 				{
-					value: '3',
+					value: '未知',
 					name: '未知'
 				}
 			]
@@ -245,5 +250,25 @@ export default {
 }
 .m-bottom {
 	text-align: center;
+}
+.color-seg{
+	display: inline-block;
+	width: 70upx;
+	height: 34upx;
+	margin-left: 20upx;
+	vertical-align: middle;
+	&.one{
+		background-color: red;
+	}
+	&.two{
+		background-color: orange;
+	}
+	&.three{
+		background-color: yellow;
+	}
+	&.four{
+		
+		background-color: blue;
+	}
 }
 </style>

@@ -5,7 +5,7 @@
 		<view class="m-content">
 			<view class="" v-show="active == '0'">
 				<view class="u-list" v-for="(item, index) in dataArr" :key="index">
-					<view class="u-list-title">{{ item.title }} <view @tap="handleCollapse(item,index)" :class="{'u-dot':true, 'active':item.isActive}"></view></view>
+					<view class="u-list-title" @tap="handleCollapse(item,index)">{{ item.title }} <view  :class="{'u-dot':true, 'active':item.isActive}"></view></view>
 					<view :class="{'u-list-desc':true,active:item.isActive}">
 						<view class="cell" v-for="(params, idx) in paramsArr" :key="idx">
 							<text>{{ params.name }}</text>
@@ -66,7 +66,7 @@ export default {
 			active: '0',
 			dataArr: [
 				{
-					title: '整体情况',
+					title: '整体情况-模拟数据',
 					yskszl: '10',
 					zxsc: '20',
 					dxcs: '15',
@@ -79,7 +79,7 @@ export default {
 					bdmcs: '111',
 					isActive:true,
 				},{
-					title: '腾讯',
+					title: '腾讯-模拟数据',
 					yskszl: '10',
 					zxsc: '20',
 					dxcs: '15',
@@ -91,7 +91,7 @@ export default {
 					jscs: '6',
 					bdmcs: '111'
 				},{
-					title: '凤凰',
+					title: '凤凰-模拟数据',
 					yskszl: '10',
 					zxsc: '20',
 					dxcs: '15',

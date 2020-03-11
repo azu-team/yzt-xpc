@@ -2,9 +2,10 @@
 	<view >
 		<view class="m-list first-line">
 			<view class="m-line">
-				<view class="u-title">所在区县</view>
+				<view class="u-title">当前位置</view>
 				<view class="u-content">
-					<text @tap="showChoose">{{region}}</text>
+					<view class=""><input type="text" v-model="form.field02" placeholder="请输入当前位置" /></view>
+					<!-- <text @tap="showChoose">{{region}}</text> -->
 				</view>
 			</view>
 		</view>
@@ -59,6 +60,7 @@
 </template>
 
 <script>
+import amap from '../../utils/amap-wx.js';
 const recorderManager = uni.getRecorderManager();
 const innerAudioContext = uni.createInnerAudioContext();
 
@@ -67,6 +69,8 @@ innerAudioContext.autoplay = true;
 export default {
 	data() {
 		return {
+			amapPlugin: null,
+			key: 'ce334d5499fb668332c1a65513a54201',
 			canRecord:false,//判断是否有录音权限
 			region:'选择位置',
 			editorCtx:'',//文本域上下文
@@ -84,22 +88,23 @@ export default {
 			text: 'uni-app',
 			voicePath: '',
 			form:{
-				field06:'0',
+				field02:'',
+				field06:'健康',
 				field07:'无',
 				field09:''
 			},
 			list1: [
 				{
-					value: '0',
+					value: '健康',
 					name: '健康',
 					checked:true,
 				},
 				{
-					value: '1',
+					value: '有发烧、咳嗽等症状',
 					name: '有发烧、咳嗽等症状'
 				},
 				{
-					value: '2',
+					value: '其他症状',
 					name: '其他症状'
 				}
 			],
@@ -125,6 +130,9 @@ export default {
 		}
 	},
 	mounted() {
+		this.amapPlugin = new amap.AMapWX({
+			key: this.key
+		});
 		this.judgeAuthorize()
 		innerAudioContext.onEnded(()=>{
 			this.audioStatus = '播放文件'
@@ -172,37 +180,52 @@ export default {
 				}
 			})
 		},
+		hasLocationQx(){
+			uni.getLocation({
+				success: res => {
+					this.amapPlugin.getRegeo({
+						success: data => {
+							this.form.field02 = data[0].name;
+							// this.form.field05 = data[0].regeocodeData.addressComponent.city
+						},
+						fail:(err)=>{
+							console.log(err,'err')
+						}
+					});
+				},
+				fail: () => {
+					uni.showToast({
+						title:'请打开定位服务以便获取当前位置!',
+						icon:'none',
+						duration:3000
+					})
+				}
+			});
+		},
 		judgeAuthorize() {
 			uni.getSetting({
 				success: info => {
-					/*
-						{"errMsg":"getSetting:ok","authSetting":{"scope.userInfo":true,"scope.record":true}}
-					*/
 					if(!info.authSetting['scope.record']){
-						uni.authorize({
-							scope:'scope.record',
-							success:()=>{
-								this.canRecord = true;
-								this.initPage()
-							},
-							fail:()=>{
-								uni.showToast({
-									title:'请确认录音功能正常',
-									icon:'none'
-								})
-								setTimeout(()=> {
-									uni.openSetting({
-										success: res => {
-											this.canRecord = true;
-											this.initPage()
-										}
-									});
-								}, 1500);
-							}
-						})
 					}else{
 						this.canRecord = true;
 						this.initPage()
+					}
+					if (!info.authSetting['scope.userLocation']) {
+						uni.authorize({
+							scope: 'scope.userLocation',
+							success: () => {
+								this.hasLocationQx();
+							},
+							fail: () => {
+								uni.showToast({
+									title:'请打开定位服务以便获取当前位置!',
+									icon:'none',
+									duration:3000
+								})
+							}
+						});
+					} else {
+						this.hasLocationQx();
 					}
 				}
 			});
@@ -212,12 +235,38 @@ export default {
 				this.voicePath = res.tempFilePath;
 			});
 		},
+		openQx(){
+			uni.authorize({
+				scope:'scope.record',
+				success:()=>{
+					this.canRecord = true;
+					this.initPage()
+				},
+				fail:()=>{
+					uni.showToast({
+						title:'请确认录音功能正常',
+						icon:'none'
+					})
+					setTimeout(()=> {
+						uni.openSetting({
+							success: res => {
+								this.canRecord = true;
+								this.initPage()
+							}
+						});
+					}, 500);
+				}
+			})
+		},
 		handleRecord(){
 			if(!this.canRecord){
 				uni.showToast({
 					title:'请保证当前录音权限正常!',
 					icon:'none'
 				})
+				setTimeout(()=>{
+					this.openQx()
+				},1500)
 				return
 			};
 			if(this.recordStatus == 1 || this.recordStatus == 3){
@@ -243,8 +292,6 @@ export default {
 				...this.form,
 				field01:uni.getStorageSync('userId')
 			}
-			console.log(params,'params')
-			return;
 			this.$HTTP({
 				url:'/getHelp/save',
 				params,

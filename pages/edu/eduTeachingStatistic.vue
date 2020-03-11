@@ -3,7 +3,6 @@
 		<view class="qiun-padding" style="font-size: 32upx;">
 			<text>{{ tips }}</text>
 		</view>
-		<!-- <view class="qiun-padding"><view class="qiun-tip" @tap="changeData()">更新柱状图数据</view></view> -->
 		<view class="qiun-title-bar" style="background-color: #fff;"><view class="qiun-title-dot-light">柱状图</view></view>
 		<view class="qiun-charts" style="background-color: #fff;">
 			<canvas canvas-id="canvasColumn" id="canvasColumn" class="charts" @touchstart="touchIt($event, 'canvasColumn')"></canvas>

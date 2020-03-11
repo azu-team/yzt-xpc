@@ -72,4 +72,7 @@ view.data-v-091b0f89, text.data-v-091b0f89, image.data-v-091b0f89, label.data-v-
       color: #a7a7a7;
       font-size: 32rpx;
 }
+.m-bottom.data-v-091b0f89 {
+  text-align: center;
+}
 

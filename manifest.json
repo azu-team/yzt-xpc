@@ -60,9 +60,15 @@
         "appid" : "wx77df03c164b129fb",
         "setting" : {
             "urlCheck" : false,
-            "es6" : true
+            "es6" : true,
+            "postcss" : false
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "获取当前打卡位置，可手动修改"
+            }
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true
