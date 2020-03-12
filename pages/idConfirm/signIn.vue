@@ -56,7 +56,10 @@
 				</button>
 			</view>
 			<view class="m-clause">
-				我同意
+				<checkbox-group @change="handleCheckChange" style="display: inline-block;">
+					<checkbox   :checked="hasChecked" color="#5E5EFC" style="transform:scale(0.7)" />
+				</checkbox-group>
+				   我同意
 					<text class="link" @tap="watchLink('https://hao.pthink.com.cn/privacy/jszj_user.htm')">《用户协议》</text>及
 					<text class="link" @tap="watchLink('https://hao.pthink.com.cn/privacy/jszj.htm')">《隐私政策》</text>
 			</view>
@@ -76,6 +79,7 @@ export default {
 	components: { mySelect , cropper},
 	data() {
 		return {
+			hasChecked:false,
 			tempFilePath: '', //上传图片地址
 			form: {
 				SFZH: '',
@@ -106,8 +110,10 @@ export default {
 		};
 	},
 	methods: {
+		handleCheckChange(){
+			this.hasChecked = !this.hasChecked
+		},
 		watchLink(link){
-			console.log('=========')
 			uni.navigateTo({
 				url:'../outLink/outLink?type='+link,
 			})
@@ -135,6 +141,14 @@ export default {
 			// uni.navigateBack()
 		},
 		handleConfirm() {
+			// 确保用户隐私协议已勾选
+			if(!this.hasChecked){
+				uni.showToast({
+					title:'请勾选用户隐私协议！',
+					icon:'none'
+				})
+				return
+			}
 			// this.$emit('switchStatus', this.form.ZYSFLX);
 			// return;
 			// 将身份类型进行转码，因为在首页的权限判断不一致

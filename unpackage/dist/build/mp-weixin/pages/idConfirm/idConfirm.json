@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "申请认证",
-  "usingComponents": {
-    "sign-in": "/pages/idConfirm/signIn",
-    "sign-up": "/pages/idConfirm/signUp"
-  }
-}

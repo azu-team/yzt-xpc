@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "一键求助",
-  "usingComponents": {
-    "add-page": "/pages/common/quickHelpAdd",
-    "his-page": "/pages/common/quickHelpHistory"
-  }
-}
