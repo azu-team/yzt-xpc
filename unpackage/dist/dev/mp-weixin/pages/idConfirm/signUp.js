@@ -416,6 +416,7 @@ var _config = __webpack_require__(/*! ../../utils/config.js */ 16);function _obj
 
   data: function data() {
     return {
+      formSexInitValue: _selectLists.sexList[0].value,
       tempFilePath: '', //临时附件路径
       formStatus: '1', //表填填写的进度，1 为 身份选择  2 为信息录入 作废
       form: {
@@ -467,46 +468,61 @@ var _config = __webpack_require__(/*! ../../utils/config.js */ 16);function _obj
       relationList: _selectLists.relationList,
       typeList: _selectLists.typeList,
       timeFormName: '',
-      timeFormKey: '' };
+      timeFormKey: '',
+      idTypeObj: {
+        "1": '1',
+        "2": '20',
+        "3": '2',
+        "4": '21' } };
+
 
   },
   mounted: function mounted() {
     this.queryUserInfo();
   },
   methods: {
-    queryUserInfo: function queryUserInfo() {
-      var url = '',formName = '';
-      if (this.type <= 2) {
-        url = '/api/tour/esnAuthStudent/list';
-        formName = 'form';
-      } else if (this.type == 3) {
-        url = '/api/tour/esnAuthTeacher/list';
-        formName = 'jsForm';
-      } else if (this.type == 4) {
-        url = '/api/tour/esnForSchool/list';
-        formName = 'eduForm';
-      }
+    queryUserInfo: function queryUserInfo() {var _this = this;
+      var url = '/UserAuth/getUserRz',formName = '';
+
       this.$HTTP({
         url: url,
         params: {
           "pageNum": "",
           "pageSize": "",
-          "userid": uni.getStorageSync('userId') },
-
-        successCallback: function successCallback(res) {
-          console.log(res, 'res');
-        } });
-
-    },
-    // 查询数据，将已有数据进行填充
-    queryInfo: function queryInfo() {
-      this.$HTTP({
-        url: '',
-        params: {},
-
+          "ZYSFLX": this.idTypeObj[this.type],
+          "USERID": uni.getStorageSync('userId') },
 
         successCallback: function successCallback(_ref) {var data = _ref.data;
-
+          if (data.code == '0') {
+            var dataObj = data.data;
+            if (_this.type <= 2) {
+              // XM: '', //姓名
+              // CSRQ: '', //出生日期
+              // XB: sexList[0].id, //性别
+              // SFZJHM: '', //身份证件号码
+              _this.form.XM = dataObj.xm;
+              _this.form.CSRQ = dataObj.csrq;
+              _this.form.XB = dataObj.xb;
+              _this.form.SFZJHM = dataObj.sfzjhm;
+              _this.formSexInitValue = _this.$tranform_code2name(_selectLists.sexList, dataObj.xb);
+              _this.$nextTick(function () {
+                _this.$refs.form.init();
+              });
+            } else if (_this.type == 3) {
+              // XM: '', //姓名
+              // CSRQ: '', //出生日期
+              // XB: sexList[0].id, //性别编码
+              // SFZJHM: '', //身份证件号码
+              _this.jsForm.XM = dataObj.xm;
+              _this.jsForm.CSRQ = dataObj.csrq;
+              _this.jsForm.XB = dataObj.xb;
+              _this.jsForm.SFZJHM = dataObj.sfzjhm;
+              _this.formSexInitValue = _this.$tranform_code2name(_selectLists.sexList, dataObj.xb);
+              _this.$nextTick(function () {
+                _this.$refs.jsForm.init();
+              });
+            }
+          }
         } });
 
     },
@@ -524,29 +540,29 @@ var _config = __webpack_require__(/*! ../../utils/config.js */ 16);function _obj
       // this.form.field02 = result
       this[this.timeFormName][this.timeFormKey] = checkArr[0].join('');
     },
-    handleChooseImg: function handleChooseImg(formName, keyName) {var _this = this;
+    handleChooseImg: function handleChooseImg(formName, keyName) {var _this2 = this;
       uni.chooseImage({
         count: 1,
         success: function success(_ref3) {var tempFilePaths = _ref3.tempFilePaths,tempFiles = _ref3.tempFiles;
           // 图片大小小于40k TODO 图片大小不做处理，直接上传到服务器
-          if (tempFiles[0].size < 40 * 1024) {
-            _this.tempFilePath = tempFilePaths[0];
-            _this[formName][keyName] = tempFilePaths[0];
-            return;
-            uni.getFileSystemManager().readFile({
-              filePath: tempFilePaths[0],
-              encoding: 'base64',
-              success: function success(res) {
-                _this[formName][keyName] = 'data:image/jpeg;base64,' + res.data;
-              } });
-
-          } else {
-            uni.showToast({
-              title: '文件大小要小于40k',
-              icon: 'none',
-              duration: 3000 });
-
-          }
+          _this2.tempFilePath = tempFilePaths[0];
+          _this2[formName][keyName] = tempFilePaths[0];
+          // if(tempFiles[0].size < 40 * 1024 ){
+          //  return
+          //  uni.getFileSystemManager().readFile({
+          //   filePath:tempFilePaths[0],
+          //   encoding:'base64',
+          //   success:res=>{
+          // 	  this[formName][keyName] = 'data:image/jpeg;base64,'+ res.data
+          //   }
+          //  })
+          // }else{
+          //  uni.showToast({
+          //  	title:'文件大小要小于40k',
+          // icon:'none',
+          // duration:3000
+          //  })
+          // }
         } });
 
     },
@@ -563,10 +579,69 @@ var _config = __webpack_require__(/*! ../../utils/config.js */ 16);function _obj
       }
       this.form[formType] = orignItem.id;
     },
-    saveInfo: function saveInfo(wxUserInfo) {var _this2 = this;
-      // 根据角色设置请求参数
-      var params = {};
+    saveInfo: function saveInfo(params) {var _this3 = this;
+      this.$HTTP({
+        url: '/UserAuth/createEsn',
+        params: params,
+        successCallback: function successCallback(_ref5) {var data = _ref5.data;
+          _this3.handleSucess(data);
+        },
+        completeCallback: function completeCallback() {
+          // uni.hideLoading()
+        } });
+
+    },
+    saveInfoByFiles: function saveInfoByFiles(url, params, fileName) {var _this4 = this;
+      uni.showLoading({
+        title: '正在验证...' });
+
+      uni.uploadFile({
+        url: url, //服务器地址
+        filePath: this.tempFilePath, //文件地址
+        name: fileName, //服务器中文件对应的key值
+        formData: params, //上传的额外参数
+        success: function success(_ref6) {var data = _ref6.data;
+          uni.hideLoading();
+          data = JSON.parse(data);
+          _this4.handleSucess(data);
+        },
+        fail: function fail() {
+          console.log('失败了');
+          uni.hideLoading();
+        } });
+
+    },
+    handleSucess: function handleSucess(data) {
+      if (data.code == '0') {
+        // 接口响应成功
+        // esn 认证成功返回的esn号码
+        // uni.setStorageSync('userInfo', wxUserInfo);
+        uni.setStorageSync('idType', this.form.type);
+        uni.setStorageSync('state', data.data.jc.state);
+        uni.showToast({
+          title: '提交成功',
+          mask: true,
+          duration: 1500 });
+
+        setTimeout(function () {
+          uni.navigateBack();
+        }, 1500);
+      } else {
+        uni.showToast({
+          title: "".concat(data.code, ":").concat(data.msg),
+          icon: 'none',
+          duration: 3000 });
+
+      }
+    },
+    handleConfirm: function handleConfirm() {
+      var url = _config.http_root + '/UserAuth/saveTea',fileName = 'SZXP',params = {}; //默认教师、行政路径
       if (this.form.type <= 2) {
+        // 学生权限，需要添加默认参数 1 学生 20 家长
+        this.form.ZYSFLB = this.form.type == 1 ? "1" : "20";
+        fileName = 'SZXP';
+        // 上传路径区分 如果为学生和家长，路径不同
+        url = _config.http_root + '/UserAuth/saveStu';
         params = _objectSpread({}, this.form);
         delete params.type;
       } else if (this.form.type == 3) {
@@ -574,66 +649,22 @@ var _config = __webpack_require__(/*! ../../utils/config.js */ 16);function _obj
         this.jsForm);
 
       } else if (this.form.type == 4) {
+        this.eduForm.ZYSFLB = "21";
+        fileName = 'RLSJ';
         params = _objectSpread({},
         this.eduForm);
 
       }
-      var fileParams = _objectSpread({},
-      params, {
-        USERID: uni.getStorageSync('userId')
-
-        // delete fileParams.SZXP
-        // console.log(fileParams,'file')
-        // uni.uploadFile({
-        // 	url:http_root+'/UserAuth/createEsn',//服务器地址
-        // 	filePath:this.tempFilePath,//文件地址
-        // 	name:'SZXP',//服务器中文件对应的key值
-        // 	formData:fileParams,//上传的额外参数
-        // 	success:(res)=>{
-        // 		console.log(res,'上传成功')
-        // 	}
-        // })
-      });this.$HTTP({
-        url: '/UserAuth/createEsn',
-        params: fileParams,
-        successCallback: function successCallback(_ref5) {var data = _ref5.data;
-          if (data.code == '0') {
-            // 接口响应成功
-            // esn 认证成功返回的esn号码
-            // uni.setStorageSync('userInfo', wxUserInfo);
-            uni.setStorageSync('idType', _this2.form.type);
-            uni.showToast({
-              title: '认证成功',
-              mask: true,
-              duration: 1500 });
-
-            setTimeout(function () {
-              uni.navigateBack();
-            }, 1500);
-          } else {
-            uni.showToast({
-              title: "".concat(data.code, ":").concat(data.msg),
-              icon: 'none',
-              duration: 3000 });
-
-          }
-        },
-        completeCallback: function completeCallback() {
-          // uni.hideLoading()
-        } });
-
-    },
-    handleConfirm: function handleConfirm() {
-      if (this.form.type <= 2) {
-        // 学生权限，需要添加默认参数 1 学生 20 家长
-        this.form.ZYSFLB = this.form.type == 1 ? "1" : "20";
-      } else if (this.form.type == 4) {
-        this.eduForm.ZYSFLB = "21";
+      params.USERID = uni.getStorageSync('userId');
+      if (this.tempFilePath) {
+        this.saveInfoByFiles(url, params, fileName);
+      } else {
+        this.saveInfo(params);
       }
       // uni.showLoading({
       // 	title:'正在认证...'
       // })
-      this.saveInfo();
+
       // uni.getUserInfo({
       // 	provider: 'weixin',
       // 	success: res => {

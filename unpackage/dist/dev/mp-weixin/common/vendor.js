@@ -754,7 +754,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -16631,6 +16631,7 @@ var http_root = 'https://cc.pthink.com.cn/jszj';exports.http_root = http_root;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 Date.prototype.Format = function (fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份
@@ -16653,6 +16654,17 @@ Date.prototype.Format = function (fmt) {
     RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));}
 
   return fmt;
+};
+
+_vue.default.prototype.$tranform_code2name = function (arr, target) {
+  if (!arr.length) return '';
+  var result = '';
+  arr.forEach(function (item, index) {
+    if (item.id == target) {
+      result = item.value;
+    }
+  });
+  return result;
 };
 
 /***/ }),
@@ -22201,7 +22213,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -22222,14 +22234,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -22305,7 +22317,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -24666,7 +24678,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@alpha","_id":"@dcloudio/uni-stat@2
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页" }, "pages/healthCard/healthCard": { "navigationBarTitleText": "健康申报" }, "pages/idConfirm/idConfirm": { "navigationBarTitleText": "申请认证" }, "pages/idConfirm/baseInfo": { "navigationBarTitleText": "个人信息" }, "pages/stu/stuLearning": { "navigationBarTitleText": "在线学习" }, "pages/stu/stuStatus": { "navigationBarTitleText": "查看学习情况" }, "pages/teacher/teaTeaching": { "navigationBarTitleText": "在线授课" }, "pages/teacher/teaStatistic": { "navigationBarTitleText": "查看授课情况" }, "pages/edu/eduTeachingStatistic": { "navigationBarTitleText": "所辖区域授课情况" }, "pages/edu/eduLearningStatistic": { "navigationBarTitleText": "所辖区域学习情况" }, "pages/common/quickHelp": { "navigationBarTitleText": "一键求助" }, "pages/common/healthStatus": { "navigationBarTitleText": "健康情况收集" }, "pages/common/safeStatus": { "navigationBarTitleText": "安全情况" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "enablePullDownRefresh": false } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/healthCard/healthCard": { "navigationBarTitleText": "健康申报", "usingComponents": { "add-page": "/pages/healthCard/healCardAdd", "his-page": "/pages/healthCard/healthCardHistory" }, "usingAutoImportComponents": {} }, "pages/idConfirm/idConfirm": { "navigationBarTitleText": "申请认证", "usingComponents": { "sign-in": "/pages/idConfirm/signIn", "sign-up": "/pages/idConfirm/signUp" }, "usingAutoImportComponents": {} }, "pages/idConfirm/baseInfo": { "navigationBarTitleText": "个人信息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/stu/stuLearning": { "navigationBarTitleText": "在线学习", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/stu/stuStatus": { "navigationBarTitleText": "查看学习情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/teacher/teaTeaching": { "navigationBarTitleText": "在线授课", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/teacher/teaStatistic": { "navigationBarTitleText": "查看授课情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/edu/eduTeachingStatistic": { "navigationBarTitleText": "所辖区域授课情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/edu/eduLearningStatistic": { "navigationBarTitleText": "所辖区域学习情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/common/quickHelp": { "navigationBarTitleText": "一键求助", "usingComponents": { "add-page": "/pages/common/quickHelpAdd", "his-page": "/pages/common/quickHelpHistory" }, "usingAutoImportComponents": {} }, "pages/common/healthStatus": { "navigationBarTitleText": "健康情况收集", "usingComponents": { "add-page": "/pages/common/healthStatusAdd", "his-page": "/pages/common/healthStatusHistory" }, "usingAutoImportComponents": {} }, "pages/common/safeStatus": { "navigationBarTitleText": "安全情况", "usingComponents": { "add-page": "/pages/common/safeStatusAdd", "his-page": "/pages/common/safeStatusHistory" }, "usingAutoImportComponents": {} }, "pages/outLink/outLink": { "navigationBarTitleText": "安全隐私协议" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "enablePullDownRefresh": false } };exports.default = _default;
 
 /***/ }),
 

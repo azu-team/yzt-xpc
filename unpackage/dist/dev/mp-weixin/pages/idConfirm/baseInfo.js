@@ -189,6 +189,7 @@ var _default = { data: function data() {return { typeList: _selectLists.typeList
   },
   methods: {
     quickOut: function quickOut() {
+      uni.removeStorageSync('state');
       uni.removeStorageSync('idType');
       uni.navigateBack();
     },

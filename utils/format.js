@@ -1,3 +1,4 @@
+import Vue from 'vue'
 Date.prototype.Format = function(fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份
@@ -21,3 +22,14 @@ Date.prototype.Format = function(fmt) {
       );
   return fmt;
 };
+
+Vue.prototype.$tranform_code2name = function(arr,target){
+	if(!arr.length) return ''
+	let result = ''
+	arr.forEach((item,index)=>{
+		if(item.id == target){
+			result = item.value
+		}
+	})
+	return result;
+}

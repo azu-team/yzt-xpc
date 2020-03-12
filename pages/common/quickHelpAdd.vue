@@ -2,9 +2,9 @@
 	<view >
 		<view class="m-list first-line">
 			<view class="m-line">
-				<view class="u-title">当前位置</view>
-				<view class="u-content">
-					<view class=""><input type="text" v-model="form.field02" placeholder="请输入当前位置" /></view>
+				<view class="u-title" style="width: 20%;">当前位置</view>
+				<view class="u-content" style="width: 75%;">
+					<view class="" style="width: 100%;"><input type="text" v-model="form.field02" placeholder="请输入当前位置" /></view>
 					<!-- <text @tap="showChoose">{{region}}</text> -->
 				</view>
 			</view>
@@ -31,15 +31,15 @@
 				</label>
 			</radio-group>
 		</view>
-		<view class="m-list">
+		<!-- <view class="m-list">
 			<view class="u-q-title"><text>3.语音信息</text></view>
 			<view class="u-content">
 				<view :class="{'f-record':true,'recording':recordStatus==2}" @click="handleRecord">{{audioText}}</view>
 				<view :class="['f-audio',voicePath?'':'disabled',audioStatus=='播放文件'?'':'recording']" @click="playVoice">{{audioStatus}}</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="m-list">
-			<view class="u-q-title"><text>4.求助具体要求</text></view>
+			<view class="u-q-title"><text>3.求助具体要求</text></view>
 			<view class="u-content">
 				<editor id="editor"  placeholder="请输入具体要求" @ready="onEditorReady"></editor>
 				<!-- <input class="input" type="text" v-model="form.field09" /> -->
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import {http_root} from '../../utils/config.js'
 import amap from '../../utils/amap-wx.js';
 const recorderManager = uni.getRecorderManager();
 const innerAudioContext = uni.createInnerAudioContext();
@@ -311,17 +312,31 @@ export default {
 					}
 				}
 			})
+			return;
 			// 上传数据
-			// uni.uploadFile({
-			// 	url:'',//服务器地址
-			// 	filePath:'',//文件地址
-			// 	name:'',//服务器中文件对应的key值
-			// 	formData:{
-			// 	},//上传的额外参数
-			// 	success:(res)=>{
-			// 		console.log(res,'上传成功')
-			// 	}
-			// })
+			uni.uploadFile({
+				url:http_root+'/getHelp/save',//服务器地址
+				filePath:this.voicePath,//文件地址
+				name:'field08',//服务器中文件对应的key值
+				formData:params,//上传的额外参数
+				success:({data})=>{
+					uni.hideLoading()
+					data = JSON.parse(data)
+					if(data.code == 0){
+						uni.showToast({
+							title:'提交成功!'
+						})
+						setTimeout(()=>{
+							uni.navigateBack()
+						},1500)
+					}else{
+						uni.showToast({
+							title:data.msg,
+							icon:'none'
+						})
+					}
+				}
+			})
 		}
 	}
 };

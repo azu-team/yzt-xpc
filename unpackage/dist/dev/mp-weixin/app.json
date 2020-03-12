@@ -12,7 +12,8 @@
     "pages/edu/eduLearningStatistic",
     "pages/common/quickHelp",
     "pages/common/healthStatus",
-    "pages/common/safeStatus"
+    "pages/common/safeStatus",
+    "pages/outLink/outLink"
   ],
   "subPackages": [],
   "window": {
@@ -31,6 +32,5 @@
     "link-area": "/components/w-picker/w-picker",
     "tabs": "/components/ms-tabs/ms-tabs",
     "uni-tag": "/components/uni-tag/uni-tag"
-  },
-  "sitemapLocation": "sitemap6.json"
+  }
 }

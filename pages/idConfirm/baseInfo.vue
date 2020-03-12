@@ -54,6 +54,7 @@ export default {
 	},
 	methods: {
 		quickOut(){
+			uni.removeStorageSync('state');
 			uni.removeStorageSync('idType');
 			uni.navigateBack()
 		},

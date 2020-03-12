@@ -35,10 +35,10 @@ export default {
 					name: '是否受伤',
 					key: 'field07'
 				},
-				{
-					name: '语音信息',
-					key: 'field08'
-				},
+				// {
+				// 	name: '语音信息',
+				// 	key: 'field08'
+				// },
 				{
 					name: '求助具体要求',
 					key: 'field09'

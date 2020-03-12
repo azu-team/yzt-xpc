@@ -159,18 +159,20 @@ var _default =
   data: function data() {
     return {
       hasUserInfo: false,
-      idType: '1' };
+      idType: '1',
+      showAll: false };
 
   },
   onShow: function onShow() {
     // 防止重复赋值
-    var idType = uni.getStorageSync('idType');
+    var idType = uni.getStorageSync('idType'),
+    state = uni.getStorageSync('state');
     if (idType && idType == '1') {
       // 学生与家长权限一致，标识不同需要单独处理
       idType = '2';
     }
     if (idType != this.idType) this.idType = idType || '1';
-    // this.idType = 2;
+    this.showAll = state == '2';
   },
   mounted: function mounted() {
     this.getOpenId();
@@ -258,7 +260,7 @@ var _default =
 
 
 
-      return moduleCon[this.idType];
+      return this.showAll ? moduleCon[this.idType] : moduleCon[this.idType].slice(0, 1);
     } },
 
   methods: {
@@ -272,20 +274,38 @@ var _default =
               code: code },
 
             successCallback: function successCallback(_ref2) {var data = _ref2.data;
+              uni.navigateTo({
+                url: '/pages/idConfirm/idConfirm' });
+
+              return;
               if (data.code == '0') {
+                var idTypeObj = {
+                  "1": '2',
+                  "2": '3',
+                  "20": '2',
+                  "21": '4' };
+
                 var resData = data.data;
                 // userId必定存在 保存
                 uni.setStorageSync('userId', resData.userId);
-                if (resData.state == '0') {
-                  // 已认证
-                  uni.setStorageSync('userInfo', resData);
-                  uni.setStorageSync('idType', resData.zysflb);
-                  _this.idType = resData.zysflb;
-                } else if (resData.state == '1') {
+                if (resData.state == '1') {
+                  // 已认证 但未激活
+                  uni.setStorageSync('idType', idTypeObj[resData.zysflb]);
+                  // 只显示个人身份信息
+                  _this.idType = idTypeObj[resData.zysflb];
+                } else if (resData.state == '0') {
                   // 跳转注册部分
                   uni.navigateTo({
                     url: '/pages/idConfirm/idConfirm' });
 
+                } else if (resData.state == '2') {
+                  // 登录正常
+                  uni.setStorageSync('state', resData.state);
+                  uni.setStorageSync('idType', idTypeObj[resData.zysflb]);
+                  // 显示权限模块
+                  _this.idType = idTypeObj[resData.zysflb];
+                  // 显示权限下所有模块
+                  _this.showall = true;
                 }
               } else {
                 uni.showToast({

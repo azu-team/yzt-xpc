@@ -78,6 +78,11 @@
 			"style": {
 				"navigationBarTitleText": "安全情况"
 			}
+		},{
+			"path":"pages/outLink/outLink",
+			"style": {
+				"navigationBarTitleText": "安全隐私协议"
+			}
 		}
 
 	],

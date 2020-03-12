@@ -117,4 +117,12 @@ view.data-v-281d8f2c, text.data-v-281d8f2c, image.data-v-281d8f2c, label.data-v-
 .m-line .u-title.data-v-281d8f2c {
   width: 25%;
 }
+.m-clause.data-v-281d8f2c {
+  text-align: center;
+  padding: 30rpx 60rpx;
+  font-size: 28rpx;
+}
+.m-clause .link.data-v-281d8f2c {
+    color: #5E5EFC;
+}
 

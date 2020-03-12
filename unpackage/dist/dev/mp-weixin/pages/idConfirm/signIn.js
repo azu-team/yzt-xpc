@@ -187,6 +187,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
 var _config = __webpack_require__(/*! ../../utils/config.js */ 16);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var mySelect = function mySelect() {return __webpack_require__.e(/*! import() | components/xfl-select/xfl-select */ "components/xfl-select/xfl-select").then(__webpack_require__.bind(null, /*! ../../components/xfl-select/xfl-select.vue */ 228));};var cropper = function cropper() {return Promise.all(/*! import() | pages/idConfirm/cropper */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/idConfirm/cropper")]).then(__webpack_require__.bind(null, /*! ./cropper.vue */ 235));};var _default =
 {
 
@@ -196,7 +200,7 @@ var _config = __webpack_require__(/*! ../../utils/config.js */ 16);function _obj
       tempFilePath: '', //上传图片地址
       form: {
         SFZH: '',
-        ZYSFLX: '2',
+        ZYSFLX: '1',
         XM: '',
         ESN: '',
         RLSJ: '' },
@@ -212,7 +216,7 @@ var _config = __webpack_require__(/*! ../../utils/config.js */ 16);function _obj
         id: '2' },
 
       {
-        value: '老师',
+        value: '教师',
         id: '3' },
 
       {
@@ -223,6 +227,12 @@ var _config = __webpack_require__(/*! ../../utils/config.js */ 16);function _obj
 
   },
   methods: {
+    watchLink: function watchLink(link) {
+      console.log('=========');
+      uni.navigateTo({
+        url: '../outLink/outLink?type=' + link });
+
+    },
     // 图片选择之后
     myUpload: function myUpload(_ref) {var path = _ref.path;
       // TODO 将选择的图片上传到服务器，同时携带参数
@@ -246,9 +256,23 @@ var _config = __webpack_require__(/*! ../../utils/config.js */ 16);function _obj
       // uni.navigateBack()
     },
     handleConfirm: function handleConfirm() {var _this = this;
+      // this.$emit('switchStatus', this.form.ZYSFLX);
+      // return;
+      // 将身份类型进行转码，因为在首页的权限判断不一致
+      var idType = {
+        "1": '1',
+        "2": '20',
+        "3": '2',
+        "4": '21' };
+
+      var params = _objectSpread({},
+      this.form, {
+        USERID: uni.getStorageSync('userId') });
+
+      params.ZYSFLX = idType[this.form.ZYSFLX];
       if (!this.form.ESN) {
         // 如果esn为空，表示注册用户
-        this.sendData();
+        this.sendData(params);
         return;
       }
       // this.$emit('switchStatus', this.form.type);
@@ -263,7 +287,7 @@ var _config = __webpack_require__(/*! ../../utils/config.js */ 16);function _obj
         success: function success(_ref3) {var tempFilePaths = _ref3.tempFilePaths,tempFiles = _ref3.tempFiles;
           // 图片大小小于40k
           _this.tempFilePath = tempFilePaths[0];
-          _this.sendDataByFile();
+          _this.sendDataByFile(params);
           // if (tempFiles[0].size < 40 * 1024) {
           // 	uni.getFileSystemManager().readFile({
           // 		filePath: tempFilePaths[0],
@@ -306,75 +330,53 @@ var _config = __webpack_require__(/*! ../../utils/config.js */ 16);function _obj
 
     },
     // 不包含附件，直接发请求,注册用户
-    sendData: function sendData() {var _this2 = this;
+    sendData: function sendData(params) {var _this2 = this;
       this.$HTTP({
         url: '/UserAuth/registerUser',
-        params: _objectSpread({},
-        this.form, {
-          USERID: uni.getStorageSync('userId') }),
-
+        params: params,
         successCallback: function successCallback(_ref4) {var data = _ref4.data;
-          if (data.code == '0') {
-            _this2.$emit('switchStatus', _this2.form.ZYSFLX);
-            return;
-          }
-          if (data.code == '0000') {
-            var resData = data.data;
-            if (resData.state == '2') {
-              // 激活成功
-              uni.setStorageSync('userInfo', resData);
-              uni.setStorageSync('idType', resData.zysflb);
-              uni.navigateBack();
-            }
-          } else {
-            uni.showToast({
-              title: data.code + ' : ' + data.msg,
-              icon: 'none',
-              duration: 3000 });
-
-          }
+          _this2.handleSuccess(data);
         } });
 
     },
     // 上传附件进行验证
-    sendDataByFile: function sendDataByFile() {var _this3 = this;
+    sendDataByFile: function sendDataByFile(params) {var _this3 = this;
       uni.showLoading({
         title: '正在验证',
         icon: 'none' });
-
-      var fileParams = _objectSpread({},
-      this.form, {
-        USERID: uni.getStorageSync('userId') });
 
       uni.uploadFile({
         url: _config.http_root + '/UserAuth/register', //服务器地址
         filePath: this.tempFilePath, //文件地址
         name: 'RLSJ', //服务器中文件对应的key值
-        formData: fileParams, //上传的额外参数
+        formData: params, //上传的额外参数
         success: function success(_ref5) {var data = _ref5.data;
           uni.hideLoading();
           data = JSON.parse(data);
-          if (data.code == '0') {
-            _this3.$emit('switchStatus', _this3.form.ZYSFLX);
-            return;
-          }
-          if (data.code == '0000') {
-            var resData = data.data;
-            if (resData.state == '2') {
-              // 激活成功
-              uni.setStorageSync('userInfo', resData);
-              uni.setStorageSync('idType', resData.zysflb);
-              uni.navigateBack();
-            }
-          } else {
-            uni.showToast({
-              title: data.code + ' : ' + data.msg,
-              icon: 'none',
-              duration: 3000 });
-
-          }
+          _this3.handleSuccess(data);
         } });
 
+    },
+    handleSuccess: function handleSuccess(data) {
+      if (data.code == '0') {
+        this.$emit('switchStatus', this.form.ZYSFLX);
+        return;
+      }
+      if (data.code == '0000') {
+        var resData = data.data;
+        if (resData.state == '2') {
+          // 激活成功
+          uni.setStorageSync('state', resData.state);
+          uni.setStorageSync('idType', this.form.ZYSFLX);
+          uni.navigateBack();
+        }
+      } else {
+        uni.showToast({
+          title: data.code + ' : ' + data.msg,
+          icon: 'none',
+          duration: 3000 });
+
+      }
     },
     judgeAuthSetting: function judgeAuthSetting() {
       uni.getSetting({

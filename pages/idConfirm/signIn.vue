@@ -19,7 +19,7 @@
 						:style_Container="'height: 2em; font-size: 28upx;'"
 						:placeholder="'选择身份'"
 						:selectHideType="'hideAll'"
-						initValue="学生"
+						:initValue="list[0].value"
 						@change="handleSelectChange"
 					></my-select>
 				</view>
@@ -55,7 +55,11 @@
 					<text>下一步{{ form.ESN ? '(人脸识别)' : '' }}</text>
 				</button>
 			</view>
-			
+			<view class="m-clause">
+				我同意
+					<text class="link" @tap="watchLink('https://hao.pthink.com.cn/privacy/jszj_user.htm')">《用户协议》</text>及
+					<text class="link" @tap="watchLink('https://hao.pthink.com.cn/privacy/jszj.htm')">《隐私政策》</text>
+			</view>
 			<cropper selWidth="660rpx" selHeight="660rpx" @upload="myUpload" avatarStyle="width:100vw;height:100vw;" ref='cropper' ></cropper>
 			<!-- #ifdef MP-WEIXIN -->
 			<!-- <camera device-position="front" flash="off" binderror="error" style="width: 100%; height: 300px;"></camera> -->
@@ -75,7 +79,7 @@ export default {
 			tempFilePath: '', //上传图片地址
 			form: {
 				SFZH: '',
-				ZYSFLX: '2',
+				ZYSFLX: '1',
 				XM: '',
 				ESN: '',
 				RLSJ: ''
@@ -91,7 +95,7 @@ export default {
 					id: '2'
 				},
 				{
-					value: '老师',
+					value: '教师',
 					id: '3'
 				},
 				{
@@ -102,6 +106,12 @@ export default {
 		};
 	},
 	methods: {
+		watchLink(link){
+			console.log('=========')
+			uni.navigateTo({
+				url:'../outLink/outLink?type='+link,
+			})
+		},
 		// 图片选择之后
 		myUpload({path}) {
 		  // TODO 将选择的图片上传到服务器，同时携带参数
@@ -125,9 +135,23 @@ export default {
 			// uni.navigateBack()
 		},
 		handleConfirm() {
+			// this.$emit('switchStatus', this.form.ZYSFLX);
+			// return;
+			// 将身份类型进行转码，因为在首页的权限判断不一致
+			let idType = {
+				"1":'1',
+				"2":'20',
+				"3":'2',
+				"4":'21'
+			}
+			let params = {
+				...this.form,
+				USERID: uni.getStorageSync('userId')
+			}
+			params.ZYSFLX = idType[this.form.ZYSFLX]
 			if (!this.form.ESN) {
 				// 如果esn为空，表示注册用户
-				this.sendData();
+				this.sendData(params);
 				return;
 			}
 			// this.$emit('switchStatus', this.form.type);
@@ -142,7 +166,7 @@ export default {
 				success: ({ tempFilePaths, tempFiles }) => {
 					// 图片大小小于40k
 					this.tempFilePath = tempFilePaths[0];
-					this.sendDataByFile()
+					this.sendDataByFile(params)
 					// if (tempFiles[0].size < 40 * 1024) {
 					// 	uni.getFileSystemManager().readFile({
 					// 		filePath: tempFilePaths[0],
@@ -185,75 +209,53 @@ export default {
 			// #endif
 		},
 		// 不包含附件，直接发请求,注册用户
-		sendData(){
+		sendData(params){
 			this.$HTTP({
 				url: '/UserAuth/registerUser',
-				params: {
-					...this.form,
-					USERID: uni.getStorageSync('userId')
-				},
+				params: params,
 				successCallback: ({ data }) => {
-					if (data.code == '0') {
-						this.$emit('switchStatus', this.form.ZYSFLX);
-						return;
-					}
-					if (data.code == '0000') {
-						let resData = data.data;
-						if (resData.state == '2') {
-							// 激活成功
-							uni.setStorageSync('userInfo', resData);
-							uni.setStorageSync('idType', resData.zysflb);
-							uni.navigateBack();
-						}
-					} else {
-						uni.showToast({
-							title: data.code + ' : ' + data.msg,
-							icon: 'none',
-							duration: 3000
-						});
-					}
+					this.handleSuccess(data)
 				}
 			});
 		},
 		// 上传附件进行验证
-		sendDataByFile() {
+		sendDataByFile(params) {
 			uni.showLoading({
 				title:'正在验证',
 				icon:'none'
 			})
-			let fileParams = {
-				...this.form,
-				USERID: uni.getStorageSync('userId')
-			}
 			uni.uploadFile({
 				url:http_root+'/UserAuth/register',//服务器地址
 				filePath:this.tempFilePath,//文件地址
 				name:'RLSJ',//服务器中文件对应的key值
-				formData:fileParams,//上传的额外参数
+				formData:params,//上传的额外参数
 				success:({data})=>{
 					uni.hideLoading()
 					data = JSON.parse(data)
-					if (data.code == '0') {
-						this.$emit('switchStatus', this.form.ZYSFLX);
-						return;
-					}
-					if (data.code == '0000') {
-						let resData = data.data;
-						if (resData.state == '2') {
-							// 激活成功
-							uni.setStorageSync('userInfo', resData);
-							uni.setStorageSync('idType', resData.zysflb);
-							uni.navigateBack();
-						}
-					} else {
-						uni.showToast({
-							title: data.code + ' : ' + data.msg,
-							icon: 'none',
-							duration: 3000
-						});
-					}
+					this.handleSuccess(data)
 				}
 			})
+		},
+		handleSuccess(data){
+			if (data.code == '0') {
+				this.$emit('switchStatus', this.form.ZYSFLX);
+				return;
+			}
+			if (data.code == '0000') {
+				let resData = data.data;
+				if (resData.state == '2') {
+					// 激活成功
+					uni.setStorageSync('state', resData.state);
+					uni.setStorageSync('idType', this.form.ZYSFLX);
+					uni.navigateBack();
+				}
+			} else {
+				uni.showToast({
+					title: data.code + ' : ' + data.msg,
+					icon: 'none',
+					duration: 3000
+				});
+			}
 		},
 		judgeAuthSetting() {
 			uni.getSetting({
@@ -283,5 +285,13 @@ export default {
 }
 .m-line .u-title {
 	width: 25%;
+}
+.m-clause{
+	text-align: center;
+	padding: 30rpx 60rpx;
+	font-size: 28rpx;
+	.link{
+		color: #5E5EFC;
+	}
 }
 </style>

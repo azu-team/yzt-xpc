@@ -25,6 +25,7 @@
 					<view class="u-title">性别</view>
 					<view class="u-content">
 						<my-select
+						    ref='form'
 							:list="sexList"
 							:clearable="false"
 							:showItemNum="5"
@@ -33,7 +34,7 @@
 							:style_Container="'height: 2em; font-size: 28upx;'"
 							:placeholder="'选择性别'"
 							:selectHideType="'hideAll'"
-							:initValue="sexList[0].value"
+							:initValue="formSexInitValue"
 							@change="handleSelectChange($event, 'XB')"
 						></my-select>
 					</view>
@@ -122,21 +123,20 @@
 					<view class="u-title">监护人手机</view>
 					<view class="u-content"><input class="u-input" type="text" v-model="form.JHRSJ" placeholder="18岁以下可选" /></view>
 				</view>
-				<view class="m-line">
+				<!-- <view class="m-line">
 					<view class="u-title">确认人员ESN</view>
 					<view class="u-content"><input class="u-input" type="text" v-model="form.QRRYESN" placeholder="班主任ESN" /></view>
-				</view>
-				<view class="m-line">
+				</view> -->
+				<!-- <view class="m-line">
 					<view class="u-title">签名证书</view>
 					<view class="u-content"><input class="u-input" type="text" v-model="form.QMZS" placeholder="请输入班主任的签名证书" /></view>
-				</view>
-				<view class="m-line">
+				</view> -->
+				<!-- <view class="m-line">
 					<view class="u-title">确认时间</view>
 					<view class="u-content">
 						<text @tap="showChoose('form','QRSJ')">{{form.QRSJ || '选择日期'}}</text>
-						<!-- <input class="u-input" type="text" v-model="form.QRSJ" placeholder="YYYYMMDDHHMISS" /> -->
 						</view>
-				</view>
+				</view> -->
 			</view>
 			<view  v-else-if="form.type == 3">
 				<view class="m-line">
@@ -171,6 +171,7 @@
 				    <view class="u-title">性别</view>
 				    <view class="u-content">
 				        <my-select
+							ref="jsForm"
 				            :list="sexList"
 				            :clearable="false"
 				            :showItemNum="5"
@@ -179,7 +180,7 @@
 				            :style_Container="'height: 2em; font-size: 28upx;'"
 				            :placeholder="'选择性别'"
 				            :selectHideType="'hideAll'"
-				            :initValue="sexList[0].value"
+				            :initValue="formSexInitValue"
 				            @change="handleSelectChange($event, 'XB')"
 				        ></my-select>
 				    </view>
@@ -220,21 +221,20 @@
 				    <view class="u-title">手机号</view>
 				    <view class="u-content"><input class="u-input" type="text" v-model="jsForm.XXSJ" placeholder="请输入手机号" /></view>
 				</view>
-				<view class="m-line">
+				<!-- <view class="m-line">
 				    <view class="u-title">确认人员ESN</view>
 				    <view class="u-content"><input class="u-input" type="text" v-model="jsForm.QRRYESN" placeholder="班主任ESN" /></view>
-				</view>
-				<view class="m-line">
+				</view> -->
+				<!-- <view class="m-line">
 				    <view class="u-title">签名证书</view>
 				    <view class="u-content"><input class="u-input" type="text" v-model="jsForm.QMZS" placeholder="请输入班主任的签名证书" /></view>
-				</view>
-				<view class="m-line">
+				</view> -->
+				<!-- <view class="m-line">
 				    <view class="u-title">确认时间</view>
 				    <view class="u-content">
 						<text @tap="showChoose('jsForm','QRSJ')">{{jsForm.QRSJ || '选择日期'}}</text>
-						<!-- <input class="u-input" type="text" v-model="jsForm.QRSJ" placeholder="YYYYMMDDHHMISS" /> -->
 						</view>
-				</view>
+				</view> -->
 			</view>
 			<view  v-else-if="form.type == 4">
 				<view class="m-line">
@@ -272,7 +272,7 @@
 			</view>
 
 			<view class="m-bottom">
-				<button class="u-btn"  @tap="handleConfirm" ><text>认证</text></button>
+				<button class="u-btn"  @tap="handleConfirm" ><text>提交</text></button>
 			</view>
 			<link-area
 				mode="date"
@@ -298,6 +298,7 @@ export default {
 	},
 	data() {
 		return {
+			formSexInitValue:sexList[0].value,
 			tempFilePath:'',//临时附件路径
 			formStatus: '1', //表填填写的进度，1 为 身份选择  2 为信息录入 作废
 			form: {
@@ -350,6 +351,12 @@ export default {
 			typeList: typeList,
 			timeFormName:'',
 			timeFormKey:'',
+			idTypeObj : {
+				"1":'1',
+				"2":'20',
+				"3":'2',
+				"4":'21'
+			}
 		};
 	},
 	mounted(){
@@ -357,40 +364,49 @@ export default {
 	},
 	methods: {
 		queryUserInfo(){
-			let url = '',formName = ''
-			if(this.type <= 2){
-				url = '/api/tour/esnAuthStudent/list'
-				formName = 'form'
-			}else if(this.type == 3){
-				url = '/api/tour/esnAuthTeacher/list'
-				formName = 'jsForm'
-			}else if(this.type == 4){
-				url = '/api/tour/esnForSchool/list'
-				formName = 'eduForm'
-			}
+			let url = '/UserAuth/getUserRz',formName = ''
+			
 			this.$HTTP({
 				url,
 				params:{
 					"pageNum": "",
 					"pageSize": "",
-					"userid": uni.getStorageSync('userId')
+					"ZYSFLX":this.idTypeObj[this.type],
+					"USERID": uni.getStorageSync('userId')
 				},
-				successCallback:res=>{
-					console.log(res,'res')
+				successCallback:({data})=>{
+					if(data.code == '0'){
+						let dataObj = data.data
+						if(this.type <= 2){
+							// XM: '', //姓名
+							// CSRQ: '', //出生日期
+							// XB: sexList[0].id, //性别
+							// SFZJHM: '', //身份证件号码
+							this.form.XM = dataObj.xm
+							this.form.CSRQ = dataObj.csrq
+							this.form.XB = dataObj.xb
+							this.form.SFZJHM = dataObj.sfzjhm
+							this.formSexInitValue = this.$tranform_code2name(sexList,dataObj.xb)
+							this.$nextTick(()=>{
+								this.$refs.form.init();
+							})
+						}else if(this.type == 3){
+							// XM: '', //姓名
+							// CSRQ: '', //出生日期
+							// XB: sexList[0].id, //性别编码
+							// SFZJHM: '', //身份证件号码
+							this.jsForm.XM = dataObj.xm
+							this.jsForm.CSRQ = dataObj.csrq
+							this.jsForm.XB = dataObj.xb
+							this.jsForm.SFZJHM = dataObj.sfzjhm
+							this.formSexInitValue = this.$tranform_code2name(sexList,dataObj.xb)
+							this.$nextTick(()=>{
+								this.$refs.jsForm.init();
+							})
+						}
+					}
 				}
 			})
-		},
-		// 查询数据，将已有数据进行填充
-		queryInfo(){
-			 this.$HTTP({
-				 url:'',
-				 params:{
-					 
-				 },
-				 successCallback:({data})=>{
-					 
-				 }
-			 })
 		},
 		handleCancelChoose(){
 			this.$refs.linkage.hide()
@@ -411,24 +427,24 @@ export default {
 				count:1,
 			  success: ({tempFilePaths,tempFiles}) => {
 				  // 图片大小小于40k TODO 图片大小不做处理，直接上传到服务器
-				  if(tempFiles[0].size < 40 * 1024 ){
 					  this.tempFilePath = tempFilePaths[0]
 					  this[formName][keyName] = tempFilePaths[0]
-					  return
-					  uni.getFileSystemManager().readFile({
-						  filePath:tempFilePaths[0],
-						  encoding:'base64',
-						  success:res=>{
-							  this[formName][keyName] = 'data:image/jpeg;base64,'+ res.data
-						  }
-					  })
-				  }else{
-					  uni.showToast({
-					  	title:'文件大小要小于40k',
-						icon:'none',
-						duration:3000
-					  })
-				  }
+				  // if(tempFiles[0].size < 40 * 1024 ){
+					 //  return
+					 //  uni.getFileSystemManager().readFile({
+						//   filePath:tempFilePaths[0],
+						//   encoding:'base64',
+						//   success:res=>{
+						// 	  this[formName][keyName] = 'data:image/jpeg;base64,'+ res.data
+						//   }
+					 //  })
+				  // }else{
+					 //  uni.showToast({
+					 //  	title:'文件大小要小于40k',
+						// icon:'none',
+						// duration:3000
+					 //  })
+				  // }
 			  }
 			})
 		},
@@ -445,10 +461,69 @@ export default {
 			}
 			this.form[formType] = orignItem.id;
 		},
-		saveInfo(wxUserInfo){
-			// 根据角色设置请求参数
-			let params = {}
-			if(this.form.type <=2){
+		saveInfo(params){
+			this.$HTTP({
+				url:'/UserAuth/createEsn',
+				params:params,
+				successCallback:({data})=>{
+					this.handleSucess(data)
+				},
+				completeCallback:()=>{
+					// uni.hideLoading()
+				}
+			})
+		},
+		saveInfoByFiles(url,params,fileName){
+			uni.showLoading({
+				title:'正在验证...'
+			})
+			uni.uploadFile({
+				url,//服务器地址
+				filePath:this.tempFilePath,//文件地址
+				name:fileName,//服务器中文件对应的key值
+				formData:params,//上传的额外参数
+				success:({data})=>{
+					uni.hideLoading()
+					data = JSON.parse(data)
+					this.handleSucess(data)
+				},
+				fail:()=>{
+					console.log('失败了')
+					uni.hideLoading()
+				}
+			})
+		},
+		handleSucess(data){
+			if(data.code == '0'){
+				// 接口响应成功
+				// esn 认证成功返回的esn号码
+				// uni.setStorageSync('userInfo', wxUserInfo);
+				uni.setStorageSync('idType', this.form.type);
+				uni.setStorageSync('state', data.data.jc.state);
+				uni.showToast({
+					title:'提交成功',
+					mask:true,
+					duration:1500
+				})
+				setTimeout(()=>{
+					uni.navigateBack();
+				},1500)
+			}else{
+				uni.showToast({
+					title: `${data.code}:${data.msg}`,
+					icon:'none',
+					duration:3000
+				})
+			}
+		},
+		handleConfirm() {
+			let url = http_root+'/UserAuth/saveTea',fileName='SZXP',params={}//默认教师、行政路径
+			if(this.form.type <= 2){
+				// 学生权限，需要添加默认参数 1 学生 20 家长
+				this.form.ZYSFLB = this.form.type == 1? "1" : "20"
+				fileName = 'SZXP'
+				// 上传路径区分 如果为学生和家长，路径不同
+				url = http_root+'/UserAuth/saveStu'
 				params = {...this.form}
 				delete params.type
 			}else if(this.form.type == 3){
@@ -456,66 +531,22 @@ export default {
 					...this.jsForm
 				}
 			}else if(this.form.type == 4){
+				this.eduForm.ZYSFLB = "21"
+				fileName = 'RLSJ'
 				params = {
 					...this.eduForm
 				}
 			}
-			let fileParams = {
-					...params,
-					USERID:uni.getStorageSync('userId')
-				}
-			// delete fileParams.SZXP
-			// console.log(fileParams,'file')
-			// uni.uploadFile({
-			// 	url:http_root+'/UserAuth/createEsn',//服务器地址
-			// 	filePath:this.tempFilePath,//文件地址
-			// 	name:'SZXP',//服务器中文件对应的key值
-			// 	formData:fileParams,//上传的额外参数
-			// 	success:(res)=>{
-			// 		console.log(res,'上传成功')
-			// 	}
-			// })
-			this.$HTTP({
-				url:'/UserAuth/createEsn',
-				params:fileParams,
-				successCallback:({data})=>{
-					if(data.code == '0'){
-						// 接口响应成功
-						// esn 认证成功返回的esn号码
-						// uni.setStorageSync('userInfo', wxUserInfo);
-						uni.setStorageSync('idType', this.form.type);
-						uni.showToast({
-							title:'认证成功',
-							mask:true,
-							duration:1500
-						})
-						setTimeout(()=>{
-							uni.navigateBack();
-						},1500)
-					}else{
-						uni.showToast({
-							title: `${data.code}:${data.msg}`,
-							icon:'none',
-							duration:3000
-						})
-					}
-				},
-				completeCallback:()=>{
-					// uni.hideLoading()
-				}
-			})
-		},
-		handleConfirm() {
-			if(this.form.type <= 2){
-				// 学生权限，需要添加默认参数 1 学生 20 家长
-				this.form.ZYSFLB = this.form.type == 1? "1" : "20"
-			}else if(this.form.type == 4){
-				this.eduForm.ZYSFLB = "21"
+			params.USERID = uni.getStorageSync('userId')
+			if(this.tempFilePath){
+				this.saveInfoByFiles(url,params,fileName)
+			}else{
+				this.saveInfo(params);
 			}
 			// uni.showLoading({
 			// 	title:'正在认证...'
 			// })
-			this.saveInfo();
+			
 			// uni.getUserInfo({
 			// 	provider: 'weixin',
 			// 	success: res => {

@@ -178,6 +178,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var _config = __webpack_require__(/*! ../../utils/config.js */ 16);
 var _amapWx = _interopRequireDefault(__webpack_require__(/*! ../../utils/amap-wx.js */ 180));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 var recorderManager = uni.getRecorderManager();
 var innerAudioContext = uni.createInnerAudioContext();
@@ -429,17 +430,31 @@ innerAudioContext.autoplay = true;var _default =
           }
         } });
 
+      return;
       // 上传数据
-      // uni.uploadFile({
-      // 	url:'',//服务器地址
-      // 	filePath:'',//文件地址
-      // 	name:'',//服务器中文件对应的key值
-      // 	formData:{
-      // 	},//上传的额外参数
-      // 	success:(res)=>{
-      // 		console.log(res,'上传成功')
-      // 	}
-      // })
+      uni.uploadFile({
+        url: _config.http_root + '/getHelp/save', //服务器地址
+        filePath: this.voicePath, //文件地址
+        name: 'field08', //服务器中文件对应的key值
+        formData: params, //上传的额外参数
+        success: function success(_ref3) {var data = _ref3.data;
+          uni.hideLoading();
+          data = JSON.parse(data);
+          if (data.code == 0) {
+            uni.showToast({
+              title: '提交成功!' });
+
+            setTimeout(function () {
+              uni.navigateBack();
+            }, 1500);
+          } else {
+            uni.showToast({
+              title: data.msg,
+              icon: 'none' });
+
+          }
+        } });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

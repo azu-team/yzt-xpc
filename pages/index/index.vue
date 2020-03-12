@@ -25,17 +25,19 @@ export default {
 		return {
 			hasUserInfo: false,
 			idType: '1',
+			showAll:false,
 		};
 	},
 	onShow() {
 		// 防止重复赋值
-		let idType = uni.getStorageSync('idType');
+		let idType = uni.getStorageSync('idType'),
+			state = uni.getStorageSync('state')
 		if (idType && idType == '1') {
 			// 学生与家长权限一致，标识不同需要单独处理
 			idType = '2';
 		}
 		if (idType != this.idType) this.idType = idType || '1';
-		// this.idType = 2;
+		this.showAll = state == '2'
 	},
 	mounted() {
 		this.getOpenId();
@@ -123,7 +125,7 @@ export default {
 					}
 				]
 			};
-			return moduleCon[this.idType];
+			return this.showAll? moduleCon[this.idType] : moduleCon[this.idType].slice(0,1);
 		}
 	},
 	methods: {
@@ -137,20 +139,38 @@ export default {
 							code
 						},
 						successCallback: ({ data }) => {
+							uni.navigateTo({
+								url: '/pages/idConfirm/idConfirm'
+							});
+							return
 							if (data.code == '0') {
+								let idTypeObj={
+									"1":'2',
+									"2":'3',
+									"20":'2',
+									"21":'4'
+								}
 								let resData = data.data;
 								// userId必定存在 保存
 								uni.setStorageSync('userId', resData.userId);
-								if (resData.state == '0') {
-									// 已认证
-									uni.setStorageSync('userInfo', resData);
-									uni.setStorageSync('idType', resData.zysflb);
-									this.idType = resData.zysflb;
-								} else if (resData.state == '1') {
+								if (resData.state == '1') {
+									// 已认证 但未激活
+									uni.setStorageSync('idType', idTypeObj[resData.zysflb]);
+									// 只显示个人身份信息
+									this.idType = idTypeObj[resData.zysflb];
+								} else if (resData.state == '0') {
 									// 跳转注册部分
 									uni.navigateTo({
 										url: '/pages/idConfirm/idConfirm'
 									});
+								} else if(resData.state == '2'){
+									// 登录正常
+									uni.setStorageSync('state',resData.state)
+									uni.setStorageSync('idType', idTypeObj[resData.zysflb]);
+									// 显示权限模块
+									this.idType = idTypeObj[resData.zysflb];
+									// 显示权限下所有模块
+									this.showall = true;
 								}
 							} else {
 								uni.showToast({
