@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "健康情况收集",
+  "usingComponents": {
+    "add-page": "/pages/common/healthStatusAdd",
+    "his-page": "/pages/common/healthStatusHistory"
+  }
+}

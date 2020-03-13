@@ -29,6 +29,7 @@ export default {
 		};
 	},
 	onShow() {
+		
 		// 防止重复赋值
 		let idType = uni.getStorageSync('idType'),
 			state = uni.getStorageSync('state')
@@ -49,51 +50,51 @@ export default {
 				'1': [
 					{
 						name: '身份认证',
-						imgUrl: '../../static/mp-weixin/pic1.png',
+						imgUrl: '../../static/mp-weixin/imgs/1.png',
 						path: '/pages/idConfirm/idConfirm'
 					}
 				],
 				'2': [
 					{
 						name: '个人信息',
-						imgUrl: '../../static/mp-weixin/pic2.png',
+						imgUrl: '../../static/mp-weixin/imgs/1.png',
 						path: '/pages/idConfirm/baseInfo'
 					},
 					{
 						name: '学生每日健康打卡',
-						imgUrl: '../../static/mp-weixin/pic2.png',
+						imgUrl: '../../static/mp-weixin/imgs/2.png',
 						path: '/pages/healthCard/healthCard'
 					},
 					{
 						name: '在线学习',
-						imgUrl: '../../static/mp-weixin/pic3.png',
+						imgUrl: '../../static/mp-weixin/imgs/3.png',
 						path: '/pages/stu/stuLearning'
 					},
 					{
 						name: '查看学习情况',
-						imgUrl: '../../static/mp-weixin/pic4.png',
+						imgUrl: '../../static/mp-weixin/imgs/4.png',
 						path: '/pages/stu/stuStatus'
 					},
 					{
 						name: '一键求助',
-						imgUrl: '../../static/mp-weixin/pic3.png',
+						imgUrl: '../../static/mp-weixin/imgs/5.png',
 						path: '/pages/common/quickHelp'
 					},
 					{
 						name: '健康情况收集',
-						imgUrl: '../../static/mp-weixin/pic4.png',
+						imgUrl: '../../static/mp-weixin/imgs/6.png',
 						path: '/pages/common/healthStatus'
 					},
 					{
 						name: '安全情况',
-						imgUrl: '../../static/mp-weixin/pic1.png',
+						imgUrl: '../../static/mp-weixin/imgs/7.png',
 						path: '/pages/common/safeStatus'
 					}
 				],
 				'3': [
 					{
 						name: '个人信息',
-						imgUrl: '../../static/mp-weixin/pic2.png',
+						imgUrl: '../../static/mp-weixin/imgs/1.png',
 						path: '/pages/idConfirm/baseInfo'
 					},
 					{
@@ -110,7 +111,7 @@ export default {
 				'4': [
 					{
 						name: '个人信息',
-						imgUrl: '../../static/mp-weixin/pic2.png',
+						imgUrl: '../../static/mp-weixin/imgs/1.png',
 						path: '/pages/idConfirm/baseInfo'
 					},
 					{
@@ -139,10 +140,6 @@ export default {
 							code
 						},
 						successCallback: ({ data }) => {
-							uni.navigateTo({
-								url: '/pages/idConfirm/idConfirm'
-							});
-							return
 							if (data.code == '0') {
 								let idTypeObj={
 									"1":'2',
@@ -259,6 +256,7 @@ export default {
 .item-wrapper {
 	width: 90%;
 	height: 260upx;
+	transform: scale(1.05);
 	&.disabled {
 		opacity: 0.6;
 	}
@@ -267,9 +265,9 @@ export default {
 	height: 165upx;
 }
 .text {
-	font-size: 28upx;
+	font-size: 30upx;
 	background: #fff;
-	color: #808080;
+	color: #333333;//#808080;
 	height: 95upx;
 	display: flex;
 	align-items: center;

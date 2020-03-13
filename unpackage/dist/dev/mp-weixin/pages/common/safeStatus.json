@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "安全情况",
+  "usingComponents": {
+    "add-page": "/pages/common/safeStatusAdd",
+    "his-page": "/pages/common/safeStatusHistory"
+  }
+}

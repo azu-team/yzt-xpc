@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "cropper": "/pages/idConfirm/cropper",
+    "my-select": "/components/xfl-select/xfl-select"
+  }
+}

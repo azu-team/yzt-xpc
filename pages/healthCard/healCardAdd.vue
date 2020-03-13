@@ -9,8 +9,8 @@
 				<view class="u-title" style="width: 25%;">当前区县</view>
 				<view class="u-content" style="width: 70%;display: inline-block;">
 					<!-- <text @tap="showChoose('linkage')">{{ region }}</text> -->
-					<!-- <view class=""><input type="text" v-model="form.field06" placeholder="请输入当前位置" /></view> -->
-					<view class=""><text @tap="showChoose('linkage')">{{ region }}</text></view>
+					<view class=""><input type="text" v-model="form.field06" placeholder="请输入当前位置" /></view>
+					<!-- <view class=""><text @tap="showChoose('linkage')">{{ region }}</text></view> -->
 					
 				</view>
 			</view>
@@ -253,6 +253,13 @@ export default {
 	},
 	onLoad(e) {},
 	mounted() {
+		this.$getLocationByAmap().then((data)=>{
+			let address = data[0].regeocodeData.addressComponent
+			this.form.field06 = address.province + address.city + address.district;
+			this.form.field05 = data[0].regeocodeData.addressComponent.city
+		}).catch(()=>{
+			
+		});
 		// this.amapPlugin = new amap.AMapWX({
 		// 	key: this.key
 		// });

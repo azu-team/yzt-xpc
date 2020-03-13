@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "健康申报",
+  "usingComponents": {
+    "add-page": "/pages/healthCard/healCardAdd",
+    "his-page": "/pages/healthCard/healthCardHistory"
+  }
+}

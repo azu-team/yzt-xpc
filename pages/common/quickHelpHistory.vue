@@ -10,6 +10,11 @@
 					<text>{{ params.name }}</text>
 					: {{ item[params.key] }}
 				</view>
+				<view class="cell">
+					<text>语音信息</text>:
+					<text v-if="item.field05" class="audio" @tap="handleDownload(item)">播放</text>
+					<text v-else>暂无</text>
+				</view>
 			</view>
 		</view>
 		<view class="" v-if="!dataArr.length">
@@ -19,6 +24,10 @@
 </template>
 
 <script>
+import {http_root} from '../../utils/config.js'
+// const innerAudioContext = uni.createInnerAudioContext();
+
+// innerAudioContext.autoplay = true;
 export default {
 	data() {
 		return {
@@ -29,19 +38,15 @@ export default {
 				},
 				{
 					name: '是否需要援助',
-					key: 'field06'
+					key: 'field03'
 				},
 				{
 					name: '是否受伤',
-					key: 'field07'
+					key: 'field04'
 				},
-				// {
-				// 	name: '语音信息',
-				// 	key: 'field08'
-				// },
 				{
 					name: '求助具体要求',
-					key: 'field09'
+					key: 'field06'
 				}
 			],
 			dataArr: []
@@ -51,12 +56,42 @@ export default {
 		this.getData()
 	},
 	methods: {
+		audioPlay(path){
+			// innerAudioContext.src = path;
+			// innerAudioContext.play();
+		},
+		handleDownload(item){
+			if(item.filePath){
+				this.audioPlay(item.filePath)
+			}else{
+				uni.showLoading({
+					title:'下载附件中...'
+				})
+				uni.downloadFile({
+					url:item.field05,
+					success:({tempFilePath})=>{
+						uni.hideLoading()
+						item.filePath = tempFilePath;
+						this.audioPlay(tempFilePath)
+					},
+					fail:()=> {
+						uni.hideLoading()
+						uni.showToast({
+							title:'下载失败',
+							icon:'none'
+						})
+					}
+				})
+			}
+			
+		},
 		handleCollapse(item, index) {
 			this.$set(item, 'isActive', !item.isActive);
 		},
 		getData(){
 			this.$HTTP({
 				url:'/getHelp/list',
+				showLoading:false,
 				params:{
 					"field01":uni.getStorageSync('userId'),
 					"pageNum":"",
@@ -88,7 +123,7 @@ export default {
 @import '../../assets/style/list.scss';
 .m-content {
 	padding: 20upx 40upx;
-	height: calc(100vh - 295upx);
+	height: calc(100vh - 315upx);
 	overflow: auto;
 	swiper,swiper-item,{
 		width: 100%;
@@ -130,5 +165,8 @@ export default {
 			}
 		}
 	}
+}
+.audio{
+	
 }
 </style>

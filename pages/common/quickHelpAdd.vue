@@ -4,7 +4,7 @@
 			<view class="m-line">
 				<view class="u-title" style="width: 20%;">当前位置</view>
 				<view class="u-content" style="width: 75%;">
-					<view class="" style="width: 100%;"><input type="text" v-model="form.field02" placeholder="请输入当前位置" /></view>
+					<view class="" style="width: 100%;"><input type="text" v-model="form.FIELD02" placeholder="请输入当前位置" /></view>
 					<!-- <text @tap="showChoose">{{region}}</text> -->
 				</view>
 			</view>
@@ -13,10 +13,10 @@
 			<view class="u-q-title"><text>1.是否需要援助</text> 
 			<!-- <text class="icon">单选</text> -->
 			</view>
-			<radio-group @change="handleRadioChange($event,'field06')">
-				<label class="u-list-cell" v-for="(item,index) in list1" :key="index">
-					<view class="u-radio"><radio :value="item.value" :checked="form.field06 == item.value" /></view>
-					<view :class="{ 'u-text': true, active: form.field06 == item.value }">{{ item.name }}</view>
+			<radio-group @change="handleRadioChange($event,'FIELD03')">
+				<label class="u-list-cell" v-for="(item,index) in list2" :key="index">
+					<view class="u-radio"><radio :value="item.value" :checked="form.FIELD03 == item.value" /></view>
+					<view :class="{ 'u-text': true, active: form.FIELD03 == item.value }">{{ item.name }}</view>
 				</label>
 			</radio-group>
 		</view>
@@ -24,25 +24,25 @@
 			<view class="u-q-title"><text>2.是否受伤</text> 
 			<!-- <text class="icon">单选</text> -->
 			</view>
-			<radio-group @change="handleRadioChange($event,'field07')">
+			<radio-group @change="handleRadioChange($event,'FIELD04')">
 				<label class="u-list-cell" v-for="(item, index) in list2" :key="index">
-					<view class="u-radio"><radio :value="item.value" :checked="form.field07 == item.value" /></view>
-					<view :class="{ 'u-text': true, active: form.field07 == item.value }">{{ item.name }}</view>
+					<view class="u-radio"><radio :value="item.value" :checked="form.FIELD04 == item.value" /></view>
+					<view :class="{ 'u-text': true, active: form.FIELD04 == item.value }">{{ item.name }}</view>
 				</label>
 			</radio-group>
 		</view>
-		<!-- <view class="m-list">
+		<view class="m-list">
 			<view class="u-q-title"><text>3.语音信息</text></view>
 			<view class="u-content">
 				<view :class="{'f-record':true,'recording':recordStatus==2}" @click="handleRecord">{{audioText}}</view>
 				<view :class="['f-audio',voicePath?'':'disabled',audioStatus=='播放文件'?'':'recording']" @click="playVoice">{{audioStatus}}</view>
 			</view>
-		</view> -->
+		</view>
 		<view class="m-list">
-			<view class="u-q-title"><text>3.求助具体要求</text></view>
+			<view class="u-q-title"><text>4.求助具体要求</text></view>
 			<view class="u-content">
 				<editor id="editor"  placeholder="请输入具体要求" @ready="onEditorReady"></editor>
-				<!-- <input class="input" type="text" v-model="form.field09" /> -->
+				<!-- <input class="input" type="text" v-model="form.FIELD06" /> -->
 			</view>
 		</view>
 		<view class="m-bottom">
@@ -89,10 +89,12 @@ export default {
 			text: 'uni-app',
 			voicePath: '',
 			form:{
-				field02:'',
-				field06:'健康',
-				field07:'无',
-				field09:''
+				FIELD02:'',
+				FIELD03:'否',
+				FIELD04:'否',
+				FIELD06:'',
+				FIELD08:'',//经度
+				FIELD09:'',//纬度
 			},
 			list1: [
 				{
@@ -111,11 +113,11 @@ export default {
 			],
 			list2:[
 				{
-					value:'无',
-					name:'无'
+					value:'否',
+					name:'否'
 				},{
-					value:'有',
-					name:'有'
+					value:'是',
+					name:'是'
 				}
 			]
 		};
@@ -131,12 +133,29 @@ export default {
 		}
 	},
 	mounted() {
-		this.amapPlugin = new amap.AMapWX({
-			key: this.key
+		this.$getLocationByAmap().then((data)=>{
+			this.form.FIELD08 = data[0].longitude
+			this.form.FIELD09 = data[0].latitude
+			this.form.FIELD02 = data[0].name;
+		}).catch(()=>{
+			
 		});
-		this.judgeAuthorize()
+		// this.amapPlugin = new amap.AMapWX({
+		// 	key: this.key
+		// });
+		// this.judgeAuthorize()
 		innerAudioContext.onEnded(()=>{
 			this.audioStatus = '播放文件'
+		})
+		innerAudioContext.onError(({errCode})=>{
+			console.log(errCode,'err')
+			uni.showToast({
+				title:errCode,
+				icon:'none'
+			})
+			this.$nextTick(()=>{
+				// this.audioStatus = '播放文件'
+			})
 		})
 	},
 	methods: {
@@ -149,7 +168,7 @@ export default {
 		handleChoose({checkArr,checkValue,defaultVal,result}){
 			this.$refs.linkage.hide()
 			this.region = result
-			this.form.field02 = result
+			this.form.FIELD02 = result
 		},
 		onEditorReady() {
 			uni.createSelectorQuery().in(this).select('#editor').context((res) => {
@@ -167,7 +186,7 @@ export default {
 		validate(){
 			this.editorCtx.getContents({
 				success:(data)=>{
-					this.form.field09 = data.text
+					this.form.FIELD06 = data.text
 				},
 				fail:()=>{
 					uni.showToast({
@@ -177,7 +196,16 @@ export default {
 				},
 				complete:()=>{
 					// 如果求助要求不是必须项，则使用此方法，否则只调用success方法
-					this.sendData()
+					let params = {
+						...this.form,
+						FIELD01:uni.getStorageSync('userId'),
+						ID:'',
+					}
+					if(this.voicePath){
+						this.sendDataByFiles(params)
+					}else{
+						this.sendData(params)
+					}
 				}
 			})
 		},
@@ -186,8 +214,10 @@ export default {
 				success: res => {
 					this.amapPlugin.getRegeo({
 						success: data => {
-							this.form.field02 = data[0].name;
-							// this.form.field05 = data[0].regeocodeData.addressComponent.city
+							this.form.FIELD08 = data[0].longitude
+							this.form.FIELD09 = data[0].latitude
+							this.form.FIELD02 = data[0].name;
+							// this.form.FIELD05 = data[0].regeocodeData.addressComponent.city
 						},
 						fail:(err)=>{
 							console.log(err,'err')
@@ -233,6 +263,7 @@ export default {
 		},
 		initPage(){
 			recorderManager.onStop((res) =>{
+				console.log(res.tempFilePath,'文件地址')
 				this.voicePath = res.tempFilePath;
 			});
 		},
@@ -267,7 +298,7 @@ export default {
 				})
 				setTimeout(()=>{
 					this.openQx()
-				},1500)
+				},500)
 				return
 			};
 			if(this.recordStatus == 1 || this.recordStatus == 3){
@@ -286,55 +317,49 @@ export default {
 				this.audioStatus = '播放中...'
 			}
 		},
-		sendData(){
-			// 缺少key值  field01 用户id
-			// field08 语音信息
-			let params = {
-				...this.form,
-				field01:uni.getStorageSync('userId')
+		handleSuccess(data){
+			if(data.code == 0){
+				uni.showToast({
+					title:'提交成功!'
+				})
+				setTimeout(()=>{
+					uni.navigateBack()
+				},1500)
+			}else{
+				uni.showToast({
+					title:data.msg,
+					icon:'none'
+				})
 			}
-			this.$HTTP({
-				url:'/getHelp/save',
-				params,
-				successCallback: ({data}) => {
-					if(data.code == 0){
-						uni.showToast({
-							title:'提交成功!'
-						})
-						setTimeout(()=>{
-							uni.navigateBack()
-						},1500)
-					}else{
-						uni.showToast({
-							title:data.msg,
-							icon:'none'
-						})
-					}
-				}
+		},
+		sendDataByFiles(params){
+			uni.showLoading({
+				title:'正在提交',
+				icon:'none'
 			})
-			return;
-			// 上传数据
 			uni.uploadFile({
-				url:http_root+'/getHelp/save',//服务器地址
+				url:http_root+'/getHelp/saveupFile',//服务器地址
 				filePath:this.voicePath,//文件地址
-				name:'field08',//服务器中文件对应的key值
+				name:'FIELD05',//服务器中文件对应的key值
 				formData:params,//上传的额外参数
 				success:({data})=>{
 					uni.hideLoading()
 					data = JSON.parse(data)
-					if(data.code == 0){
-						uni.showToast({
-							title:'提交成功!'
-						})
-						setTimeout(()=>{
-							uni.navigateBack()
-						},1500)
-					}else{
-						uni.showToast({
-							title:data.msg,
-							icon:'none'
-						})
-					}
+					this.handleSuccess(data)
+				}
+			})
+		},
+		sendData(params){
+			// 不含附件字段要为小写
+			let params_lower={}
+			for(let key in params){
+				params_lower[key.toLowerCase()] = params[key]
+			}
+			this.$HTTP({
+				url:'/getHelp/save',
+				params_lower,
+				successCallback: ({data}) => {
+					this.handleSuccess(data)
 				}
 			})
 		}

@@ -18,7 +18,8 @@
 			<view class="m-line">
 				<view class="u-title">所在区县</view>
 				<view class="u-content">
-					<text @tap="showChoose">{{region}}</text>
+					<!-- <text @tap="showChoose">{{region}}</text> -->
+					<view class=""><input type="text" v-model="form.field02" placeholder="请输入当前位置" /></view>
 				</view>
 			</view>
 		</view>
@@ -101,6 +102,7 @@ export default {
 				// },
 			],
 			form: {
+				field02:'',
 				field03: '被盗',
 				field04: '红',
 				field05: '本地居家隔离',
@@ -181,7 +183,14 @@ export default {
 			]
 		};
 	},
-	onLoad(e) {},
+	mounted(){
+		this.$getLocationByAmap().then((data)=>{
+			let address = data[0].regeocodeData.addressComponent
+			this.form.field02 = address.province + address.city + address.district;
+		}).catch(()=>{
+			
+		});
+	},
 	methods: {
 		handleCancelChoose(){
 			this.$refs.linkage.hide()
