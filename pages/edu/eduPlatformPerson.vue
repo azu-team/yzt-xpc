@@ -2,26 +2,28 @@
 	<!-- 行政人员 -->
 	<view class="container">
 		<view class="m-title">选择学习平台</view>
-		<view class="m-condition">
+		<!-- <view class="m-condition">
 			<text class="u-tips" @tap="handleChooseTime(true)">{{startTime || '开始时间'}}</text>
 			<text class="u-middle">至</text>
 			<text class="u-tips" @tap="handleChooseTime(false)">{{endTime || '结束时间'}}</text>
-		</view>
+		</view> -->
 		<view class="m-content">
 			<view class="u-title-wrapper">
 				<view class="u-title"></view>
-				<view class="u-title">上次课程名称</view>
-				<view class="u-title">应到/实到</view>
-				<view class="u-title">学习时间</view>
+				<view class="u-title">辖区学校使用数</view>
+				<view class="u-title">使用人数</view>
+				<view class="u-title">课程门数</view>
+				<view class="u-title">课时总长</view>
 			</view>
 			<view class="u-list" v-for="(item, index) in dataArr" :key="index">
 				<view class="u-platform"   @tap="handleNav(item)">
 					<view class="u-left"><image class="icon" :src="item.logoUrl" mode="aspectFit"></image></view>
 					<view class="u-right">{{ item.name }}</view>
 				</view>
-				<view class="u-desc">{{item.courseName}}</view>
-				<view class="u-desc" @tap="handleWatchDetail(item)">{{item.yd}}/<text class="link">{{item.sd}}</text> </view>
-				<view class="u-desc">{{item.learningTime}}</view>
+				<view class="u-desc" @tap="handleWatchDetail(item)"><text class="link">{{item.schoolNum}}</text></view>
+				<view class="u-desc" >{{item.userNum}} </view>
+				<view class="u-desc">{{item.courseNum}}</view>
+				<view class="u-desc">{{item.totalTime}}</view>
 			</view>
 		</view>
 		
@@ -40,20 +42,16 @@
 				<view class="m-pop-content">
 					<view class="m-close">
 						<text></text>
-						<text>缺勤人数</text>
+						<text>学校列表</text>
 						<icon type="cancel" size="20" @tap="handleClose" color="#000"/>
 					</view>
 					<view class="t-table" >
 					  <view class="t-row t-title">
-					    <view class="t-th">课程名称</view>
-					    <view class="t-th">缺课人</view>
-					    <view class="t-th">缺课原因</view>
-					    <view class="t-th">学习时间</view>
+					    <view class="t-th">学校名称</view>
+					    <view class="t-th">课程时长</view>
 					  </view>
 					  	<view class="t-row" v-for="(row, index) in trList" :key="index">
 					  	  <view class="t-td">{{row.className}}</view>
-					  	  <view class="t-td">{{row.name}}</view>
-					  	  <view class="t-td">{{row.reason}}</view>
 					  	  <view class="t-td">{{row.classTime}}</view>
 					  	</view>
 					</view>
@@ -159,51 +157,56 @@ export default {
 					name: '腾讯课堂',
 					value: '1',
 					logoUrl: '/static/mp-weixin/tencent.png',
-					courseName:'计算机原理',
+					schoolNum:'10',
 					loginTime:'3月3日 9:00',
 					learningTime:'9:00-10:00',
-					sd:'42',
-					yd:'44',
+					courseNum:'42',
+					totalTime:'44h',
+					userNum:100,
 				},
 				{
 					name: '钉钉',
 					value: '2',
 					logoUrl: '/static/mp-weixin/dingding.png',
-					courseName:'思想品德修养',
+					schoolNum:'11',
 					loginTime:'3月4日 9:00',
 					learningTime:'9:00-10:00',
-					sd:'42',
-					yd:'44',
+					courseNum:'42',
+					totalTime:'44h',
+					userNum:100,
 				},
 				{
 					name: '凤凰职教云',
 					value: '3',
 					logoUrl: '/static/mp-weixin/fenghuang.png',
-					courseName:'计算机原理',
+					schoolNum:'12',
 					loginTime:'3月5日 9:00',
 					learningTime:'9:00-10:00',
-					sd:'42',
-					yd:'44',
+					courseNum:'42',
+					totalTime:'44h',
+					userNum:100,
 				},
 				{
 					name: '智慧职教',
 					value: '4',
 					logoUrl: '/static/mp-weixin/zhihui.png',
-					courseName:'数学',
+					schoolNum:'13',
 					loginTime:'3月3日 9:00',
 					learningTime:'9:00-10:00',
-					sd:'42',
-					yd:'44',
+					courseNum:'42',
+					totalTime:'44h',
+					userNum:100,
 				},
 				{
 					name: '超星泛雅',
 					value: '5',
 					logoUrl: '/static/mp-weixin/chaoxing.png',
-					courseName:'体育',
+					schoolNum:'11',
 					loginTime:'3月4日 9:00',
 					learningTime:'9:00-10:00',
-					sd:'42',
-					yd:'44',
+					courseNum:'42',
+					totalTime:'44h',					
+					userNum:100,
 				}
 			]
 		};
@@ -282,7 +285,7 @@ export default {
 		font-size: 28rpx;
 		.u-title{
 			display: inline-block;
-			width: 25%;
+			width: 20%;
 			vertical-align: middle;
 		}
 	}
@@ -293,7 +296,7 @@ export default {
 
 		.u-platform {
 			display: inline-block;
-			width: 20%;
+			width: 15%;
 			margin: 0 2.5%;
 			text-align: center;
 			padding: 20upx 0;
@@ -315,7 +318,7 @@ export default {
 		}
 		.u-desc{
 			display: inline-block;
-			width: 25%;
+			width: 20%;
 			font-size: 28rpx;
 			color: $uni-text-color;
 			word-break: break-all;

@@ -1,22 +1,35 @@
 <template>
 	<view class="container">
-		<view class="">
-			
+		<view v-if="isHeadMaster">
+			<head-master></head-master>
 		</view>
-		<view class="">
-			
+		<view v-else>
+			<person></person>
 		</view>
 	</view>
 </template>
 <script>
+	import headMaster from './eduPlatformHeadMaster.vue'
+	import person from './eduPlatformPerson.vue'
 export default {
+	components:{headMaster,person},
 	data() {
 		return {
+			isHeadMaster:false,
 		};
+	},
+	onLoad(){
+		this.judgePerson()
 	},
 	mounted(){
 	},
 	methods: {
+		judgePerson(){
+			// this.$HTTP({
+			// 	url:'',
+			// 	params:{}
+			// })
+		}
 	}
 };
 </script>
