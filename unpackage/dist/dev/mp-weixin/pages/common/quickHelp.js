@@ -83,6 +83,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.__map(_vm.contactArr, function(item, index) {
+    var g0 = item.name.substring(0, 7)
+    return {
+      $orig: _vm.__get_orig(item),
+      g0: g0
+    }
+  })
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -116,7 +132,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var addPage = function addPage() {return Promise.all(/*! import() | pages/common/quickHelpAdd */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/common/quickHelpAdd")]).then(__webpack_require__.bind(null, /*! ./quickHelpAdd.vue */ 182));};var hisPage = function hisPage() {return Promise.all(/*! import() | pages/common/quickHelpHistory */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/common/quickHelpHistory")]).then(__webpack_require__.bind(null, /*! ./quickHelpHistory.vue */ 189));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var addPage = function addPage() {return Promise.all(/*! import() | pages/common/quickHelpAdd */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/common/quickHelpAdd")]).then(__webpack_require__.bind(null, /*! ./quickHelpAdd.vue */ 182));};var hisPage = function hisPage() {return Promise.all(/*! import() | pages/common/quickHelpHistory */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/common/quickHelpHistory")]).then(__webpack_require__.bind(null, /*! ./quickHelpHistory.vue */ 189));};var _default =
 
 
 
@@ -165,7 +181,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    handleCall: function handleCall(phoneNumber) {
+      uni.makePhoneCall({
+        phoneNumber: phoneNumber });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

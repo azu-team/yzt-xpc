@@ -153,6 +153,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 
 {
@@ -160,13 +163,16 @@ var _default =
     return {
       hasUserInfo: false,
       idType: '1',
-      showAll: false };
+      showAll: false,
+      tips: '可信身份认证' };
 
   },
   onShow: function onShow() {
 
     // 防止重复赋值
+    // 用户权限判断标识符
     var idType = uni.getStorageSync('idType'),
+    // 未激活用户 仅显示身份认证信息
     state = uni.getStorageSync('state');
     if (idType && idType == '1') {
       // 学生与家长权限一致，标识不同需要单独处理
@@ -174,6 +180,7 @@ var _default =
     }
     if (idType != this.idType) this.idType = idType || '1';
     this.showAll = state == '2';
+    this.tips = this.idType == '1' ? '可信身份认证' : '使用场景';
   },
   mounted: function mounted() {
     this.getOpenId();
@@ -185,7 +192,7 @@ var _default =
         '1': [
         {
           name: '身份认证',
-          imgUrl: '../../static/mp-weixin/imgs/1.png',
+          imgUrl: '../../static/mp-weixin/imgs/login.png',
           path: '/pages/idConfirm/idConfirm' }],
 
 
@@ -196,7 +203,7 @@ var _default =
           path: '/pages/idConfirm/baseInfo' },
 
         {
-          name: '学生每日健康打卡',
+          name: '每日健康打卡',
           imgUrl: '../../static/mp-weixin/imgs/2.png',
           path: '/pages/healthCard/healthCard' },
 
@@ -234,12 +241,12 @@ var _default =
 
         {
           name: '在线授课',
-          imgUrl: '../../static/mp-weixin/pic2.png',
+          imgUrl: '../../static/mp-weixin/imgs/2.png',
           path: '/pages/teacher/teaTeaching' },
 
         {
           name: '查看授课情况',
-          imgUrl: '../../static/mp-weixin/pic3.png',
+          imgUrl: '../../static/mp-weixin/imgs/3.png',
           path: '/pages/teacher/teaStatistic' }],
 
 
@@ -251,12 +258,12 @@ var _default =
 
         {
           name: '查看与统计所辖区域授课情况',
-          imgUrl: '../../static/mp-weixin/pic4.png',
+          imgUrl: '../../static/mp-weixin/imgs/2.png',
           path: '/pages/edu/eduTeachingStatistic' },
 
         {
           name: '查看与统计所辖区域学习情况',
-          imgUrl: '../../static/mp-weixin/pic1.png',
+          imgUrl: '../../static/mp-weixin/imgs/3.png',
           path: '/pages/edu/eduLearningStatistic' }] };
 
 
@@ -290,6 +297,7 @@ var _default =
                   uni.setStorageSync('idType', idTypeObj[resData.zysflb]);
                   // 只显示个人身份信息
                   _this.idType = idTypeObj[resData.zysflb];
+                  _this.tips = '使用场景';
                 } else if (resData.state == '0') {
                   // 跳转注册部分
                   uni.navigateTo({
@@ -302,7 +310,7 @@ var _default =
                   // 显示权限模块
                   _this.idType = idTypeObj[resData.zysflb];
                   // 显示权限下所有模块
-                  _this.showall = true;
+                  _this.showAll = true;
                 }
               } else {
                 uni.showToast({

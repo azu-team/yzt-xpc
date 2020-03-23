@@ -14,7 +14,7 @@
 		overflow:auto;
 	}
 	.u-list {
-		padding: 20upx 40upx;
+		padding: 20upx 0;
 		background-color: #ffffff;
 		border-radius: 30upx;
 		margin-bottom: 20upx;
@@ -24,8 +24,8 @@
 			font-size: 32upx;
 			color: $uni-text-color;
 			border-bottom: solid 1px $main-borer-color;
-			padding-bottom: 20upx;
 			position: relative;
+			padding: 0 40upx 20upx 40upx;
 		}
 		.u-list-desc {
 			font-size: 28upx;
@@ -33,13 +33,19 @@
 			transition: max-height 0.3s; 
 			max-height: 0;
 			overflow: hidden;
+			background-color: #F9F9F9;
+			padding:0 40upx;
 			&.active{
 				max-height: 270upx;
 			}
 			.cell {
 				display: inline-block;
-				width: 40%;
-				margin: 20upx 0 0 40upx;
+				width: 50%;
+				margin: 20upx 0 0 0;
+				color: #5F5F5F;
+				.cell-title{
+					color: #959595;
+				}
 				&.one_line {
 					display: block;
 					width: 100%;
@@ -62,6 +68,7 @@
 	// transform: translateX(8upx);
 	z-index: 3;
 	&.active{
+		border-left-color: #0195FF;
 		transform-origin: center center;
 		transform: translate(-5upx,10upx) rotate(90deg);
 	}

@@ -175,11 +175,6 @@ export default {
 		        this.editorCtx = res.context
 		    }).exec()
 		},
-		handleCall(phoneNumber){
-			uni.makePhoneCall({
-			    phoneNumber: phoneNumber
-			});
-		},
 		handleRadioChange(evt,name){
 			this.form[name] = evt.target.value
 		},

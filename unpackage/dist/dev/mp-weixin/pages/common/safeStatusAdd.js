@@ -83,6 +83,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.__map(_vm.contactArr, function(item, index) {
+    var g0 = item.name.substring(0, 7)
+    return {
+      $orig: _vm.__get_orig(item),
+      g0: g0
+    }
+  })
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -211,14 +227,14 @@ var _default =
       region: '选择位置',
       nodes: "", //富文本内容
       contactArr: [
-        // {
-        // 	name:'赵某某',phone:'15154546565',
-        // },{
-        // 	name:'钱某某',phone:'15154546565',
-        // },{
-        // 	name:'孙某某',phone:'15154546565',
-        // },
-      ],
+      {
+        name: '班主任', phone: '18621582789' },
+      {
+        name: '学校保卫室', phone: '18621582789' },
+      {
+        name: '110', phone: '18621582789' }],
+
+
       form: {
         field02: '',
         field03: '被盗',
@@ -308,15 +324,38 @@ var _default =
     }).catch(function () {
 
     });
+    this.getHtmlContent();
   },
   methods: {
+    handleCall: function handleCall(phoneNumber) {
+      uni.makePhoneCall({
+        phoneNumber: phoneNumber });
+
+    },
+    getHtmlContent: function getHtmlContent() {var _this2 = this;
+      this.$HTTP({
+        url: '/safeData/getParam',
+        params: {},
+        successCallback: function successCallback(_ref) {var data = _ref.data;
+          if (data.code == 0) {
+            _this2.nodes = data.data[0].v;
+          } else {
+            uni.showToast({
+              title: data.msg,
+              icon: 'none' });
+
+          }
+
+        } });
+
+    },
     handleCancelChoose: function handleCancelChoose() {
       this.$refs.linkage.hide();
     },
     showChoose: function showChoose() {
       this.$refs.linkage.show();
     },
-    handleChoose: function handleChoose(_ref) {var checkArr = _ref.checkArr,checkValue = _ref.checkValue,defaultVal = _ref.defaultVal,result = _ref.result;
+    handleChoose: function handleChoose(_ref2) {var checkArr = _ref2.checkArr,checkValue = _ref2.checkValue,defaultVal = _ref2.defaultVal,result = _ref2.result;
       this.$refs.linkage.hide();
       this.region = result;
       this.form.field02 = result;
@@ -332,7 +371,7 @@ var _default =
       this.$HTTP({
         url: '/safeData/save',
         params: params,
-        successCallback: function successCallback(_ref2) {var data = _ref2.data;
+        successCallback: function successCallback(_ref3) {var data = _ref3.data;
           if (data.code == 0) {
             uni.showToast({
               title: '提交成功!' });

@@ -1,7 +1,7 @@
 <template>
 	<view >
-		<!-- <view class="m-tip first-line">
-			<view class="u-grid">
+		<view class="m-tip first-line">
+			<view class="u-grid" style="margin-bottom: 10upx;">
 				<view class="left">安全告知书</view>
 				<view class="right">
 					<rich-text :nodes="nodes"></rich-text>
@@ -10,10 +10,10 @@
 			<view class="u-grid">
 				<view class="left">紧急联系人</view>
 				<view class="right">
-					<view class="list-item" v-for="(item,index) in contactArr" :key="index"><text class="name">{{item.name}}</text> <text class="phone" @tap="handleCall(item.phone)">{{item.phone}}</text></view>
+					<view class="list-item" v-for="(item,index) in contactArr" :key="index"><text class="name" @tap="handleCall(item.phone)">{{item.name.length>=8?item.name.substring(0,7)+'...':item.name}}</text> </view>
 				</view>
 			</view>
-		</view> -->
+		</view>
 		<view class="m-list first-line">
 			<view class="m-line">
 				<view class="u-title">所在区县</view>
@@ -93,13 +93,13 @@ export default {
 			region:'选择位置',
 			nodes:``,//富文本内容
 			contactArr:[
-				// {
-				// 	name:'赵某某',phone:'15154546565',
-				// },{
-				// 	name:'钱某某',phone:'15154546565',
-				// },{
-				// 	name:'孙某某',phone:'15154546565',
-				// },
+				{
+					name:'班主任',phone:'18621582789',
+				},{
+					name:'学校保卫室',phone:'18621582789',
+				},{
+					name:'110',phone:'18621582789',
+				},
 			],
 			form: {
 				field02:'',
@@ -190,8 +190,31 @@ export default {
 		}).catch(()=>{
 			
 		});
+		this.getHtmlContent();
 	},
 	methods: {
+		handleCall(phoneNumber){
+			uni.makePhoneCall({
+			    phoneNumber: phoneNumber
+			});
+		},
+		getHtmlContent(){
+			this.$HTTP({
+				url:'/safeData/getParam',
+				params:{},
+				successCallback:({data})=>{
+					if(data.code == 0){
+						this.nodes = data.data[0].v
+					}else{
+						uni.showToast({
+							title:data.msg,
+							icon:'none'
+						})
+					}
+					
+				}
+			})
+		},
 		handleCancelChoose(){
 			this.$refs.linkage.hide()
 		},

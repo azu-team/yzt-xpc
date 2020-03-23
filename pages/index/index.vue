@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="title">
-			使用场景
+			{{tips}}
 			<!-- todo 不需要退出 -->
 			<!-- <view class="u-tips" v-if="idType != 1" @tap="handleUserOut">退出</view> -->
 		</view>
@@ -15,6 +15,9 @@
 				</view>
 			</view>
 		</view>
+		<view class="m-bottom-tips" v-if="idType == '1'">
+			<text>提示：请先进行“可信教育数字身份认证” ，助您“健康与安全确认” “在线教学” 一证畅通！</text>
+		</view>
 	</view>
 </template>
 
@@ -26,12 +29,15 @@ export default {
 			hasUserInfo: false,
 			idType: '1',
 			showAll:false,
+			tips:'可信身份认证',
 		};
 	},
 	onShow() {
 		
 		// 防止重复赋值
+		// 用户权限判断标识符
 		let idType = uni.getStorageSync('idType'),
+			// 未激活用户 仅显示身份认证信息
 			state = uni.getStorageSync('state')
 		if (idType && idType == '1') {
 			// 学生与家长权限一致，标识不同需要单独处理
@@ -39,6 +45,7 @@ export default {
 		}
 		if (idType != this.idType) this.idType = idType || '1';
 		this.showAll = state == '2'
+		this.tips = this.idType == '1'?'可信身份认证':'使用场景'
 	},
 	mounted() {
 		this.getOpenId();
@@ -50,7 +57,7 @@ export default {
 				'1': [
 					{
 						name: '身份认证',
-						imgUrl: '../../static/mp-weixin/imgs/1.png',
+						imgUrl: '../../static/mp-weixin/imgs/login.png',
 						path: '/pages/idConfirm/idConfirm'
 					}
 				],
@@ -61,7 +68,7 @@ export default {
 						path: '/pages/idConfirm/baseInfo'
 					},
 					{
-						name: '学生每日健康打卡',
+						name: '每日健康打卡',
 						imgUrl: '../../static/mp-weixin/imgs/2.png',
 						path: '/pages/healthCard/healthCard'
 					},
@@ -99,12 +106,12 @@ export default {
 					},
 					{
 						name: '在线授课',
-						imgUrl: '../../static/mp-weixin/pic2.png',
+						imgUrl: '../../static/mp-weixin/imgs/2.png',
 						path: '/pages/teacher/teaTeaching'
 					},
 					{
 						name: '查看授课情况',
-						imgUrl: '../../static/mp-weixin/pic3.png',
+						imgUrl: '../../static/mp-weixin/imgs/3.png',
 						path: '/pages/teacher/teaStatistic'
 					}
 				],
@@ -116,12 +123,12 @@ export default {
 					},
 					{
 						name: '查看与统计所辖区域授课情况',
-						imgUrl: '../../static/mp-weixin/pic4.png',
+						imgUrl: '../../static/mp-weixin/imgs/2.png',
 						path: '/pages/edu/eduTeachingStatistic'
 					},
 					{
 						name: '查看与统计所辖区域学习情况',
-						imgUrl: '../../static/mp-weixin/pic1.png',
+						imgUrl: '../../static/mp-weixin/imgs/3.png',
 						path: '/pages/edu/eduLearningStatistic'
 					}
 				]
@@ -155,6 +162,7 @@ export default {
 									uni.setStorageSync('idType', idTypeObj[resData.zysflb]);
 									// 只显示个人身份信息
 									this.idType = idTypeObj[resData.zysflb];
+									this.tips = '使用场景'
 								} else if (resData.state == '0') {
 									// 跳转注册部分
 									uni.navigateTo({
@@ -167,7 +175,7 @@ export default {
 									// 显示权限模块
 									this.idType = idTypeObj[resData.zysflb];
 									// 显示权限下所有模块
-									this.showall = true;
+									this.showAll = true;
 								}
 							} else {
 								uni.showToast({
@@ -256,13 +264,14 @@ export default {
 .item-wrapper {
 	width: 90%;
 	height: 260upx;
-	transform: scale(1.05);
+	
 	&.disabled {
 		opacity: 0.6;
 	}
 }
 .img {
 	height: 165upx;
+	transform: scale(1.038);
 }
 .text {
 	font-size: 30upx;
@@ -278,5 +287,12 @@ export default {
 image {
 	width: 100%;
 	height: 100%;
+}
+.m-bottom-tips{
+	position: fixed;
+	bottom: 5vh;
+	padding: 20rpx;
+	font-size: 28rpx;
+	color: #333333;
 }
 </style>

@@ -103,11 +103,19 @@
 		.right {
 			width: 60%;
 			text-align: center;
+			display: inline-flex;
+			align-items: center;
+			flex-wrap: wrap;
 			.list-item {
-				display: flex;
-				justify-content: space-around;
-				align-items: center;
+				width: 5em;
+				height: 3.2em;
+				display: inline-block;
 				margin-bottom: 10upx;
+				border: solid 1upx $main-borer-color;
+				border-radius: 10upx;
+				display: inline-flex;
+				justify-content: center;
+				align-items: center;
 				.name {
 					font-weight: bold;
 				}

@@ -48,6 +48,7 @@
 				</view>
 				<view class="u-content"><input class="u-input" type="text" v-model="form.ESN" placeholder="没有ESN账号则不填" /></view>
 			</view>
+			<view class="u-line-tips">备注说明:ESN账号是什么,详细的说明</view>
 
 			<view class="m-bottom">
 				<!-- open-type="getUserInfo" -->
@@ -307,5 +308,10 @@ export default {
 	.link{
 		color: #5E5EFC;
 	}
+}
+.u-line-tips{
+	padding-left: 40rpx;
+	font-size: 28rpx;
+	color: #333;
 }
 </style>

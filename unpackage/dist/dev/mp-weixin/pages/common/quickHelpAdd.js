@@ -293,11 +293,6 @@ innerAudioContext.autoplay = true;var _default =
         _this2.editorCtx = res.context;
       }).exec();
     },
-    handleCall: function handleCall(phoneNumber) {
-      uni.makePhoneCall({
-        phoneNumber: phoneNumber });
-
-    },
     handleRadioChange: function handleRadioChange(evt, name) {
       this.form[name] = evt.target.value;
     },

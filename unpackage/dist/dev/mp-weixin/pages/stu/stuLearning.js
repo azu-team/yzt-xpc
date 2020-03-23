@@ -144,6 +144,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -152,27 +163,42 @@ var _default =
       {
         name: '腾讯课堂',
         value: '1',
-        logoUrl: '/static/mp-weixin/tencent.png' },
+        logoUrl: '/static/mp-weixin/tencent.png',
+        courseName: '计算机原理',
+        loginTime: '3月3日 9:00',
+        learningTime: '9:00-10:00' },
 
       {
         name: '钉钉',
         value: '2',
-        logoUrl: '/static/mp-weixin/dingding.png' },
+        logoUrl: '/static/mp-weixin/dingding.png',
+        courseName: '思想品德修养',
+        loginTime: '3月4日 9:00',
+        learningTime: '9:00-10:00' },
 
       {
         name: '凤凰职教云',
         value: '3',
-        logoUrl: '/static/mp-weixin/fenghuang.png' },
+        logoUrl: '/static/mp-weixin/fenghuang.png',
+        courseName: '计算机原理',
+        loginTime: '3月5日 9:00',
+        learningTime: '9:00-10:00' },
 
       {
         name: '智慧职教',
         value: '4',
-        logoUrl: '/static/mp-weixin/zhihui.png' },
+        logoUrl: '/static/mp-weixin/zhihui.png',
+        courseName: '数学',
+        loginTime: '3月3日 9:00',
+        learningTime: '9:00-10:00' },
 
       {
         name: '超星泛雅',
         value: '5',
-        logoUrl: '/static/mp-weixin/chaoxing.png' }] };
+        logoUrl: '/static/mp-weixin/chaoxing.png',
+        courseName: '体育',
+        loginTime: '3月4日 9:00',
+        learningTime: '9:00-10:00' }] };
 
 
 

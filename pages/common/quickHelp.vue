@@ -4,7 +4,7 @@
 			<view class="u-grid">
 				<view class="left">紧急联系人</view>
 				<view class="right">
-					<view class="list-item" v-for="(item,index) in contactArr" :key="index"><text class="name">{{item.name}}</text> <text class="phone" @tap="handleCall(item.phone)">{{item.phone}}</text></view>
+					<view class="list-item" v-for="(item,index) in contactArr" :key="index"><text class="name" @tap="handleCall(item.phone)">{{item.name.length>=8?item.name.substring(0,7)+'...':item.name}}</text></view>
 				</view>
 			</view>
 			<view class="">
@@ -48,6 +48,11 @@ export default {
 		};
 	},
 	methods: {
+		handleCall(phoneNumber){
+			uni.makePhoneCall({
+			    phoneNumber: phoneNumber
+			});
+		},
 	}
 };
 </script>

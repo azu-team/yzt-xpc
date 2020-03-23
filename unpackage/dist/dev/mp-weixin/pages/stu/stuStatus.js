@@ -133,7 +133,24 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -157,6 +174,9 @@ var _default =
 {
   data: function data() {
     return {
+      startTime: '',
+      endTime: '',
+      currentSelect: '',
       paramsArr: [
       {
         name: '以上课时总量',
@@ -252,12 +272,47 @@ var _default =
       } } },
 
 
-  onLoad: function onLoad(evt) {},
+  mounted: function mounted() {
+    this.initData();
+  },
   methods: {
+    initData: function initData() {
+      this.$HTTP({
+        url: '/statistical/getXxqk',
+        params: {
+          kssj: this.startTime,
+          jssj: this.endTime,
+          userid: uni.getStorageSync('userId') },
+
+        successCallback: function successCallback(res) {
+          console.log(res, '获取参数');
+        },
+        failCallback: function failCallback(res) {
+
+        } });
+
+    },
+    handleChooseTime: function handleChooseTime(isStartTime) {
+      if (isStartTime) {
+        this.currentSelect = 'startTime';
+      } else {
+        this.currentSelect = 'endTime';
+      }
+      this.$refs.linkage.show();
+    },
+    handleCancelChoose: function handleCancelChoose() {
+      this.$refs.linkage.hide();
+    },
+    handleChoose: function handleChoose(_ref) {var checkArr = _ref.checkArr,checkValue = _ref.checkValue,defaultVal = _ref.defaultVal,result = _ref.result;
+      console.log(arguments, 'arguments');
+      this[this.currentSelect] = result;
+      this.$refs.linkage.hide();
+    },
     handleCollapse: function handleCollapse(item, index) {
       this.$set(item, 'isActive', !item.isActive);
     },
     getData: function getData() {} } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
