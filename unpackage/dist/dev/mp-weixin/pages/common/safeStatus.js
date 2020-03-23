@@ -133,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var addPage = function addPage() {return __webpack_require__.e(/*! import() | pages/common/safeStatusAdd */ "pages/common/safeStatusAdd").then(__webpack_require__.bind(null, /*! ./safeStatusAdd.vue */ 210));};var hisPage = function hisPage() {return __webpack_require__.e(/*! import() | pages/common/safeStatusHistory */ "pages/common/safeStatusHistory").then(__webpack_require__.bind(null, /*! ./safeStatusHistory.vue */ 217));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var addPage = function addPage() {return __webpack_require__.e(/*! import() | pages/common/safeStatusAdd */ "pages/common/safeStatusAdd").then(__webpack_require__.bind(null, /*! ./safeStatusAdd.vue */ 225));};var hisPage = function hisPage() {return __webpack_require__.e(/*! import() | pages/common/safeStatusHistory */ "pages/common/safeStatusHistory").then(__webpack_require__.bind(null, /*! ./safeStatusHistory.vue */ 232));};var _default =
 
 
 

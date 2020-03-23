@@ -48,7 +48,7 @@
 				</view>
 				<view class="u-content"><input class="u-input" type="text" v-model="form.ESN" placeholder="没有ESN账号则不填" /></view>
 			</view>
-			<view class="u-line-tips">备注说明:ESN账号是什么,详细的说明</view>
+			<view class="u-line-tips">Education Security Number 教育电子身份号。是根据个人的实名信息，采用密码算法生成的个人身份标识，是一个10位数字串。</view>
 
 			<view class="m-bottom">
 				<!-- open-type="getUserInfo" -->
@@ -310,8 +310,8 @@ export default {
 	}
 }
 .u-line-tips{
-	padding-left: 40rpx;
+	padding:0 40rpx;
 	font-size: 28rpx;
-	color: #333;
+	color: #646464;
 }
 </style>

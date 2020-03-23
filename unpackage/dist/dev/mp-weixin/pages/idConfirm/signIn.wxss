@@ -126,8 +126,8 @@ view.data-v-281d8f2c, text.data-v-281d8f2c, image.data-v-281d8f2c, label.data-v-
     color: #5E5EFC;
 }
 .u-line-tips.data-v-281d8f2c {
-  padding-left: 40rpx;
+  padding: 0 40rpx;
   font-size: 28rpx;
-  color: #333;
+  color: #646464;
 }
 

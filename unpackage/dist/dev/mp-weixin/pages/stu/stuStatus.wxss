@@ -129,4 +129,7 @@ view.data-v-401e249b, text.data-v-401e249b, image.data-v-401e249b, label.data-v-
 .m-condition .u-tips.data-v-401e249b {
     color: #007aff;
 }
+.m-content.data-v-401e249b {
+  height: calc(100vh - 168rpx);
+}
 

@@ -155,10 +155,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
+      startTime: '',
+      endTime: '',
+      currentSelect: '',
       dataArr: [
       {
         name: '腾讯课堂',
@@ -203,8 +221,47 @@ var _default =
 
 
   },
-  onLoad: function onLoad(evt) {},
+  mounted: function mounted() {
+    this.initData();
+  },
   methods: {
+    handleChooseTime: function handleChooseTime(isStartTime) {
+      if (isStartTime) {
+        this.currentSelect = 'startTime';
+      } else {
+        this.currentSelect = 'endTime';
+      }
+      this.$refs.linkage.show();
+    },
+    handleCancelChoose: function handleCancelChoose() {
+      this.$refs.linkage.hide();
+    },
+    handleChoose: function handleChoose(_ref) {var checkArr = _ref.checkArr,checkValue = _ref.checkValue,defaultVal = _ref.defaultVal,result = _ref.result;
+      console.log(arguments, 'arguments');
+      this[this.currentSelect] = result;
+      this.$refs.linkage.hide();
+    },
+    initData: function initData() {
+      this.$HTTP({
+        url: '/statistical/getXxqk',
+        params: {
+          kssj: this.startTime,
+          jssj: this.endTime,
+          userid: uni.getStorageSync('userId') },
+
+        successCallback: function successCallback(_ref2) {var data = _ref2.data;
+          if (data.code == 0) {
+            console.log(data, '获取参数');
+          } else {
+            uni.showToast({
+              title: data.msg,
+              icon: 'none' });
+
+          }
+
+        } });
+
+    },
     handleNav: function handleNav() {
       uni.showToast({
         title: '暂未开通',

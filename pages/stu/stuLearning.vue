@@ -1,6 +1,11 @@
 <template>
 	<view class="container">
 		<view class="m-title">选择学习平台</view>
+		<view class="m-condition">
+			<text class="u-tips" @tap="handleChooseTime(true)">{{startTime || '开始时间'}}</text>
+			<text class="u-middle">至</text>
+			<text class="u-tips" @tap="handleChooseTime(false)">{{endTime || '结束时间'}}</text>
+		</view>
 		<view class="m-content">
 			<view class="u-title-wrapper">
 				<view class="u-title"></view>
@@ -18,12 +23,25 @@
 				<view class="u-desc">{{item.learningTime}}</view>
 			</view>
 		</view>
+		<link-area
+			mode="date"
+			startYear="2019" 
+			endYear="2030"
+			:current="true" 
+			:disabledAfter="false"
+			@confirm="handleChoose"
+			@cancel="handleCancelChoose"
+			ref="linkage"
+			themeColor="#25a5ff"></link-area>
 	</view>
 </template>
 <script>
 export default {
 	data() {
 		return {
+			startTime:'',
+			endTime:'',
+			currentSelect:'',
 			dataArr: [
 				{
 					name: '腾讯课堂',
@@ -68,8 +86,47 @@ export default {
 			]
 		};
 	},
-	onLoad(evt) {},
+	mounted(){
+		this.initData()
+	},
 	methods: {
+		handleChooseTime(isStartTime){
+			if(isStartTime){
+				this.currentSelect = 'startTime'
+			}else{
+				this.currentSelect = 'endTime'
+			}
+			this.$refs.linkage.show()
+		},
+		handleCancelChoose(){
+			this.$refs.linkage.hide()
+		},
+		handleChoose({checkArr,checkValue,defaultVal,result}){
+			console.log(arguments,'arguments')
+			this[this.currentSelect] = result;
+			this.$refs.linkage.hide()
+		},
+		initData(){
+			this.$HTTP({
+				url:'/statistical/getXxqk',
+				params:{
+					kssj:this.startTime,
+					jssj:this.endTime,
+					userid:uni.getStorageSync('userId')
+				},
+				successCallback:({data})=>{
+					if(data.code == 0){
+						console.log(data,'获取参数')
+					}else{
+						uni.showToast({
+							title:data.msg,
+							icon:'none'
+						})
+					}
+					
+				}
+			})
+		},
 		handleNav() {
 			uni.showToast({
 				title: '暂未开通',
@@ -80,66 +137,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.container {
-	min-height: 100vh;
-}
-.m-title {
-	padding: 30upx 0 0 40upx;
-}
-
-.m-content {
-	padding: 20upx 20upx;
-	.u-title-wrapper{
-		color: #197EC6;
-		vertical-align: middle;
-		font-size: 28rpx;
-		.u-title{
-			display: inline-block;
-			width: 25%;
-			vertical-align: middle;
-		}
-	}
-	// display: flex;
-	// justify-content: flex-start;
-	// align-items: center;
-	// flex-wrap: wrap;
-	.u-list {
-		width: 100%;
-		display: flex;
-		align-items: center;
-
-		.u-platform {
-			display: inline-block;
-			width: 20%;
-			margin: 0 2.5%;
-			text-align: center;
-			padding: 20upx 0;
-			// margin-bottom: 30upx;
-			border-radius: 10upx;
-			// box-shadow: 0 0 15upx #cccccc;
-			.u-left {
-				font-size: 0;
-				line-height: 0;
-				.icon {
-					width: 100upx;
-					height: 100upx;
-				}
-			}
-			.u-right {
-				margin-top: 10upx;
-				font-size: 28upx;
-				color:$uni-text-color;
-				vertical-align: middle;
-			}
-		}
-		.u-desc{
-			display: inline-block;
-			width: 25%;
-			font-size: 28rpx;
-			color: $uni-text-color;
-			word-break: break-all;
-			padding: 10upx;
-		}
-	}
-}
+	@import  '../../static/mp-weixin/globalStyle/platform.scss';
 </style>

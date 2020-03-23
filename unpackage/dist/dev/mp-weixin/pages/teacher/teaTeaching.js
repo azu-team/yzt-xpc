@@ -133,52 +133,263 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniPopup = function uniPopup() {return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 190));};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
+  components: { uniPopup: uniPopup },
   data: function data() {
     return {
+      active: false,
+      startTime: '',
+      endTime: '',
+      currentSelect: '',
+      trList: [
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' },
+      {
+        className: '课程名称',
+        name: '张三',
+        reason: '请假',
+        classTime: '9:00' }],
+
+
+      dataList: [],
+
+
       dataArr: [
       {
         name: '腾讯课堂',
         value: '1',
-        logoUrl: '/static/mp-weixin/tencent.png' },
+        logoUrl: '/static/mp-weixin/tencent.png',
+        courseName: '计算机原理',
+        loginTime: '3月3日 9:00',
+        learningTime: '9:00-10:00',
+        sd: '42',
+        yd: '44' },
 
       {
         name: '钉钉',
         value: '2',
-        logoUrl: '/static/mp-weixin/dingding.png' },
+        logoUrl: '/static/mp-weixin/dingding.png',
+        courseName: '思想品德修养',
+        loginTime: '3月4日 9:00',
+        learningTime: '9:00-10:00',
+        sd: '42',
+        yd: '44' },
 
       {
         name: '凤凰职教云',
         value: '3',
-        logoUrl: '/static/mp-weixin/fenghuang.png' },
+        logoUrl: '/static/mp-weixin/fenghuang.png',
+        courseName: '计算机原理',
+        loginTime: '3月5日 9:00',
+        learningTime: '9:00-10:00',
+        sd: '42',
+        yd: '44' },
 
       {
         name: '智慧职教',
         value: '4',
-        logoUrl: '/static/mp-weixin/zhihui.png' },
+        logoUrl: '/static/mp-weixin/zhihui.png',
+        courseName: '数学',
+        loginTime: '3月3日 9:00',
+        learningTime: '9:00-10:00',
+        sd: '42',
+        yd: '44' },
 
       {
         name: '超星泛雅',
         value: '5',
-        logoUrl: '/static/mp-weixin/chaoxing.png' }] };
+        logoUrl: '/static/mp-weixin/chaoxing.png',
+        courseName: '体育',
+        loginTime: '3月4日 9:00',
+        learningTime: '9:00-10:00',
+        sd: '42',
+        yd: '44' }] };
 
 
 
   },
-  onLoad: function onLoad(evt) {},
+  mounted: function mounted() {
+    this.initData();
+  },
   methods: {
+    handleClose: function handleClose() {
+      this.active = false;
+    },
+    handleWatchDetail: function handleWatchDetail(item) {
+      this.active = true;
+      // this.$refs.popup.open()
+    },
+    handleChooseTime: function handleChooseTime(isStartTime) {
+      if (isStartTime) {
+        this.currentSelect = 'startTime';
+      } else {
+        this.currentSelect = 'endTime';
+      }
+      this.$refs.linkage.show();
+    },
+    handleCancelChoose: function handleCancelChoose() {
+      this.$refs.linkage.hide();
+    },
+    handleChoose: function handleChoose(_ref) {var checkArr = _ref.checkArr,checkValue = _ref.checkValue,defaultVal = _ref.defaultVal,result = _ref.result;
+      console.log(arguments, 'arguments');
+      this[this.currentSelect] = result;
+      this.$refs.linkage.hide();
+    },
+    initData: function initData() {
+      this.$HTTP({
+        url: '/statistical/getXxqk',
+        params: {
+          kssj: this.startTime,
+          jssj: this.endTime,
+          userid: uni.getStorageSync('userId') },
+
+        successCallback: function successCallback(_ref2) {var data = _ref2.data;
+          if (data.code == 0) {
+            console.log(data, '获取参数');
+          } else {
+            uni.showToast({
+              title: data.msg,
+              icon: 'none' });
+
+          }
+
+        } });
+
+    },
     handleNav: function handleNav() {
       uni.showToast({
         title: '暂未开通',

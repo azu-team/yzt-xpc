@@ -133,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var addPage = function addPage() {return __webpack_require__.e(/*! import() | pages/common/healthStatusAdd */ "pages/common/healthStatusAdd").then(__webpack_require__.bind(null, /*! ./healthStatusAdd.vue */ 196));};var hisPage = function hisPage() {return __webpack_require__.e(/*! import() | pages/common/healthStatusHistory */ "pages/common/healthStatusHistory").then(__webpack_require__.bind(null, /*! ./healthStatusHistory.vue */ 203));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var addPage = function addPage() {return __webpack_require__.e(/*! import() | pages/common/healthStatusAdd */ "pages/common/healthStatusAdd").then(__webpack_require__.bind(null, /*! ./healthStatusAdd.vue */ 211));};var hisPage = function hisPage() {return __webpack_require__.e(/*! import() | pages/common/healthStatusHistory */ "pages/common/healthStatusHistory").then(__webpack_require__.bind(null, /*! ./healthStatusHistory.vue */ 218));};var _default =
 
 
 

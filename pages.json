@@ -1,96 +1,104 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "首页"
+    "pages" : [
+        //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+        {
+            "path" : "pages/index/index",
+            "style" : {
+                "navigationBarTitleText" : "首页"
+            }
+        },
+        {
+            "path" : "pages/healthCard/healthCard",
+            "style" : {
+                "navigationBarTitleText" : "健康申报"
+            }
+        },
+        {
+            "path" : "pages/idConfirm/idConfirm",
+            "style" : {
+                "navigationBarTitleText" : "申请认证"
+            }
+        },
+        {
+            "path" : "pages/idConfirm/baseInfo",
+            "style" : {
+                "navigationBarTitleText" : "个人信息"
+            }
+        },
+        {
+            "path" : "pages/stu/stuLearning",
+            "style" : {
+                "navigationBarTitleText" : "在线学习"
+            }
+        },
+        {
+            "path" : "pages/stu/stuStatus",
+            "style" : {
+                "navigationBarTitleText" : "查看学习情况"
+            }
+        },
+        {
+            "path" : "pages/teacher/teaTeaching",
+            "style" : {
+                "navigationBarTitleText" : "在线授课"
+            }
+        },
+        {
+            "path" : "pages/teacher/teaStatistic",
+            "style" : {
+                "navigationBarTitleText" : "查看授课情况"
+            }
+        },
+        {
+            "path" : "pages/edu/eduTeachingStatistic",
+            "style" : {
+                // 查看与统计所辖区域授课情况
+                "navigationBarTitleText" : "所辖区域授课情况"
+            }
+        },
+        {
+            "path" : "pages/edu/eduLearningStatistic",
+            "style" : {
+                // 查看与统计所辖区域学习情况
+                "navigationBarTitleText" : "所辖区域学习情况"
+            }
+        },
+        {
+            "path" : "pages/common/quickHelp",
+            "style" : {
+                "navigationBarTitleText" : "一键求助"
+            }
+        },
+        {
+            "path" : "pages/common/healthStatus",
+            "style" : {
+                "navigationBarTitleText" : "健康情况收集"
+            }
+        },
+        {
+            "path" : "pages/common/safeStatus",
+            "style" : {
+                "navigationBarTitleText" : "安全情况"
+            }
+        },
+        {
+            "path" : "pages/outLink/outLink",
+            "style" : {
+                "navigationBarTitleText" : "安全隐私协议"
+            }
+        },
+        {
+            "path" : "pages/edu/eduPlatform",
+            "style" : {
+				"navigationBarTitleText" : "学习平台数据"
 			}
-		},
-		{
-			"path": "pages/healthCard/healthCard",
-			"style": {
-				"navigationBarTitleText": "健康申报"
-			}
-		},
-		{
-			"path": "pages/idConfirm/idConfirm",
-			"style": {
-				"navigationBarTitleText": "申请认证"
-			}
-		}, {
-			"path": "pages/idConfirm/baseInfo",
-			"style": {
-				"navigationBarTitleText": "个人信息"
-			}
-		},
-
-		{
-			"path": "pages/stu/stuLearning",
-			"style": {
-				"navigationBarTitleText": "在线学习"
-			}
-		},
-		{
-			"path": "pages/stu/stuStatus",
-			"style": {
-				"navigationBarTitleText": "查看学习情况"
-			}
-		},
-		{
-			"path": "pages/teacher/teaTeaching",
-			"style": {
-				"navigationBarTitleText": "在线授课"
-			}
-		},
-		{
-			"path": "pages/teacher/teaStatistic",
-			"style": {
-				"navigationBarTitleText": "查看授课情况"
-			}
-		},
-
-		{
-			"path": "pages/edu/eduTeachingStatistic",
-			"style": {
-				// 查看与统计所辖区域授课情况
-				"navigationBarTitleText": "所辖区域授课情况"
-			}
-		},
-		{
-			"path": "pages/edu/eduLearningStatistic",
-			"style": {
-				// 查看与统计所辖区域学习情况
-				"navigationBarTitleText": "所辖区域学习情况"
-			}
-		},
-		{
-			"path": "pages/common/quickHelp",
-			"style": {
-				"navigationBarTitleText": "一键求助"
-			}
-		}, {
-			"path": "pages/common/healthStatus",
-			"style": {
-				"navigationBarTitleText": "健康情况收集"
-			}
-		}, {
-			"path": "pages/common/safeStatus",
-			"style": {
-				"navigationBarTitleText": "安全情况"
-			}
-		},{
-			"path":"pages/outLink/outLink",
-			"style": {
-				"navigationBarTitleText": "安全隐私协议"
-			}
-		}
-
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8",
-		"enablePullDownRefresh": false
-	}
+        }
+    ],
+    "globalStyle" : {
+        "navigationBarTextStyle" : "black",
+        "navigationBarTitleText" : "uni-app",
+        "navigationBarBackgroundColor" : "#F8F8F8",
+        "backgroundColor" : "#F8F8F8",
+        "enablePullDownRefresh" : false
+    }
 }

@@ -133,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var addPage = function addPage() {return __webpack_require__.e(/*! import() | pages/healthCard/healCardAdd */ "pages/healthCard/healCardAdd").then(__webpack_require__.bind(null, /*! ./healCardAdd.vue */ 154));};var hisPage = function hisPage() {return __webpack_require__.e(/*! import() | pages/healthCard/healthCardHistory */ "pages/healthCard/healthCardHistory").then(__webpack_require__.bind(null, /*! ./healthCardHistory.vue */ 161));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var addPage = function addPage() {return __webpack_require__.e(/*! import() | pages/healthCard/healCardAdd */ "pages/healthCard/healCardAdd").then(__webpack_require__.bind(null, /*! ./healCardAdd.vue */ 162));};var hisPage = function hisPage() {return __webpack_require__.e(/*! import() | pages/healthCard/healthCardHistory */ "pages/healthCard/healthCardHistory").then(__webpack_require__.bind(null, /*! ./healthCardHistory.vue */ 169));};var _default =
 
 
 

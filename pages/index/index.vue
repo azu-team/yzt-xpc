@@ -120,15 +120,19 @@ export default {
 						name: '个人信息',
 						imgUrl: '../../static/mp-weixin/imgs/1.png',
 						path: '/pages/idConfirm/baseInfo'
+					},{
+						name: '授课平台',
+						imgUrl: '../../static/mp-weixin/imgs/2.png',
+						path: '/pages/edu/eduPlatform'
 					},
 					{
 						name: '查看与统计所辖区域授课情况',
-						imgUrl: '../../static/mp-weixin/imgs/2.png',
+						imgUrl: '../../static/mp-weixin/imgs/3.png',
 						path: '/pages/edu/eduTeachingStatistic'
 					},
 					{
 						name: '查看与统计所辖区域学习情况',
-						imgUrl: '../../static/mp-weixin/imgs/3.png',
+						imgUrl: '../../static/mp-weixin/imgs/4.png',
 						path: '/pages/edu/eduLearningStatistic'
 					}
 				]

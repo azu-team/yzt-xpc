@@ -1552,7 +1552,128 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
-/***/ 134:
+/***/ 14:
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \**********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode, /* vue-cli only */
+  components, // fixed by xxxxxx auto components
+  renderjs // fixed by xxxxxx renderjs
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // fixed by xxxxxx auto components
+  if (components) {
+    options.components = Object.assign(components, options.components || {})
+  }
+  // fixed by xxxxxx renderjs
+  if (renderjs) {
+    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
+      this[renderjs.__module] = this
+    });
+    (options.mixins || (options.mixins = [])).push(renderjs)
+  }
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ 142:
 /*!******************************************************************************!*\
   !*** C:/Users/azu/Desktop/yzt_xcx/components/w-picker/city-data/province.js ***!
   \******************************************************************************/
@@ -1702,7 +1823,7 @@ provinceData;exports.default = _default;
 
 /***/ }),
 
-/***/ 135:
+/***/ 143:
 /*!**************************************************************************!*\
   !*** C:/Users/azu/Desktop/yzt_xcx/components/w-picker/city-data/city.js ***!
   \**************************************************************************/
@@ -3216,7 +3337,7 @@ cityData;exports.default = _default;
 
 /***/ }),
 
-/***/ 136:
+/***/ 144:
 /*!**************************************************************************!*\
   !*** C:/Users/azu/Desktop/yzt_xcx/components/w-picker/city-data/area.js ***!
   \**************************************************************************/
@@ -15769,7 +15890,7 @@ areaData;exports.default = _default;
 
 /***/ }),
 
-/***/ 137:
+/***/ 145:
 /*!********************************************************************!*\
   !*** C:/Users/azu/Desktop/yzt_xcx/components/w-picker/w-picker.js ***!
   \********************************************************************/
@@ -16427,127 +16548,6 @@ var initPicker = {
 
 
 initPicker;exports.default = _default;
-
-/***/ }),
-
-/***/ 14:
-/*!**********************************************************************************************************!*\
-  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \**********************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode, /* vue-cli only */
-  components, // fixed by xxxxxx auto components
-  renderjs // fixed by xxxxxx renderjs
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // fixed by xxxxxx auto components
-  if (components) {
-    options.components = Object.assign(components, options.components || {})
-  }
-  // fixed by xxxxxx renderjs
-  if (renderjs) {
-    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
-      this[renderjs.__module] = this
-    });
-    (options.mixins || (options.mixins = [])).push(renderjs)
-  }
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
 
 /***/ }),
 
@@ -22747,19 +22747,19 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 229:
+/***/ 244:
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 230);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 245);
 
 
 /***/ }),
 
-/***/ 230:
+/***/ 245:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -22790,7 +22790,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 231);
+module.exports = __webpack_require__(/*! ./runtime */ 246);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -22807,7 +22807,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 231:
+/***/ 246:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -24713,7 +24713,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/healthCard/healthCard": { "navigationBarTitleText": "健康申报", "usingComponents": { "add-page": "/pages/healthCard/healCardAdd", "his-page": "/pages/healthCard/healthCardHistory" }, "usingAutoImportComponents": {} }, "pages/idConfirm/idConfirm": { "navigationBarTitleText": "申请认证", "usingComponents": { "sign-in": "/pages/idConfirm/signIn", "sign-up": "/pages/idConfirm/signUp" }, "usingAutoImportComponents": {} }, "pages/idConfirm/baseInfo": { "navigationBarTitleText": "个人信息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/stu/stuLearning": { "navigationBarTitleText": "在线学习", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/stu/stuStatus": { "navigationBarTitleText": "查看学习情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/teacher/teaTeaching": { "navigationBarTitleText": "在线授课", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/teacher/teaStatistic": { "navigationBarTitleText": "查看授课情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/edu/eduTeachingStatistic": { "navigationBarTitleText": "所辖区域授课情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/edu/eduLearningStatistic": { "navigationBarTitleText": "所辖区域学习情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/common/quickHelp": { "navigationBarTitleText": "一键求助", "usingComponents": { "add-page": "/pages/common/quickHelpAdd", "his-page": "/pages/common/quickHelpHistory" }, "usingAutoImportComponents": {} }, "pages/common/healthStatus": { "navigationBarTitleText": "健康情况收集", "usingComponents": { "add-page": "/pages/common/healthStatusAdd", "his-page": "/pages/common/healthStatusHistory" }, "usingAutoImportComponents": {} }, "pages/common/safeStatus": { "navigationBarTitleText": "安全情况", "usingComponents": { "add-page": "/pages/common/safeStatusAdd", "his-page": "/pages/common/safeStatusHistory" }, "usingAutoImportComponents": {} }, "pages/outLink/outLink": { "navigationBarTitleText": "安全隐私协议", "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "enablePullDownRefresh": false } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/healthCard/healthCard": { "navigationBarTitleText": "健康申报", "usingComponents": { "add-page": "/pages/healthCard/healCardAdd", "his-page": "/pages/healthCard/healthCardHistory" }, "usingAutoImportComponents": {} }, "pages/idConfirm/idConfirm": { "navigationBarTitleText": "申请认证", "usingComponents": { "sign-in": "/pages/idConfirm/signIn", "sign-up": "/pages/idConfirm/signUp" }, "usingAutoImportComponents": {} }, "pages/idConfirm/baseInfo": { "navigationBarTitleText": "个人信息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/stu/stuLearning": { "navigationBarTitleText": "在线学习", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/stu/stuStatus": { "navigationBarTitleText": "查看学习情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/teacher/teaTeaching": { "navigationBarTitleText": "在线授课", "usingComponents": { "uni-popup": "/components/uni-popup/uni-popup" }, "usingAutoImportComponents": {} }, "pages/teacher/teaStatistic": { "navigationBarTitleText": "查看授课情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/edu/eduTeachingStatistic": { "navigationBarTitleText": "所辖区域授课情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/edu/eduLearningStatistic": { "navigationBarTitleText": "所辖区域学习情况", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/common/quickHelp": { "navigationBarTitleText": "一键求助", "usingComponents": { "add-page": "/pages/common/quickHelpAdd", "his-page": "/pages/common/quickHelpHistory" }, "usingAutoImportComponents": {} }, "pages/common/healthStatus": { "navigationBarTitleText": "健康情况收集", "usingComponents": { "add-page": "/pages/common/healthStatusAdd", "his-page": "/pages/common/healthStatusHistory" }, "usingAutoImportComponents": {} }, "pages/common/safeStatus": { "navigationBarTitleText": "安全情况", "usingComponents": { "add-page": "/pages/common/safeStatusAdd", "his-page": "/pages/common/safeStatusHistory" }, "usingAutoImportComponents": {} }, "pages/outLink/outLink": { "navigationBarTitleText": "安全隐私协议", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/edu/eduPlatform": { "navigationBarTitleText": "学习平台数据", "usingComponents": { "uni-popup": "/components/uni-popup/uni-popup" }, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "enablePullDownRefresh": false } };exports.default = _default;
 
 /***/ }),
 
