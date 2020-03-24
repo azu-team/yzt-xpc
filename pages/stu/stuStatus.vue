@@ -169,7 +169,6 @@ export default {
 			this.$refs.linkage.hide()
 		},
 		handleChoose({checkArr,checkValue,defaultVal,result}){
-			console.log(arguments,'arguments')
 			this[this.currentSelect] = result;
 			this.$refs.linkage.hide()
 		},

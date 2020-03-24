@@ -87,11 +87,11 @@ export default {
 						imgUrl: '../../static/mp-weixin/imgs/5.png',
 						path: '/pages/common/quickHelp'
 					},
-					{
-						name: '健康情况收集',
-						imgUrl: '../../static/mp-weixin/imgs/6.png',
-						path: '/pages/common/healthStatus'
-					},
+					// {
+					// 	name: '健康情况收集',
+					// 	imgUrl: '../../static/mp-weixin/imgs/6.png',
+					// 	path: '/pages/common/healthStatus'
+					// },
 					{
 						name: '安全情况',
 						imgUrl: '../../static/mp-weixin/imgs/7.png',
@@ -109,10 +109,15 @@ export default {
 						imgUrl: '../../static/mp-weixin/imgs/2.png',
 						path: '/pages/teacher/teaTeaching'
 					},
+					// {
+					// 	name: '查看授课情况',
+					// 	imgUrl: '../../static/mp-weixin/imgs/3.png',
+					// 	path: '/pages/teacher/teaStatistic'
+					// },
 					{
-						name: '查看授课情况',
-						imgUrl: '../../static/mp-weixin/imgs/3.png',
-						path: '/pages/teacher/teaStatistic'
+						name:'学生申报统计',
+						imgUrl: '../../static/mp-weixin/imgs/4.png',
+						path: '/pages/statistics/stuSubmissionStatistics'
 					}
 				],
 				'4': [
@@ -125,15 +130,20 @@ export default {
 						imgUrl: '../../static/mp-weixin/imgs/2.png',
 						path: '/pages/edu/eduPlatform'
 					},
+					// {
+					// 	name: '查看与统计所辖区域授课情况',
+					// 	imgUrl: '../../static/mp-weixin/imgs/3.png',
+					// 	path: '/pages/edu/eduTeachingStatistic'
+					// },
+					// {
+					// 	name: '查看与统计所辖区域学习情况',
+					// 	imgUrl: '../../static/mp-weixin/imgs/4.png',
+					// 	path: '/pages/edu/eduLearningStatistic'
+					// },
 					{
-						name: '查看与统计所辖区域授课情况',
-						imgUrl: '../../static/mp-weixin/imgs/3.png',
-						path: '/pages/edu/eduTeachingStatistic'
-					},
-					{
-						name: '查看与统计所辖区域学习情况',
-						imgUrl: '../../static/mp-weixin/imgs/4.png',
-						path: '/pages/edu/eduLearningStatistic'
+						name:'学生申报统计',
+						imgUrl: '../../static/mp-weixin/imgs/5.png',
+						path: '/pages/statistics/stuSubmissionStatistics'
 					}
 				]
 			};

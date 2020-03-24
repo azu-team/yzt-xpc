@@ -1,9 +1,21 @@
 <template>
 	<view>
-		<view class="m-top">
+		<view class="m-top-desc">
+			<image class="img" :src="pageInfo.imgPath" mode="aspectFit"></image>
+			<view class="rich">
+				<rich-text :nodes="pageInfo.textDesc"></rich-text>
+			</view>
+			<view class="">
+				<text class="text">日期:{{pageInfo.date}}</text>
+			</view>
+			<view class="">
+				<text class="text">发起人:{{pageInfo.person}}</text>
+			</view>
+		</view>
+		<!-- <view class="m-top">
 			<view class="u-title-1">学生每日健康打卡</view>
 			<view class="u-title-2">请大家认真填写</view>
-		</view>
+		</view> -->
 		<view class="m-list">
 			<view class="m-line">
 				<view class="u-title" style="width: 25%;">当前区县</view>
@@ -100,19 +112,27 @@
 			<view class="u-q-content">
 				<view class="m-line">
 					<view class="u-title">{{ text1 }}</view>
-					<view class="u-content"><input class="u-input" type="text" v-model="form.a" placeholder="飞机-航班号" /></view>
+					<view class="u-content"><input class="u-input" type="text" v-model="form.a" :placeholder="text1" /></view>
 				</view>
 				<view class="m-line" v-if="text2">
 					<view class="u-title">{{ text2 }}</view>
-					<view class="u-content"><input class="u-input" type="text" v-model="form.b" placeholder="飞机-起降地点" /></view>
+					<view class="u-content"><input class="u-input" type="text" v-model="form.b" :placeholder="text2" /></view>
 				</view>
 				<view class="m-line" v-if="text3">
 					<view class="u-title">{{ text3 }}</view>
-					<view class="u-content"><input class="u-input" type="text" v-model="form.c" placeholder="飞机-座位号" /></view>
+					<view class="u-content"><input class="u-input" type="text" v-model="form.c" :placeholder="text3" /></view>
 				</view>
 			</view>
 		</view>
-
+		<view class="m-list">
+			<view class="u-q-title"><text>8.导致风险原因</text></view>
+			<radio-group class="radio-group" @change="handleRadioChange($event, 'field30')">
+				<label class="u-list-cell" v-for="(item, index) in riskReasonList" :key="index">
+					<view class="u-radio"><radio :value="item.value" :checked="form.field30 == item.value" /></view>
+					<view :class="{ 'u-text': true, active: form.field30 == item.value }">{{ item.name }}</view>
+				</label>
+			</radio-group>
+		</view>
 		<view class="m-bottom">
 			<view class="u-btn" @click="validate"><text>提交</text></view>
 		</view>
@@ -145,6 +165,12 @@
 export default {
 	data() {
 		return {
+			pageInfo:{
+				date:new Date().Format('yyyy-MM-dd'),
+				person:'姓名',
+				imgPath:'',
+				textDesc:'',
+			},
 			// amapPlugin: null,
 			// key: 'ce334d5499fb668332c1a65513a54201',
 			lotusAddressData: {
@@ -164,6 +190,7 @@ export default {
 				field12: '否',
 				field13: '',
 				field14: '',
+				field30: '有确诊病历',
 				a: '', // 暂时获取页面数据
 				b: '', // 暂时获取页面数据
 				c: '' // 暂时获取页面数据
@@ -234,6 +261,18 @@ export default {
 					value: '3',
 					name: '轮船'
 				}
+			],
+			riskReasonList:[
+				{
+					value:'有确诊病历',
+					name:'有确诊病历'
+				},{
+					value:'有长途行程',
+					name:'有长途行程'
+				},{
+					value:'在重点疫区',
+					name:'在重点疫区'
+				}
 			]
 		};
 	},
@@ -260,12 +299,82 @@ export default {
 		}).catch(()=>{
 			
 		});
+		this.initData()
 		// this.amapPlugin = new amap.AMapWX({
 		// 	key: this.key
 		// });
 		// this.judgeAuthorize();
 	},
 	methods: {
+		initData(){
+			// 获取标题数据
+			this.$HTTP({
+				url:'/healthForDay/getParam',
+				params:{},
+				successCallback:({data})=>{
+					if(data.code == 0){
+						this.pageInfo.imgPath = data.data[0].v
+						this.pageInfo.textDesc = data.data[1].v
+						
+					}else{
+						uni.showToast({
+							title:data.msg,
+							icon:'none'
+						})
+					}
+				}
+			})
+			// 获取上次填报信息
+			this.$HTTP({
+				url:'/healthForDay/getLastOne',
+				params:{
+					userid:uni.getStorageSync('userId')
+				},
+				successCallback:({data})=>{
+					if(data.code == 0){
+						let dataObj = data.data
+						let keyArr = [7,8,9,10,11,12,13,30]
+						keyArr.forEach((num,idx)=>{
+							this.form['field'+num] = dataObj['field'+num]
+						})
+						console.log(dataObj,'dataOjb')
+						if(dataObj.field14){
+							this.setDataByfield14(dataObj.field14,dataObj)
+						}
+					}else{
+						uni.showToast({
+							title:data.msg,
+							icon:'none'
+						})
+					}
+				}
+			})
+		},
+		setDataByfield14(type,dataObj){
+			switch(type){
+				case '飞机': {
+					this.form.a = dataObj.field15 ;
+					this.form.b = dataObj.field16 ;
+					this.form.c = dataObj.field17 ;
+					this.form.field14 = 0
+				};break;
+				case '火车': {
+					this.form.a = dataObj.field18 ;
+					this.form.b = dataObj.field19 ;
+					this.form.c = dataObj.field20 ;
+					this.form.field14 = 1
+				};break;
+				case '汽车': {
+					this.form.a = dataObj.field21 ;
+					this.form.b = dataObj.field22 ;
+					this.form.field14 = 2
+				};break;
+				case '轮船': {
+					this.form.a = dataObj.field23 ;
+					this.form.field14 = 3
+				};break;
+			}
+		},
 		handleClearData(){
 			this.form.field14 = ''
 		},
@@ -284,28 +393,30 @@ export default {
 					break;
 				case '1':
 					{
-						this.form.field18 = this.form.a;
-						this.form.field19 = this.form.b;
-						this.form.field20 = this.form.c;
+						params.field18 = this.form.a;
+						params.field19 = this.form.b;
+						params.field20 = this.form.c;
 						params.field14 = '火车'
 					}
 					break;
 				case '2':
 					{
-						this.form.field21 = this.form.a;
-						this.form.field22 = this.form.b;
+						params.field21 = this.form.a;
+						params.field22 = this.form.b;
 						params.field14 = '汽车'
 					}
 					break;
 				case '3':
 					{
-						this.form.field23 = this.form.a;
+						params.field23 = this.form.a;
 						params.field14 = '轮船'
 					}
 					break;
 			}
 			params.field01 = uni.getStorageSync('userId'),
 			params.field02 = uni.getStorageSync('idType')
+			// console.log(params)
+			// return;
 			this.send(params);
 		},
 		send(params) {
@@ -432,6 +543,23 @@ export default {
 .container {
 	background-color: #f6fbfe;
 	min-height: 100vh;
+}
+.m-top-desc{
+	background-color: #FFFFFF;
+	margin-bottom: 20upx;
+	padding-bottom: 20upx;
+	.img{
+		width: 750rpx;
+		height: 350rpx;
+	}
+	.text{
+		font-size: 32upx;
+		color: #797979;
+		padding-left: 20upx;
+	}
+	.rich{
+		padding: 0 20rpx;
+	}
 }
 .m-top {
 	padding: 20upx 0 30upx 20upx;

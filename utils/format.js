@@ -43,7 +43,7 @@ Vue.prototype.$getLocationByAmap = function() {
 	return new Promise((resolve, reject) => {
 		amapPlugin.getRegeo({
 			success: data => {
-				console.log(data)
+				console.log(data,'位置信息')
 				resolve(data)
 			},
 			fail: (err) => {

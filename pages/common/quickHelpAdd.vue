@@ -143,7 +143,11 @@ export default {
 		// this.amapPlugin = new amap.AMapWX({
 		// 	key: this.key
 		// });
-		// this.judgeAuthorize()
+		// 判断当前是否有录音权限
+		recorderManager.onStop((res) =>{
+			this.voicePath = res.tempFilePath;
+		});
+		this.judgeAuthorize()
 		innerAudioContext.onEnded(()=>{
 			this.audioStatus = '播放文件'
 		})
@@ -231,35 +235,10 @@ export default {
 		judgeAuthorize() {
 			uni.getSetting({
 				success: info => {
-					if(!info.authSetting['scope.record']){
-					}else{
+					if(info.authSetting['scope.record']){
 						this.canRecord = true;
-						this.initPage()
-					}
-					if (!info.authSetting['scope.userLocation']) {
-						uni.authorize({
-							scope: 'scope.userLocation',
-							success: () => {
-								this.hasLocationQx();
-							},
-							fail: () => {
-								uni.showToast({
-									title:'请打开定位服务以便获取当前位置!',
-									icon:'none',
-									duration:3000
-								})
-							}
-						});
-					} else {
-						this.hasLocationQx();
 					}
 				}
-			});
-		},
-		initPage(){
-			recorderManager.onStop((res) =>{
-				console.log(res.tempFilePath,'文件地址')
-				this.voicePath = res.tempFilePath;
 			});
 		},
 		openQx(){
@@ -267,7 +246,6 @@ export default {
 				scope:'scope.record',
 				success:()=>{
 					this.canRecord = true;
-					this.initPage()
 				},
 				fail:()=>{
 					uni.showToast({
@@ -278,7 +256,6 @@ export default {
 						uni.openSetting({
 							success: res => {
 								this.canRecord = true;
-								this.initPage()
 							}
 						});
 					}, 500);

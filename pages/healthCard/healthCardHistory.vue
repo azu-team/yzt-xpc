@@ -67,6 +67,9 @@ export default {
 				{
 					name: '是否乘坐长途公交',
 					key: 'field12'
+				},{
+					name:'导致风险原因',
+					key:'field30'
 				}
 			],
 			dataArr: [
@@ -143,7 +146,7 @@ export default {
 		overflow:auto;
 	}
 	.u-list {
-		padding: 20upx 40upx;
+		// padding: 20upx 40upx;
 		background-color: #ffffff;
 		border-radius: 30upx;
 		margin-bottom: 20upx;
@@ -163,7 +166,7 @@ export default {
 			max-height: 0;
 			overflow: hidden;
 			&.active{
-				max-height: 750upx;
+				max-height: 100vh;
 			}
 			.cell {
 				display: inline-block;

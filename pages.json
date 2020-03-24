@@ -90,8 +90,14 @@
         {
             "path" : "pages/edu/eduPlatform",
             "style" : {
-				"navigationBarTitleText" : "学习平台数据"
-			}
+                "navigationBarTitleText" : "学习平台数据"
+            }
+        },
+        {
+            "path" : "pages/statistics/stuSubmissionStatistics",
+            "style" : {
+                "navigationBarTitleText" : "学生申报信息统计"
+            }
         }
     ],
     "globalStyle" : {

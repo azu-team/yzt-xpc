@@ -121,52 +121,9 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets/style/list.scss';
-.m-content {
-	padding: 20upx 40upx;
-	height: calc(100vh - 315upx);
-	overflow: auto;
-	swiper,swiper-item,{
-		width: 100%;
-		height: 100%;
-		overflow:auto;
-	}
-	.u-list {
-		padding: 20upx 40upx;
-		background-color: #ffffff;
-		border-radius: 30upx;
-		margin-bottom: 20upx;
-		box-shadow: 0 5upx 5upx #eee;
-		border: solid 1upx $main-borer-color;
-		.u-list-title {
-			font-size: 32upx;
-			color: $uni-text-color;
-			border-bottom: solid 1px $main-borer-color;
-			padding-bottom: 20upx;
-			position: relative;
-		}
-		.u-list-desc {
-			font-size: 28upx;
-			color: $uni-text-second-color;
-			transition: max-height 0.3s; 
-			max-height: 0;
-			overflow: hidden;
-			&.active{
-				max-height: 750upx;
-			}
-			.cell {
-				display: inline-block;
-				width: 95%;
-				margin: 20upx 0 0 40upx;
-				// white-space: nowrap;
-				&.one_line {
-					display: block;
-					width: 100%;
-				}
-			}
-		}
-	}
-}
-.audio{
-	
+.m-content .u-list .u-list-desc .cell{
+	display: inline-block;
+	width: 95%;
+	margin: 20upx 0 0 40upx;
 }
 </style>
