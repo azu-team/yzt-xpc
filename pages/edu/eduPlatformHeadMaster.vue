@@ -2,17 +2,18 @@
 	<!-- 校长 -->
 	<view class="container">
 		<view class="m-title">选择学习平台</view>
-		<!-- <view class="m-condition">
+		<view class="m-condition">
 			<text class="u-tips" @tap="handleChooseTime(true)">{{startTime || '开始时间'}}</text>
 			<text class="u-middle">至</text>
 			<text class="u-tips" @tap="handleChooseTime(false)">{{endTime || '结束时间'}}</text>
-		</view> -->
+			<uni-tag @click="handleClearData" style="display: inline-block;width: 90upx;margin-left: 20upx;" text="清空" type="primary" size="small"></uni-tag>
+		</view>
 		<view class="m-content">
 			<view class="u-title-wrapper">
 				<view class="u-title"></view>
 				<view class="u-title">课程门数</view>
 				<view class="u-title">应到/实到(人)</view>
-				<view class="u-title">可是总长(小时)</view>
+				<view class="u-title">课时总长(小时)</view>
 			</view>
 			<view class="u-list" v-for="(item, index) in dataArr" :key="index">
 				<view class="u-platform" @tap="handleNav(item)">
@@ -20,13 +21,13 @@
 					<view class="u-right">{{ item.name }}</view>
 				</view>
 				<view class="u-desc" @tap="handleWatchDetail(item,0)">
-					<text class="link">{{ item.courseNum }}</text>
+					<text class="link">{{ item.courseNum||'' }}</text>
 				</view>
 				<view class="u-desc" @tap="handleWatchDetail(item,1)">
-					{{ item.yd }}/
-					<text class="link">{{ item.sd }}</text>
+					{{ item.yd||'' }}/
+					<text class="link">{{ item.sd||'' }}</text>
 				</view>
-				<view class="u-desc">{{ item.totalTime }}</view>
+				<view class="u-desc">{{ item.totalTime||'' }}</view>
 			</view>
 		</view>
 
@@ -92,150 +93,59 @@ export default {
 			startTime: '',
 			endTime: '',
 			currentSelect: '',
-			trList: [
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				},
-				{
-					courseNum: '10',
-					name: '张三',
-					reason: '请假',
-					totalTime: '25h'
-				}
-			],
+			trList: [],
 			dataList: [],
 			dataArr: [
-				{
-					name: '腾讯课堂',
-					value: '1',
-					logoUrl: '/static/mp-weixin/tencent.png',
-					courseNum: '13',
-					loginTime: '3月3日 9:00',
-					totalTime: '20',
-					sd: '42',
-					yd: '44'
-				},
-				{
-					name: '钉钉',
-					value: '2',
-					logoUrl: '/static/mp-weixin/dingding.png',
-					courseNum: '2',
-					loginTime: '3月4日 9:00',
-					totalTime: '12',
-					sd: '42',
-					yd: '44'
-				},
-				{
-					name: '凤凰职教云',
-					value: '3',
-					logoUrl: '/static/mp-weixin/fenghuang.png',
-					courseNum: '12',
-					loginTime: '3月5日 9:00',
-					totalTime: '21',
-					sd: '42',
-					yd: '44'
-				},
-				{
-					name: '智慧职教',
-					value: '4',
-					logoUrl: '/static/mp-weixin/zhihui.png',
-					courseNum: '3',
-					loginTime: '3月3日 9:00',
-					totalTime: '14',
-					sd: '42',
-					yd: '44'
-				},
-				{
-					name: '超星泛雅',
-					value: '5',
-					logoUrl: '/static/mp-weixin/chaoxing.png',
-					courseNum: '2',
-					loginTime: '3月4日 9:00',
-					totalTime: '21',
-					sd: '42',
-					yd: '44'
-				}
+				// {
+				// 	name: '腾讯课堂',
+				// 	value: '1',
+				// 	logoUrl: '/static/mp-weixin/tencent.png',
+				// 	courseNum: '13',
+				// 	loginTime: '3月3日 9:00',
+				// 	totalTime: '20',
+				// 	sd: '42',
+				// 	yd: '44'
+				// },
+				// {
+				// 	name: '钉钉',
+				// 	value: '2',
+				// 	logoUrl: '/static/mp-weixin/dingding.png',
+				// 	courseNum: '2',
+				// 	loginTime: '3月4日 9:00',
+				// 	totalTime: '12',
+				// 	sd: '42',
+				// 	yd: '44'
+				// },
+				// {
+				// 	name: '凤凰职教云',
+				// 	value: '3',
+				// 	logoUrl: '/static/mp-weixin/fenghuang.png',
+				// 	courseNum: '12',
+				// 	loginTime: '3月5日 9:00',
+				// 	totalTime: '21',
+				// 	sd: '42',
+				// 	yd: '44'
+				// },
+				// {
+				// 	name: '智慧职教',
+				// 	value: '4',
+				// 	logoUrl: '/static/mp-weixin/zhihui.png',
+				// 	courseNum: '3',
+				// 	loginTime: '3月3日 9:00',
+				// 	totalTime: '14',
+				// 	sd: '42',
+				// 	yd: '44'
+				// },
+				// {
+				// 	name: '超星泛雅',
+				// 	value: '5',
+				// 	logoUrl: '/static/mp-weixin/chaoxing.png',
+				// 	courseNum: '2',
+				// 	loginTime: '3月4日 9:00',
+				// 	totalTime: '21',
+				// 	sd: '42',
+				// 	yd: '44'
+				// }
 			]
 		};
 	},
@@ -243,13 +153,56 @@ export default {
 		this.initData();
 	},
 	methods: {
+		getDetailData(row,type){
+			let url = type == 0?'/statistical/getXztkKc':'/statistical/getXztkWd'
+			this.trList = []
+			this.$HTTP({
+				url,
+				params:{
+					userid:uni.getStorageSync('userId'),
+					'kc':row.kc
+				},
+				successCallback:({data})=>{
+					console.log(data,'data')
+					if(data.code ==0){
+						let dataArr = []
+						if(type == 0){
+							dataArr = data.data.map(item=>{
+								return{
+									courseNum:item.kcmc,
+									totalTime:item.sj,
+								}
+							})
+						}else{
+							dataArr = data.data.map(item=>{
+								return{
+									courseNum:item.kcmc,
+									name:item.xsxm,
+									reason:item.wdyy,
+									totalTime:item.sksj,
+								}
+							})
+						}
+						this.trList = dataArr
+						
+					}else{
+						
+					}
+				}
+			})
+		},
+		handleClearData(){
+			this.startTime = '';
+			this.endTime = ''
+			this.initData()
+		},
 		handleClose() {
 			this.active = false;
 		},
 		handleWatchDetail(item,type) {
 			this.dialogType = type;
 			this.active = true;
-			// this.$refs.popup.open()
+			this.getDetailData(item,type)
 		},
 		handleChooseTime(isStartTime) {
 			if (isStartTime) {
@@ -266,23 +219,45 @@ export default {
 			console.log(arguments, 'arguments');
 			this[this.currentSelect] = result;
 			this.$refs.linkage.hide();
+			this.initData()
 		},
 		initData() {
 			this.$HTTP({
-				url: '/statistical/getXxqk',
+				url: '/statistical/getXzck',
 				params: {
 					kssj: this.startTime,
 					jssj: this.endTime,
 					userid: uni.getStorageSync('userId')
 				},
 				successCallback: ({ data }) => {
-					if (data.code == 0) {
-						console.log(data, '获取参数');
-					} else {
+					if(data.code == 0){
+						let dataObj = data.data
+						this.dataArr = []
+						/* 
+						name: '钉钉',
+						value: '2',
+						logoUrl: '/static/mp-weixin/dingding.png',
+						courseNum: '2',
+						loginTime: '3月4日 9:00',
+						totalTime: '12',
+						sd: '42',
+						yd: '44' */
+						for(let key in dataObj){
+							this.dataArr.push({
+								...dataObj[key],
+								name:dataObj[key].name||'名称',
+								logoUrl:dataObj[key].imgUrl,
+								courseNum:dataObj[key].kcs,
+								sd:dataObj[key].sdrs,
+								yd:dataObj[key].ydrs,
+								totalTime:dataObj[key].zsc,
+							})
+						}
+					}else{
 						uni.showToast({
-							title: data.msg,
-							icon: 'none'
-						});
+							title:data.msg,
+							icon:'none'
+						})
 					}
 				}
 			});

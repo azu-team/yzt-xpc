@@ -2,11 +2,12 @@
 	<!-- 行政人员 -->
 	<view class="container">
 		<view class="m-title">选择学习平台</view>
-		<!-- <view class="m-condition">
+		<view class="m-condition">
 			<text class="u-tips" @tap="handleChooseTime(true)">{{startTime || '开始时间'}}</text>
 			<text class="u-middle">至</text>
 			<text class="u-tips" @tap="handleChooseTime(false)">{{endTime || '结束时间'}}</text>
-		</view> -->
+			<uni-tag @click="handleClearData" style="display: inline-block;width: 90upx;margin-left: 20upx;" text="清空" type="primary" size="small"></uni-tag>
+		</view>
 		<view class="m-content">
 			<view class="u-title-wrapper">
 				<view class="u-title"></view>
@@ -20,10 +21,10 @@
 					<view class="u-left"><image class="icon" :src="item.logoUrl" mode="aspectFit"></image></view>
 					<view class="u-right">{{ item.name }}</view>
 				</view>
-				<view class="u-desc" @tap="handleWatchDetail(item)"><text class="link">{{item.schoolNum}}</text></view>
-				<view class="u-desc" >{{item.userNum}} </view>
-				<view class="u-desc">{{item.courseNum}}</view>
-				<view class="u-desc">{{item.totalTime}}</view>
+				<view class="u-desc" @tap="handleWatchDetail(item)"><text class="link">{{item.schoolNum||''}}</text></view>
+				<view class="u-desc" >{{item.userNum ||''}} </view>
+				<view class="u-desc">{{item.courseNum||''}}</view>
+				<view class="u-desc">{{item.totalTime||''}}</view>
 			</view>
 		</view>
 		
@@ -38,7 +39,7 @@
 			ref="linkage"
 			themeColor="#25a5ff"></link-area>
 			<!-- <uni-popup ref="popup"> -->
-			<view :class="{'m-mask':true,'active':active}">
+			<view :class="{'m-mask':true,'active':active}" >
 				<view class="m-pop-content">
 					<view class="m-close">
 						<text></text>
@@ -48,11 +49,9 @@
 					<view class="t-table" >
 					  <view class="t-row t-title">
 					    <view class="t-th">学校名称</view>
-					    <view class="t-th">课程时长</view>
 					  </view>
 					  	<view class="t-row" v-for="(row, index) in trList" :key="index">
-					  	  <view class="t-td">{{row.className}}</view>
-					  	  <view class="t-td">{{row.classTime}}</view>
+					  	  <view class="t-td">{{row.schoolName}}</view>
 					  	</view>
 					</view>
 					
@@ -71,143 +70,63 @@ export default {
 			startTime:'',
 			endTime:'',
 			currentSelect:'',
-			trList:[
-				{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},{
-					className:'课程名称',
-					name:'张三',
-					reason:'请假',
-					classTime:'9:00'
-				},
-			],
-			dataList:[
-				
-			],
+			trList:[],
 			dataArr: [
-				{
-					name: '腾讯课堂',
-					value: '1',
-					logoUrl: '/static/mp-weixin/tencent.png',
-					schoolNum:'10',
-					loginTime:'3月3日 9:00',
-					learningTime:'9:00-10:00',
-					courseNum:'42',
-					totalTime:'44h',
-					userNum:100,
-				},
-				{
-					name: '钉钉',
-					value: '2',
-					logoUrl: '/static/mp-weixin/dingding.png',
-					schoolNum:'11',
-					loginTime:'3月4日 9:00',
-					learningTime:'9:00-10:00',
-					courseNum:'42',
-					totalTime:'44h',
-					userNum:100,
-				},
-				{
-					name: '凤凰职教云',
-					value: '3',
-					logoUrl: '/static/mp-weixin/fenghuang.png',
-					schoolNum:'12',
-					loginTime:'3月5日 9:00',
-					learningTime:'9:00-10:00',
-					courseNum:'42',
-					totalTime:'44h',
-					userNum:100,
-				},
-				{
-					name: '智慧职教',
-					value: '4',
-					logoUrl: '/static/mp-weixin/zhihui.png',
-					schoolNum:'13',
-					loginTime:'3月3日 9:00',
-					learningTime:'9:00-10:00',
-					courseNum:'42',
-					totalTime:'44h',
-					userNum:100,
-				},
-				{
-					name: '超星泛雅',
-					value: '5',
-					logoUrl: '/static/mp-weixin/chaoxing.png',
-					schoolNum:'11',
-					loginTime:'3月4日 9:00',
-					learningTime:'9:00-10:00',
-					courseNum:'42',
-					totalTime:'44h',					
-					userNum:100,
-				}
+				// {
+				// 	name: '腾讯课堂',
+				// 	value: '1',
+				// 	logoUrl: '/static/mp-weixin/tencent.png',
+				// 	schoolNum:'10',
+				// 	loginTime:'3月3日 9:00',
+				// 	learningTime:'9:00-10:00',
+				// 	courseNum:'42',
+				// 	totalTime:'44h',
+				// 	userNum:100,
+				// },
+				// {
+				// 	name: '钉钉',
+				// 	value: '2',
+				// 	logoUrl: '/static/mp-weixin/dingding.png',
+				// 	schoolNum:'11',
+				// 	loginTime:'3月4日 9:00',
+				// 	learningTime:'9:00-10:00',
+				// 	courseNum:'42',
+				// 	totalTime:'44h',
+				// 	userNum:100,
+				// },
+				// {
+				// 	name: '凤凰职教云',
+				// 	value: '3',
+				// 	logoUrl: '/static/mp-weixin/fenghuang.png',
+				// 	schoolNum:'12',
+				// 	loginTime:'3月5日 9:00',
+				// 	learningTime:'9:00-10:00',
+				// 	courseNum:'42',
+				// 	totalTime:'44h',
+				// 	userNum:100,
+				// },
+				// {
+				// 	name: '智慧职教',
+				// 	value: '4',
+				// 	logoUrl: '/static/mp-weixin/zhihui.png',
+				// 	schoolNum:'13',
+				// 	loginTime:'3月3日 9:00',
+				// 	learningTime:'9:00-10:00',
+				// 	courseNum:'42',
+				// 	totalTime:'44h',
+				// 	userNum:100,
+				// },
+				// {
+				// 	name: '超星泛雅',
+				// 	value: '5',
+				// 	logoUrl: '/static/mp-weixin/chaoxing.png',
+				// 	schoolNum:'11',
+				// 	loginTime:'3月4日 9:00',
+				// 	learningTime:'9:00-10:00',
+				// 	courseNum:'42',
+				// 	totalTime:'44h',					
+				// 	userNum:100,
+				// }
 			]
 		};
 	},
@@ -215,12 +134,45 @@ export default {
 		this.initData()
 	},
 	methods: {
+		getDetailData(row){
+			this.trList  = []
+			this.$HTTP({
+				url:'/statistical/getGlztkXx',
+				params:{
+					userid:uni.getStorageSync('userId'),
+					'xxjh':row.xxjh
+				},
+				successCallback:({data})=>{
+					console.log(data,'data')
+					if(data.code ==0){
+						let dataArr = data.data.map(item=>{
+							return{
+								schoolName:item,
+							}
+						})
+						for(let i = 0;i<4;i++){
+							dataArr = dataArr.concat(dataArr)
+						}
+						// dataArr = [...dataArr,...dataArr,...dataArr,...dataArr]
+						this.trList = dataArr
+					}else{
+						
+					}
+				}
+			})
+		},
 		handleClose(){
 			this.active = false;
 		},
 		handleWatchDetail(item){
 			this.active = true
+			this.getDetailData(item)
 			// this.$refs.popup.open()
+		},
+		handleClearData(){
+			this.startTime = '';
+			this.endTime = ''
+			this.initData()
 		},
 		handleChooseTime(isStartTime){
 			if(isStartTime){
@@ -234,13 +186,13 @@ export default {
 			this.$refs.linkage.hide()
 		},
 		handleChoose({checkArr,checkValue,defaultVal,result}){
-			console.log(arguments,'arguments')
 			this[this.currentSelect] = result;
 			this.$refs.linkage.hide()
+			this.initData()
 		},
 		initData(){
 			this.$HTTP({
-				url:'/statistical/getXxqk',
+				url:'/statistical/getGlzck',
 				params:{
 					kssj:this.startTime,
 					jssj:this.endTime,
@@ -248,7 +200,32 @@ export default {
 				},
 				successCallback:({data})=>{
 					if(data.code == 0){
-						console.log(data,'获取参数')
+						let dataObj = data.data
+						this.dataArr = []
+						/* 	
+						{
+							name: '超星泛雅',
+							value: '5',
+							logoUrl: '/static/mp-weixin/chaoxing.png',
+							schoolNum:'11',
+							loginTime:'3月4日 9:00',
+							learningTime:'9:00-10:00',
+							courseNum:'42',
+							totalTime:'44h',					
+							userNum:100,
+						} */
+						for(let key in dataObj){
+							this.dataArr.push({
+								...dataObj[key],
+								name:dataObj[key].name||'名称',
+								logoUrl:dataObj[key].imgUrl,
+								
+								schoolNum:dataObj[key].xqxxs,
+								userNum:dataObj[key].syrs,
+								courseNum:dataObj[key].kcs,
+								totalTime:dataObj[key].kss,
+							})
+						}
 					}else{
 						uni.showToast({
 							title:data.msg,
@@ -347,7 +324,7 @@ export default {
 	width: 100vw;
 	height: 100vh;
 	background-color: rgba($color: #000000, $alpha: 0.4);
-	z-index: 5;
+	z-index: 50;
 	display: none;
 	&.active{
 		display: block;
@@ -355,7 +332,7 @@ export default {
 }
 .m-pop-content{
 	position: fixed;
-	z-index: 6;
+	z-index: 60;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%,-50%);

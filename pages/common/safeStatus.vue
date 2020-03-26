@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view class="m-tip">
+		<view class="c-title">
 			<view class=""><tabs :list="list" v-model="active"></tabs></view>
 		</view>
 		<view class="" v-show="active == '0'"><add-page></add-page></view>
@@ -37,7 +37,7 @@ export default {
 	height: 100vh;
 	overflow: auto;
 }
-.m-tip {
+.c-title {
 	position: sticky;
 	top: 0;
 	z-index: 4;

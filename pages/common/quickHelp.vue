@@ -11,6 +11,7 @@
 				<tabs :list="list" v-model="active"></tabs>
 			</view>
 		</view>
+		
 		<view class="" v-show="active == '0'">
 			<add-page ></add-page>
 		</view>
@@ -40,9 +41,9 @@ export default {
 				{
 					name:'班主任',phone:'18621582789',
 				},{
-					name:'学校保卫室',phone:'18621582789',
-				},{
 					name:'110',phone:'18621582789',
+				},{
+					name:'保卫室',phone:'18621582789',
 				},
 			]
 		};
@@ -61,8 +62,8 @@ export default {
 	@import '../../static/mp-weixin/globalStyle/radio.scss';
 	.container {
 		background-color: #f6fbfe;
-		height: 100vh;
-		overflow: auto;
+		height: auto;
+		// overflow: auto;
 	}
 	.m-tip{
 		position: sticky;

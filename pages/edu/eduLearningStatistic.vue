@@ -237,6 +237,31 @@ export default {
 					}
 				}
 			});
+			console.log({
+				$this: _self,
+				canvasId: canvasId,
+				type: 'pie',
+				fontSize: 11,
+				padding: [15, 15, 0, 15],
+				legend: {
+					show: true,
+					padding: 5,
+					lineHeight: 11,
+					margin: 0
+				},
+				background: '#FFFFFF',
+				pixelRatio: _self.pixelRatio,
+				series: chartData.series,
+				animation: false,
+				width: _self.cWidth * _self.pixelRatio,
+				height: _self.cHeight * _self.pixelRatio,
+				dataLabel: true,
+				extra: {
+					pie: {
+						lableWidth: 15
+					}
+				}
+			})
 		},
 
 		changeData() {

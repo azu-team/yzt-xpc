@@ -1,0 +1,16 @@
+{
+  "id": "1716634",
+  "name": "一证通",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8120479",
+      "name": "问题",
+      "font_class": "wenti",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    }
+  ]
+}

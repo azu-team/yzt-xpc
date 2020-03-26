@@ -86,6 +86,9 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets/style/list.scss';
+.m-content{
+	height: calc(100vh - 138upx);
+}
 .m-content .u-list .u-list-desc .cell{
 	display: inline-block;
 	width: 95%;

@@ -90,15 +90,16 @@
 export default {
 	data() {
 		return {
+			userId:uni.getStorageSync('userId'),
 			region:'选择位置',
 			nodes:``,//富文本内容
 			contactArr:[
 				{
 					name:'班主任',phone:'18621582789',
 				},{
-					name:'学校保卫室',phone:'18621582789',
-				},{
 					name:'110',phone:'18621582789',
+				},{
+					name:'保卫室',phone:'18621582789',
 				},
 			],
 			form: {
@@ -191,8 +192,34 @@ export default {
 			
 		});
 		this.getHtmlContent();
+		this.getLastContent()
 	},
 	methods: {
+		getLastContent(){
+			this.$HTTP({
+				url:'/safeData/getLastOne',
+				params:{
+					userid:this.userId,
+				},
+				successCallback:({data})=>{
+					if(data.code == 0){
+						if(!data.data) return;
+						let keyArr = ['03','04','05','06']
+						keyArr.forEach(item=>{
+							this.form['field'+item] = data.data['field'+item]
+						})
+						if(!this.form.field02){
+							this.form.field02 = data.data.field02
+						}
+					}else{
+						uni.showToast({
+							title:data.msg,
+							icon:'none'
+						})
+					}
+				}
+			})
+		},
 		handleCall(phoneNumber){
 			uni.makePhoneCall({
 			    phoneNumber: phoneNumber
@@ -232,7 +259,7 @@ export default {
 		send() {
 			let params = {
 				...this.form,
-				field01:uni.getStorageSync('userId')
+				field01:this.userId
 			}
 			this.$HTTP({
 				url: '/safeData/save',

@@ -78,7 +78,7 @@ export default {
 						path: '/pages/stu/stuLearning'
 					},
 					{
-						name: '查看学习情况',
+						name: '学习情况',
 						imgUrl: '../../static/mp-weixin/imgs/4.png',
 						path: '/pages/stu/stuStatus'
 					},
@@ -171,6 +171,10 @@ export default {
 								let resData = data.data;
 								// userId必定存在 保存
 								uni.setStorageSync('userId', resData.userId);
+								uni.showToast({
+									title:resData.state,
+									icon:'none'
+								})
 								if (resData.state == '1') {
 									// 已认证 但未激活
 									uni.setStorageSync('idType', idTypeObj[resData.zysflb]);
@@ -190,6 +194,8 @@ export default {
 									this.idType = idTypeObj[resData.zysflb];
 									// 显示权限下所有模块
 									this.showAll = true;
+									
+									this.tips = '使用场景'
 								}
 							} else {
 								uni.showToast({

@@ -34,7 +34,7 @@
         {
             "path" : "pages/stu/stuStatus",
             "style" : {
-                "navigationBarTitleText" : "查看学习情况"
+                "navigationBarTitleText" : "在线学习情况"
             }
         },
         {
@@ -98,6 +98,10 @@
             "style" : {
                 "navigationBarTitleText" : "学生申报信息统计"
             }
+        },
+        {
+            "path" : "pages/common/quickHelpAdd",
+            "style" : {}
         }
     ],
     "globalStyle" : {

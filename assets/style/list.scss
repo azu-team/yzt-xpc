@@ -5,6 +5,12 @@
 .m-title {
 	padding: 30upx 0 0 40upx;
 }
+.c-title {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background: #FFFFFF;
+}
 .m-content {
 	padding: 20upx 40upx;
 	height: calc(100vh - 108upx);
@@ -36,7 +42,7 @@
 			background-color: #F9F9F9;
 			padding:0 40upx;
 			&.active{
-				max-height: 270upx;
+				max-height: 100vh;
 			}
 			.cell {
 				display: inline-block;

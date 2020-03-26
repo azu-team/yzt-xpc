@@ -12,7 +12,7 @@
 				</view>
 				<view class="cell">
 					<text>语音信息</text>:
-					<text v-if="item.field05" class="audio" @tap="handleDownload(item)">播放</text>
+					<text v-if="item.field05" class="audio" @tap="handleDownload(item)">{{item.isPlaying?'音频文件播放中':'播放'}}</text>
 					<text v-else>暂无</text>
 				</view>
 			</view>
@@ -25,9 +25,9 @@
 
 <script>
 import {http_root} from '../../utils/config.js'
-// const innerAudioContext = uni.createInnerAudioContext();
+const innerAudioContext = uni.createInnerAudioContext();
 
-// innerAudioContext.autoplay = true;
+innerAudioContext.autoplay = true;
 export default {
 	data() {
 		return {
@@ -56,23 +56,32 @@ export default {
 		this.getData()
 	},
 	methods: {
-		audioPlay(path){
-			// innerAudioContext.src = path;
-			// innerAudioContext.play();
+		audioPlay(path,item){
+			item.isPlaying = true;
+			innerAudioContext.src = path;
+			innerAudioContext.play();
+			innerAudioContext.onEnded(()=>{
+				item.isPlaying = false
+			})
 		},
 		handleDownload(item){
+			if(item.isPlaying) return;
 			if(item.filePath){
-				this.audioPlay(item.filePath)
+				this.audioPlay(item.filePath,item)
 			}else{
 				uni.showLoading({
 					title:'下载附件中...'
 				})
+				let fileName = new Date().valueOf();
+				let fileType = item.field05.substring(item.field05.length - 3)
 				uni.downloadFile({
 					url:item.field05,
-					success:({tempFilePath})=>{
+					filePath:wx.env.USER_DATA_PATH + '/' + fileName + '.'+ fileType,
+					success:(res)=>{
 						uni.hideLoading()
-						item.filePath = tempFilePath;
-						this.audioPlay(tempFilePath)
+						console.log(item,'item')
+						item.filePath = res.filePath;
+						this.audioPlay(res.filePath,item)
 					},
 					fail:()=> {
 						uni.hideLoading()
@@ -102,6 +111,7 @@ export default {
 						let arr = data.data.list.map(item=>{
 							return{
 								...item,
+								isPlaying:false,
 								title:new Date(item.addTime).Format('yyyy-MM-dd')
 							}
 						})
@@ -125,5 +135,14 @@ export default {
 	display: inline-block;
 	width: 95%;
 	margin: 20upx 0 0 40upx;
+}
+.m-content{
+	height: auto;
+}
+.m-content .u-list .u-list-desc.active{
+	max-height: 100vh;
+}
+.audio{
+	color: #007aff;
 }
 </style>

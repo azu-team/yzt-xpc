@@ -30,7 +30,7 @@
 		<view class="m-list">
 			<view class="u-q-title">
 				<text>1.目前健康状态</text>
-				<text class="icon">单选</text>
+				<!-- <text class="icon">单选</text> -->
 			</view>
 			<radio-group class="radio-group" @change="handleRadioChange($event, 'field07')">
 				<label class="u-list-cell" v-for="(item, index) in list1" :key="index">
@@ -42,7 +42,7 @@
 		<view class="m-list">
 			<view class="u-q-title">
 				<text>2.今日体温</text>
-				<text class="icon">单选</text>
+				<!-- <text class="icon">单选</text> -->
 			</view>
 			
 			<radio-group class="radio-group" @change="handleRadioChange($event, 'field08')">
@@ -165,6 +165,7 @@
 export default {
 	data() {
 		return {
+			userId:uni.getStorageSync('userId'),
 			pageInfo:{
 				date:new Date().Format('yyyy-MM-dd'),
 				person:'姓名',
@@ -306,6 +307,19 @@ export default {
 		// this.judgeAuthorize();
 	},
 	methods: {
+		getUserInfo() {
+			this.$HTTP({
+				url: '/User/userData',
+				params: {
+					userId: this.userId
+				},
+				successCallback: ({data}) => {
+					if(data.code == '0'){
+						this.pageInfo.name = data.data.userName
+					}
+				}
+			});
+		},
 		initData(){
 			// 获取标题数据
 			this.$HTTP({
@@ -328,18 +342,21 @@ export default {
 			this.$HTTP({
 				url:'/healthForDay/getLastOne',
 				params:{
-					userid:uni.getStorageSync('userId')
+					userid:this.userId
 				},
 				successCallback:({data})=>{
 					if(data.code == 0){
+						if(!data.data) return;
 						let dataObj = data.data
-						let keyArr = [7,8,9,10,11,12,13,30]
+						let keyArr = ['07','08','09',10,11,12,13,30]
 						keyArr.forEach((num,idx)=>{
 							this.form['field'+num] = dataObj['field'+num]
 						})
-						console.log(dataObj,'dataOjb')
 						if(dataObj.field14){
 							this.setDataByfield14(dataObj.field14,dataObj)
+						}
+						if(!this.form.field06){
+							this.form.field06 = dataObj['field06']
 						}
 					}else{
 						uni.showToast({
@@ -349,6 +366,7 @@ export default {
 					}
 				}
 			})
+			this.getUserInfo();
 		},
 		setDataByfield14(type,dataObj){
 			switch(type){
@@ -356,22 +374,22 @@ export default {
 					this.form.a = dataObj.field15 ;
 					this.form.b = dataObj.field16 ;
 					this.form.c = dataObj.field17 ;
-					this.form.field14 = 0
+					this.form.field14 = '0'
 				};break;
 				case '火车': {
 					this.form.a = dataObj.field18 ;
 					this.form.b = dataObj.field19 ;
 					this.form.c = dataObj.field20 ;
-					this.form.field14 = 1
+					this.form.field14 = '1'
 				};break;
 				case '汽车': {
 					this.form.a = dataObj.field21 ;
 					this.form.b = dataObj.field22 ;
-					this.form.field14 = 2
+					this.form.field14 = '2'
 				};break;
 				case '轮船': {
 					this.form.a = dataObj.field23 ;
-					this.form.field14 = 3
+					this.form.field14 = '3'
 				};break;
 			}
 		},
@@ -413,7 +431,7 @@ export default {
 					}
 					break;
 			}
-			params.field01 = uni.getStorageSync('userId'),
+			params.field01 = this.userId
 			params.field02 = uni.getStorageSync('idType')
 			// console.log(params)
 			// return;

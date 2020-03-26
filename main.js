@@ -5,7 +5,7 @@ import linkArea from './components/w-picker/w-picker.vue'
 import tabs from './components/ms-tabs/ms-tabs.vue';
 import uTag from './components/uni-tag/uni-tag.vue'
 import './utils/format.js'
-
+import './static/mp-weixin/iconfont/iconfont.css';
 
 Vue.component('link-area',linkArea)
 Vue.component('tabs',tabs)

@@ -41,7 +41,8 @@
 		<view class="m-list">
 			<view class="u-q-title"><text>4.求助具体要求</text></view>
 			<view class="u-content">
-				<editor id="editor"  placeholder="请输入具体要求" @ready="onEditorReady"></editor>
+				<editor id="editor" style="background-color: #EEEEEE;padding: 20upx;width: 95%;border: solid 1upx #EEEEEE;"  placeholder="请输入具体要求" @ready="onEditorReady"></editor>
+				<!-- <textarea id="editor" v-model="form.FIELD06" placeholder-style="color:#F76260" placeholder="占位符字体是红色的"/> -->
 				<!-- <input class="input" type="text" v-model="form.FIELD06" /> -->
 			</view>
 		</view>
@@ -145,6 +146,13 @@ export default {
 		// });
 		// 判断当前是否有录音权限
 		recorderManager.onStop((res) =>{
+			uni.getFileInfo({
+				filePath:res.tempFilePath,
+				success:({errMsg,size,digest})=>{
+					// TODO 是否需要限制上传音频文件大小
+					console.log(size/1024+'kb')
+				}
+			})
 			this.voicePath = res.tempFilePath;
 		});
 		this.judgeAuthorize()
@@ -152,7 +160,6 @@ export default {
 			this.audioStatus = '播放文件'
 		})
 		innerAudioContext.onError(({errCode})=>{
-			console.log(errCode,'err')
 			uni.showToast({
 				title:errCode,
 				icon:'none'
@@ -161,8 +168,80 @@ export default {
 				// this.audioStatus = '播放文件'
 			})
 		})
+		this.getLastContent()
 	},
 	methods: {
+		setText(text){
+			if(this.editorCtx){
+				this.editorCtx.insertText({
+					text:text,
+					success:()=>{
+						// 在赋值完成后页面会滚动到对应的位置
+						uni.pageScrollTo({
+							scrollTop:0
+						})
+						// this.$emit('pageScrollTop')
+					}
+				})
+			}else{
+				setTimeout(()=>{
+					this.setText(text)
+				},1500)
+			}
+		},
+		handleFile(fileUrl){
+			uni.showLoading({
+				title:'下载录音文件中...'
+			})
+			let fileName = new Date().valueOf();
+			let fileType = fileUrl.substring(fileUrl.length - 3)
+			uni.downloadFile({
+				url:fileUrl,
+				filePath:wx.env.USER_DATA_PATH + '/' + fileName + '.'+ fileType,
+				success:(res)=>{
+					console.log(res,'res')
+					uni.hideLoading()
+					// console.log(tempFilePath,'音频文件路径')
+					this.voicePath = res.filePath;
+				},
+				fail:()=> {
+					uni.hideLoading()
+					uni.showToast({
+						title:'下载失败',
+						icon:'none'
+					})
+				}
+			})
+		},
+		getLastContent(){
+			this.$HTTP({
+				url:'/getHelp/getLastOne',
+				params:{
+					userid:uni.getStorageSync('userId'),
+				},
+				successCallback:({data})=>{
+					if(data.code == 0){
+						if(!data.data) return;
+						this.form.FIELD03 = data.data.field03
+						this.form.FIELD04 = data.data.field04
+						// 给文本域赋值
+						if(data.data.field06) this.setText(data.data.field06)
+						// 处理录音文件
+						if(data.data.field05) this.handleFile(data.data.field05);
+						// 设置当前位置
+						if(!this.form.FIELD02){
+							this.form.FIELD02 = data.data.field02
+						}
+						
+					}else{
+						uni.showToast({
+							title:data.msg,
+							icon:'none'
+						})
+					}
+				}
+			})
+		},
 		handleCancelChoose(){
 			this.$refs.linkage.hide()
 		},
@@ -194,6 +273,14 @@ export default {
 					})
 				},
 				complete:()=>{
+					// 对文本域内的内容进行字数限制
+					if(this.form.FIELD06.length>500){
+						uni.showToast({
+							title:'求助具体要求不能超过1000字!',
+							icon:'none'
+						})
+						return
+					}
 					// 如果求助要求不是必须项，则使用此方法，否则只调用success方法
 					let params = {
 						...this.form,
@@ -284,6 +371,7 @@ export default {
 		playVoice() {
 			if(this.audioStatus == '播放中...') return;
 			if (this.voicePath) {
+				console.log(this.voicePath,'=====')
 				innerAudioContext.src = this.voicePath;
 				innerAudioContext.play();
 				this.audioStatus = '播放中...'
@@ -305,6 +393,7 @@ export default {
 			}
 		},
 		sendDataByFiles(params){
+			
 			uni.showLoading({
 				title:'正在提交',
 				icon:'none'
@@ -329,7 +418,7 @@ export default {
 			}
 			this.$HTTP({
 				url:'/getHelp/save',
-				params_lower,
+				params:params_lower,
 				successCallback: ({data}) => {
 					this.handleSuccess(data)
 				}
@@ -367,9 +456,9 @@ export default {
 		box-sizing: border-box;
 	    width: 95%;
 	    height: 60upx;
-	    background-color: #EEEEEE !important;
+	    background-color: #EEEEEE ;
 		color: $uni-text-color;
-		padding: 30upx !important;
+		padding: 30upx ;
 		border: solid 1upx #EEEEEE;
 	}
 </style>

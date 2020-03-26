@@ -1,27 +1,28 @@
 <template>
 	<view class="container">
 		<view class="c-title">
-			<tabs :list="list" v-model="active"></tabs>
+			<!-- <tabs :list="list" v-model="active"></tabs> -->
 			<view class="m-condition">
 				<text class="u-tips" @tap="handleChooseTime(true)">{{startTime || '开始时间'}}</text>
 				<text class="u-middle">至</text>
 				<text class="u-tips" @tap="handleChooseTime(false)">{{endTime || '结束时间'}}</text>
+				<uni-tag @click="handleClearData" style="display: inline-block;width: 90upx;margin-left: 20upx;" text="清空" type="primary" size="small"></uni-tag>
 			</view>
 		</view>
 		<!-- <view class="m-title">当前学习进度</view> -->
 		<view class="m-content">
-			<view class="" v-show="active == '0'">
-				<view class="u-list" v-for="(item, index) in dataArr" :key="index">
-					<view class="u-list-title" @tap="handleCollapse(item,index)">{{ item.title }} <view  :class="{'u-dot':true, 'active':item.isActive}"></view></view>
-					<view :class="{'u-list-desc':true,active:item.isActive}">
-						<view class="cell" v-for="(params, idx) in paramsArr" :key="idx">
-							<text class="cell-title">{{ params.name }}</text>
-							:  {{ item[params.key] }}
-						</view>
+			<view class="u-list" v-for="(item, index) in dataArr" :key="index">
+				<view class="u-list-title" @tap="handleCollapse(item,index)">
+					{{ item.title }} 
+					<view  :class="{'u-dot':true, 'active':item.isActive}"></view>
+				</view>
+				<view :class="{'u-list-desc':true,active:item.isActive}">
+					<view class="cell" v-for="(params, idx) in paramsArr" :key="idx">
+						<text class="cell-title">{{ params.name }}</text>
+						:  {{ item[params.key] }}
 					</view>
 				</view>
 			</view>
-			<view class="" v-show="active == '1'"><view class="m-tips">暂无学生具体成绩</view></view>
 		</view>
 		<link-area
 			mode="date"
@@ -73,7 +74,13 @@ export default {
 				},{
 					name:'被点名次数',
 					key:'bdmcs'
-				},
+				},{
+					name:'课程门数',
+					key:'kcms'
+				},{
+					name:'课程名称',
+					key:'kcmc'
+				}
 			],
 			list: [
 				{
@@ -87,41 +94,47 @@ export default {
 			dataArr: [
 				{
 					title: '整体情况-模拟数据',
-					yskszl: '10',
-					zxsc: '20',
-					dxcs: '15',
-					kqyx: '25',
-					khzycs: '4',
-					wtsl: '011',
-					hycs: '25',
-					kscs: '2',
-					jscs: '6',
-					bdmcs: '111',
+					yskszl: '10个',
+					zxsc: '20h',
+					dxcs: '15次',
+					kqyx: '25次',
+					khzycs: '4次',
+					wtsl: '11个',
+					hycs: '25次',
+					kscs: '2次',
+					jscs: '6次',
+					bdmcs: '111次',
+					kcms:'20门',
+					kcmc:'课程名称',
 					isActive:true,
 				},{
 					title: '腾讯-模拟数据',
-					yskszl: '10',
-					zxsc: '20',
-					dxcs: '15',
-					kqyx: '25',
-					khzycs: '4',
-					wtsl: '011',
-					hycs: '25',
-					kscs: '2',
-					jscs: '6',
-					bdmcs: '111'
+					yskszl: '10个',
+					zxsc: '20h',
+					dxcs: '15次',
+					kqyx: '25次',
+					khzycs: '4次',
+					wtsl: '11个',
+					hycs: '25次',
+					kscs: '2次',
+					jscs: '6次',
+					bdmcs: '111次',
+					kcms:'20门',
+					kcmc:'课程名称',
 				},{
 					title: '凤凰-模拟数据',
-					yskszl: '10',
-					zxsc: '20',
-					dxcs: '15',
-					kqyx: '25',
-					khzycs: '4',
-					wtsl: '011',
-					hycs: '25',
-					kscs: '2',
-					jscs: '6',
-					bdmcs: '111'
+					yskszl: '10个',
+					zxsc: '20h',
+					dxcs: '15次',
+					kqyx: '25次',
+					khzycs: '4次',
+					wtsl: '11个',
+					hycs: '25次',
+					kscs: '2次',
+					jscs: '6次',
+					bdmcs: '111次',
+					kcms:'20门',
+					kcmc:'课程名称',
 				}
 			]
 		};
@@ -141,21 +154,26 @@ export default {
 		this.initData()
 	},
 	methods: {
+		handleClearData(){
+			this.startTime = '';
+			this.endTime = '';
+			this.initData()
+		},
 		initData(){
-			this.$HTTP({
-				url:'/statistical/getXxqk',
-				params:{
-					kssj:this.startTime,
-					jssj:this.endTime,
-					userid:uni.getStorageSync('userId')
-				},
-				successCallback:(res)=>{
-					console.log(res,'获取参数')
-				},
-				failCallback:(res)=>{
+			// this.$HTTP({
+			// 	url:'/statistical/getXxqk',
+			// 	params:{
+			// 		kssj:this.startTime,
+			// 		jssj:this.endTime,
+			// 		userid:uni.getStorageSync('userId')
+			// 	},
+			// 	successCallback:(res)=>{
+			// 		console.log(res,'获取参数')
+			// 	},
+			// 	failCallback:(res)=>{
 					
-				}
-			})
+			// 	}
+			// })
 		},
 		handleChooseTime(isStartTime){
 			if(isStartTime){
@@ -171,6 +189,7 @@ export default {
 		handleChoose({checkArr,checkValue,defaultVal,result}){
 			this[this.currentSelect] = result;
 			this.$refs.linkage.hide()
+			this.initData()
 		},
 		handleCollapse(item,index){
 			this.$set(item,'isActive',!item.isActive)
@@ -180,16 +199,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.c-title {
-	position: sticky;
-	top: 0;
-	z-index: 10;
-	background: #FFFFFF;
-}
 @import '../../assets/style/list.scss';
 .m-condition{
 	text-align: center;
-	padding-bottom: 20rpx;
+	padding: 20rpx 0;
 	font-size: 32rpx;
 	.u-middle{
 		margin: 0 20upx;
@@ -199,6 +212,6 @@ export default {
 	}
 }
 .m-content{
-	height: calc(100vh - 168upx);
+	height: auto;
 }
 </style>
