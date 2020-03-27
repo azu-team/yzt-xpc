@@ -213,7 +213,143 @@ const typeList = [ //登录人身份
 			value:'行政管理人员',
 			id:'21'
 		},
-	]
+	],
+	authorControl = {
+		'1': [
+			{
+				name: '身份认证',
+				imgUrl: '../../static/mp-weixin/imgs/login.png',
+				path: '/pages/idConfirm/idConfirm'
+			}
+		],
+		'2': [
+			{
+				name: '个人信息',
+				imgUrl: '../../static/mp-weixin/imgs/1.png',
+				path: '/pages/idConfirm/baseInfo'
+			},
+			{
+				name: '每日健康打卡',
+				imgUrl: '../../static/mp-weixin/imgs/2.png',
+				path: '/pages/healthCard/healthCard'
+			},
+			{
+				name: '在线学习',
+				imgUrl: '../../static/mp-weixin/imgs/3.png',
+				path: '/pages/stu/stuLearning'
+			},
+			{
+				name: '查看学习情况',
+				imgUrl: '../../static/mp-weixin/imgs/4.png',
+				path: '/pages/stu/stuStatus'
+			},
+			{
+				name: '一键求助',
+				imgUrl: '../../static/mp-weixin/imgs/5.png',
+				path: '/pages/common/quickHelp'
+			},
+			{
+				name: '安全情况',
+				imgUrl: '../../static/mp-weixin/imgs/7.png',
+				path: '/pages/common/safeStatus'
+			}
+		],
+		'3': [
+			{
+				name: '个人信息',
+				imgUrl: '../../static/mp-weixin/imgs/1.png',
+				path: '/pages/idConfirm/baseInfo'
+			},
+			{
+				name: '在线授课',
+				imgUrl: '../../static/mp-weixin/imgs/2.png',
+				path: '/pages/teacher/teaTeaching'
+			},
+			// {
+			// 	name: '查看授课情况',
+			// 	imgUrl: '../../static/mp-weixin/imgs/3.png',
+			// 	path: '/pages/teacher/teaStatistic'
+			// },
+			{
+				name:'学生申报统计',
+				imgUrl: '../../static/mp-weixin/imgs/4.png',
+				path: '/pages/statistics/stuSubmissionStatistics'
+			}
+		],
+		'4': [
+			{
+				name: '个人信息',
+				imgUrl: '../../static/mp-weixin/imgs/1.png',
+				path: '/pages/idConfirm/baseInfo'
+			},{
+				name: '授课平台',
+				imgUrl: '../../static/mp-weixin/imgs/2.png',
+				path: '/pages/edu/eduPlatform'
+			},
+			// {
+			// 	name: '查看与统计所辖区域授课情况',
+			// 	imgUrl: '../../static/mp-weixin/imgs/3.png',
+			// 	path: '/pages/edu/eduTeachingStatistic'
+			// },
+			// {
+			// 	name: '查看与统计所辖区域学习情况',
+			// 	imgUrl: '../../static/mp-weixin/imgs/4.png',
+			// 	path: '/pages/edu/eduLearningStatistic'
+			// },
+			{
+				name:'学生申报统计',
+				imgUrl: '../../static/mp-weixin/imgs/5.png',
+				path: '/pages/statistics/stuSubmissionStatistics'
+			}
+		],
+		'99':[
+			{
+				name: '个人信息',
+				imgUrl: '../../static/mp-weixin/imgs/1.png',
+				path: '/pages/idConfirm/baseInfo'
+			},
+			{
+				name: '每日健康打卡',
+				imgUrl: '../../static/mp-weixin/imgs/2.png',
+				path: '/pages/healthCard/healthCard'
+			},
+			{
+				name: '在线学习',
+				imgUrl: '../../static/mp-weixin/imgs/3.png',
+				path: '/pages/stu/stuLearning'
+			},
+			{
+				name: '查看学习情况',
+				imgUrl: '../../static/mp-weixin/imgs/4.png',
+				path: '/pages/stu/stuStatus'
+			},
+			{
+				name: '一键求助',
+				imgUrl: '../../static/mp-weixin/imgs/5.png',
+				path: '/pages/common/quickHelp'
+			},
+			{
+				name: '安全情况',
+				imgUrl: '../../static/mp-weixin/imgs/7.png',
+				path: '/pages/common/safeStatus'
+			},
+			{
+				name: '在线授课',
+				imgUrl: '../../static/mp-weixin/imgs/2.png',
+				path: '/pages/teacher/teaTeaching'
+			},
+			{
+				name:'学生申报统计',
+				imgUrl: '../../static/mp-weixin/imgs/5.png',
+				path: '/pages/statistics/stuSubmissionStatistics'
+			},
+			{
+				name: '授课平台',
+				imgUrl: '../../static/mp-weixin/imgs/2.png',
+				path: '/pages/edu/eduPlatform'
+			}
+		]
+	}
 	
 export {
 	typeList,
@@ -221,5 +357,6 @@ export {
 	idTypeList,
 	sexList,
 	eduTypeList,
-	jsTypeList
+	jsTypeList,
+	authorControl
 }

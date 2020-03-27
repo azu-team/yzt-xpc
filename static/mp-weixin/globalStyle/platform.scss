@@ -28,14 +28,14 @@
 			width: 20%;
 			margin: 0 2.5%;
 			text-align: center;
-			padding: 20upx 0;
+			padding: 15upx 0;
 			border-radius: 10upx;
 			.u-left {
 				font-size: 0;
 				line-height: 0;
 				.icon {
-					width: 100upx;
-					height: 100upx;
+					width: 90upx;
+					height: 90upx;
 				}
 			}
 			.u-right {
@@ -59,9 +59,12 @@
 	}
 }
 .m-condition{
-	text-align: center;
-	padding-bottom: 20rpx;
-	font-size: 32rpx;
+	// text-align: center;
+	padding:0 20upx 20upx ;
+	font-size: 32upx;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	.u-middle{
 		margin: 0 20upx;
 	}

@@ -15,7 +15,7 @@ export default {
 	components:{headMaster,person},
 	data() {
 		return {
-			isHeadMaster:false,
+			isHeadMaster:true,
 		};
 	},
 	onLoad(){

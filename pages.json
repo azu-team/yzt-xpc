@@ -99,10 +99,12 @@
                 "navigationBarTitleText" : "学生申报信息统计"
             }
         },
-        {
-            "path" : "pages/common/quickHelpAdd",
-            "style" : {}
-        }
+		{
+		    "path" : "pages/stu/stuCourseInfo",
+		    "style" : {
+		        "navigationBarTitleText" : "统计详细信息"
+		    }
+		}
     ],
     "globalStyle" : {
         "navigationBarTextStyle" : "black",

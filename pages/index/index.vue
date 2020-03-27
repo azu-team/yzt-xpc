@@ -2,8 +2,6 @@
 	<view class="container">
 		<view class="title">
 			{{tips}}
-			<!-- todo 不需要退出 -->
-			<!-- <view class="u-tips" v-if="idType != 1" @tap="handleUserOut">退出</view> -->
 		</view>
 		<view class="list-wrapper">
 			<view class="list-item" v-for="(item, index) in moduleArr" :key="index">
@@ -22,7 +20,7 @@
 </template>
 
 <script>
-
+import {authorControl} from '../../utils/selectLists.js'
 export default {
 	data() {
 		return {
@@ -53,101 +51,7 @@ export default {
 	
 	computed: {
 		moduleArr() {
-			let moduleCon = {
-				'1': [
-					{
-						name: '身份认证',
-						imgUrl: '../../static/mp-weixin/imgs/login.png',
-						path: '/pages/idConfirm/idConfirm'
-					}
-				],
-				'2': [
-					{
-						name: '个人信息',
-						imgUrl: '../../static/mp-weixin/imgs/1.png',
-						path: '/pages/idConfirm/baseInfo'
-					},
-					{
-						name: '每日健康打卡',
-						imgUrl: '../../static/mp-weixin/imgs/2.png',
-						path: '/pages/healthCard/healthCard'
-					},
-					{
-						name: '在线学习',
-						imgUrl: '../../static/mp-weixin/imgs/3.png',
-						path: '/pages/stu/stuLearning'
-					},
-					{
-						name: '学习情况',
-						imgUrl: '../../static/mp-weixin/imgs/4.png',
-						path: '/pages/stu/stuStatus'
-					},
-					{
-						name: '一键求助',
-						imgUrl: '../../static/mp-weixin/imgs/5.png',
-						path: '/pages/common/quickHelp'
-					},
-					// {
-					// 	name: '健康情况收集',
-					// 	imgUrl: '../../static/mp-weixin/imgs/6.png',
-					// 	path: '/pages/common/healthStatus'
-					// },
-					{
-						name: '安全情况',
-						imgUrl: '../../static/mp-weixin/imgs/7.png',
-						path: '/pages/common/safeStatus'
-					}
-				],
-				'3': [
-					{
-						name: '个人信息',
-						imgUrl: '../../static/mp-weixin/imgs/1.png',
-						path: '/pages/idConfirm/baseInfo'
-					},
-					{
-						name: '在线授课',
-						imgUrl: '../../static/mp-weixin/imgs/2.png',
-						path: '/pages/teacher/teaTeaching'
-					},
-					// {
-					// 	name: '查看授课情况',
-					// 	imgUrl: '../../static/mp-weixin/imgs/3.png',
-					// 	path: '/pages/teacher/teaStatistic'
-					// },
-					{
-						name:'学生申报统计',
-						imgUrl: '../../static/mp-weixin/imgs/4.png',
-						path: '/pages/statistics/stuSubmissionStatistics'
-					}
-				],
-				'4': [
-					{
-						name: '个人信息',
-						imgUrl: '../../static/mp-weixin/imgs/1.png',
-						path: '/pages/idConfirm/baseInfo'
-					},{
-						name: '授课平台',
-						imgUrl: '../../static/mp-weixin/imgs/2.png',
-						path: '/pages/edu/eduPlatform'
-					},
-					// {
-					// 	name: '查看与统计所辖区域授课情况',
-					// 	imgUrl: '../../static/mp-weixin/imgs/3.png',
-					// 	path: '/pages/edu/eduTeachingStatistic'
-					// },
-					// {
-					// 	name: '查看与统计所辖区域学习情况',
-					// 	imgUrl: '../../static/mp-weixin/imgs/4.png',
-					// 	path: '/pages/edu/eduLearningStatistic'
-					// },
-					{
-						name:'学生申报统计',
-						imgUrl: '../../static/mp-weixin/imgs/5.png',
-						path: '/pages/statistics/stuSubmissionStatistics'
-					}
-				]
-			};
-			return this.showAll? moduleCon[this.idType] : moduleCon[this.idType].slice(0,1);
+			return this.showAll? authorControl[this.idType] : authorControl[this.idType].slice(0,1);
 		}
 	},
 	methods: {
@@ -166,15 +70,13 @@ export default {
 									"1":'2',
 									"2":'3',
 									"20":'2',
-									"21":'4'
+									"21":'4',
+									'99':'99'//测试账号 ， 赋初值
+									
 								}
 								let resData = data.data;
 								// userId必定存在 保存
 								uni.setStorageSync('userId', resData.userId);
-								uni.showToast({
-									title:resData.state,
-									icon:'none'
-								})
 								if (resData.state == '1') {
 									// 已认证 但未激活
 									uni.setStorageSync('idType', idTypeObj[resData.zysflb]);
@@ -191,11 +93,10 @@ export default {
 									uni.setStorageSync('state',resData.state)
 									uni.setStorageSync('idType', idTypeObj[resData.zysflb]);
 									// 显示权限模块
+									// zysflb 为99 测试账号，显示所有模块
 									this.idType = idTypeObj[resData.zysflb];
 									// 显示权限下所有模块
 									this.showAll = true;
-									
-									this.tips = '使用场景'
 								}
 							} else {
 								uni.showToast({

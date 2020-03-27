@@ -3,9 +3,13 @@
 	<view class="container">
 		<view class="m-title">选择学习平台</view>
 		<view class="m-condition">
-			<text class="u-tips" @tap="handleChooseTime(true)">{{startTime || '开始时间'}}</text>
-			<text class="u-middle">至</text>
-			<text class="u-tips" @tap="handleChooseTime(false)">{{endTime || '结束时间'}}</text>
+			<view class=""></view>
+			<view class="">
+				<text class="u-tips" @tap="handleChooseTime(true)">{{startTime || '开始时间'}}</text>
+				<text class="u-middle">至</text>
+				<text class="u-tips" @tap="handleChooseTime(false)">{{endTime || '结束时间'}}</text>
+			</view>
+			
 			<uni-tag @click="handleClearData" style="display: inline-block;width: 90upx;margin-left: 20upx;" text="清空" type="primary" size="small"></uni-tag>
 		</view>
 		<view class="m-content">
@@ -20,10 +24,10 @@
 					<view class="u-left"><image class="icon" :src="item.logoUrl" mode="aspectFit"></image></view>
 					<view class="u-right">{{ item.name }}</view>
 				</view>
-				<view class="u-desc" @tap="handleWatchDetail(item,0)">
+				<view class="u-desc" @tap="handleWatchDetail(item,0,!!item.courseNum)">
 					<text class="link">{{ item.courseNum||'' }}</text>
 				</view>
-				<view class="u-desc" @tap="handleWatchDetail(item,1)">
+				<view class="u-desc" @tap="handleWatchDetail(item,1,!!item.yd)">
 					{{ item.yd||'' }}/
 					<text class="link">{{ item.sd||'' }}</text>
 				</view>
@@ -63,7 +67,7 @@
 					</view>
 					<view class="" v-if="dialogType == 1">
 						<view class="t-row" v-for="(row, index) in trList" :key="index">
-							<view class="t-td">{{ row.courseNum }}</view>
+							<view class="t-td">{{ row.course }}</view>
 							<view class="t-td">{{ row.name }}</view>
 							<view class="t-td">{{ row.reason }}</view>
 							<view class="t-td">{{ row.totalTime }}</view>
@@ -71,7 +75,7 @@
 					</view>
 					<view class="" v-else>
 						<view class="t-row" v-for="(row, index) in trList" :key="index">
-							<view class="t-td">{{ row.courseNum }}</view>
+							<view class="t-td">{{ row.course }}</view>
 							<view class="t-td">{{ row.totalTime }}</view>
 						</view>
 					</view>
@@ -96,56 +100,6 @@ export default {
 			trList: [],
 			dataList: [],
 			dataArr: [
-				// {
-				// 	name: '腾讯课堂',
-				// 	value: '1',
-				// 	logoUrl: '/static/mp-weixin/tencent.png',
-				// 	courseNum: '13',
-				// 	loginTime: '3月3日 9:00',
-				// 	totalTime: '20',
-				// 	sd: '42',
-				// 	yd: '44'
-				// },
-				// {
-				// 	name: '钉钉',
-				// 	value: '2',
-				// 	logoUrl: '/static/mp-weixin/dingding.png',
-				// 	courseNum: '2',
-				// 	loginTime: '3月4日 9:00',
-				// 	totalTime: '12',
-				// 	sd: '42',
-				// 	yd: '44'
-				// },
-				// {
-				// 	name: '凤凰职教云',
-				// 	value: '3',
-				// 	logoUrl: '/static/mp-weixin/fenghuang.png',
-				// 	courseNum: '12',
-				// 	loginTime: '3月5日 9:00',
-				// 	totalTime: '21',
-				// 	sd: '42',
-				// 	yd: '44'
-				// },
-				// {
-				// 	name: '智慧职教',
-				// 	value: '4',
-				// 	logoUrl: '/static/mp-weixin/zhihui.png',
-				// 	courseNum: '3',
-				// 	loginTime: '3月3日 9:00',
-				// 	totalTime: '14',
-				// 	sd: '42',
-				// 	yd: '44'
-				// },
-				// {
-				// 	name: '超星泛雅',
-				// 	value: '5',
-				// 	logoUrl: '/static/mp-weixin/chaoxing.png',
-				// 	courseNum: '2',
-				// 	loginTime: '3月4日 9:00',
-				// 	totalTime: '21',
-				// 	sd: '42',
-				// 	yd: '44'
-				// }
 			]
 		};
 	},
@@ -153,44 +107,6 @@ export default {
 		this.initData();
 	},
 	methods: {
-		getDetailData(row,type){
-			let url = type == 0?'/statistical/getXztkKc':'/statistical/getXztkWd'
-			this.trList = []
-			this.$HTTP({
-				url,
-				params:{
-					userid:uni.getStorageSync('userId'),
-					'kc':row.kc
-				},
-				successCallback:({data})=>{
-					console.log(data,'data')
-					if(data.code ==0){
-						let dataArr = []
-						if(type == 0){
-							dataArr = data.data.map(item=>{
-								return{
-									courseNum:item.kcmc,
-									totalTime:item.sj,
-								}
-							})
-						}else{
-							dataArr = data.data.map(item=>{
-								return{
-									courseNum:item.kcmc,
-									name:item.xsxm,
-									reason:item.wdyy,
-									totalTime:item.sksj,
-								}
-							})
-						}
-						this.trList = dataArr
-						
-					}else{
-						
-					}
-				}
-			})
-		},
 		handleClearData(){
 			this.startTime = '';
 			this.endTime = ''
@@ -199,10 +115,32 @@ export default {
 		handleClose() {
 			this.active = false;
 		},
-		handleWatchDetail(item,type) {
+		handleWatchDetail(item,type,canShow) {
+			if(!canShow) return;
 			this.dialogType = type;
 			this.active = true;
-			this.getDetailData(item,type)
+			if(type == 0){
+				let dataObj = item.kcjh,
+					dataArr = []
+				for(let key in dataObj){
+					dataArr.push({
+						course:key,
+						totalTime:dataObj[key]
+					})
+				}
+				this.trList = dataArr
+			}else{
+				this.trList = item.wdjh.map(list=>{
+					return{
+						...list,
+						course:list.kcmc,
+						name:list.xsxm,
+						reason:list.wdyy,
+						totalTime:list.sksj,
+					}
+				})
+			}
+			// this.getDetailData(item,type)
 		},
 		handleChooseTime(isStartTime) {
 			if (isStartTime) {

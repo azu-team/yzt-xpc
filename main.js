@@ -7,6 +7,7 @@ import uTag from './components/uni-tag/uni-tag.vue'
 import './utils/format.js'
 import './static/mp-weixin/iconfont/iconfont.css';
 
+
 Vue.component('link-area',linkArea)
 Vue.component('tabs',tabs)
 Vue.component('uni-tag',uTag)

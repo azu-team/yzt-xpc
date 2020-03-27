@@ -2,11 +2,13 @@
 	<view class="container">
 		<view class="m-title">选择学习平台</view>
 		<view class="m-condition">
-			<text class="u-tips" @tap="handleChooseTime(true)">{{startTime || '开始时间'}}</text>
-			<text class="u-middle">至</text>
-			<text class="u-tips" @tap="handleChooseTime(false)">{{endTime || '结束时间'}}</text>
+			<view class=""></view>
+			<view class="">
+				<text class="u-tips" @tap="handleChooseTime(true)">{{startTime || '开始时间'}}</text>
+				<text class="u-middle">至</text>
+				<text class="u-tips" @tap="handleChooseTime(false)">{{endTime || '结束时间'}}</text>
+			</view>
 			<uni-tag @click="handleClearData" style="display: inline-block;width: 90upx;margin-left: 20upx;" text="清空" type="primary" size="small">
-				<icon type="cancel" size="26"/>
 			</uni-tag>
 			
 		</view>

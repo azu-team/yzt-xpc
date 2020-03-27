@@ -9,6 +9,7 @@
 					<text class="u-middle">至</text>
 					<text class="u-tips" @tap="handleChooseTime(false)">{{ endTime || '结束时间' }}</text>
 				</view>
+				<!-- <text class="iconfont">&#xe8ba;</text> -->
 				<uni-tag @click="handleClearData" style="display: inline-block;width: 90upx;margin-left: 20upx;" text="清空" type="primary" size="small"></uni-tag>
 			</view>
 		</view>
@@ -17,7 +18,7 @@
 		<pie-chart canvas-id="canvas3" :chartData="chartData"></pie-chart> -->
 		<view class="m-q" v-for="(item, index) in questionArr" :key="index">
 			<view class="u-title">
-				<text class="iconfont icon-wenti"></text>
+				<text class="iconfont icon-shuju"></text>
 				
 				<text>{{ item.title }}</text>
 			</view>
@@ -93,24 +94,23 @@ export default {
 				},
 				successCallback: ({ data }) => {
 					if (data.code == 0) {
-						let dataObj = data.data;
-						for (let key in dataObj) {
-							let optionObj = dataObj[key],
-								optionsArr = [];
-							for (let option in optionObj) {
-								let extraArr = ['总数', 'title'];
-								if (extraArr.includes(option)) continue;
-								optionsArr.push({
-									name: option,
-									value: optionObj[option],
-									per: optionObj['总数'] != 0 ? Math.round((optionObj[option] / optionObj['总数']) * 10000) / 100 : 0
-								});
-							}
+						let dataArr = data.data;
+						dataArr.forEach((item,index)=>{
+							let optionsArr = []
+							optionsArr = item.option.sort((pre,next)=>pre.sort - next.sort)
+							optionsArr = optionsArr.map(option=>{
+								return{
+									...item,
+									name: option.name,
+									value: option.num,
+									per: item.total != 0 ? Math.round((option.num / item.total) * 10000) / 100 : 0
+								}
+							})
 							// 饼状图
-							if (dataObj[key].title == 2) {
+							if (item.modal == 2) {
 								this.questionArr.push({
-									title: key,
-									type: dataObj[key].title,
+									title: item.title,
+									type: item.modal,
 									options: {
 										series: optionsArr.map(item => {
 											return {
@@ -123,12 +123,50 @@ export default {
 							} else {
 								// 条形图
 								this.questionArr.push({
-									title: key,
-									type: dataObj[key].title,
+									title: item.title,
+									type: item.modal,
 									options: optionsArr
 								});
 							}
-						}
+						})
+						
+						
+						
+						// for (let key in dataObj) {
+						// 	let optionObj = dataObj[key],
+						// 		optionsArr = [];
+						// 	for (let option in optionObj) {
+						// 		let extraArr = ['总数', 'title'];
+						// 		if (extraArr.includes(option)) continue;
+						// 		optionsArr.push({
+						// 			name: option,
+						// 			value: optionObj[option],
+						// 			per: optionObj['总数'] != 0 ? Math.round((optionObj[option] / optionObj['总数']) * 10000) / 100 : 0
+						// 		});
+						// 	}
+						// 	// 饼状图
+						// 	if (dataObj[key].title == 2) {
+						// 		this.questionArr.push({
+						// 			title: key,
+						// 			type: dataObj[key].title,
+						// 			options: {
+						// 				series: optionsArr.map(item => {
+						// 					return {
+						// 						...item,
+						// 						data: item.value
+						// 					};
+						// 				})
+						// 			}
+						// 		});
+						// 	} else {
+						// 		// 条形图
+						// 		this.questionArr.push({
+						// 			title: key,
+						// 			type: dataObj[key].title,
+						// 			options: optionsArr
+						// 		});
+						// 	}
+						// }
 					} else {
 						uni.showToast({
 							title: data.msg,

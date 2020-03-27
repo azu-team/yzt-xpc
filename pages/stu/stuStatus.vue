@@ -1,7 +1,6 @@
 <template>
 	<view class="container">
 		<view class="c-title">
-			<!-- <tabs :list="list" v-model="active"></tabs> -->
 			<view class="m-condition">
 				<text class="u-tips" @tap="handleChooseTime(true)">{{startTime || '开始时间'}}</text>
 				<text class="u-middle">至</text>
@@ -9,17 +8,21 @@
 				<uni-tag @click="handleClearData" style="display: inline-block;width: 90upx;margin-left: 20upx;" text="清空" type="primary" size="small"></uni-tag>
 			</view>
 		</view>
-		<!-- <view class="m-title">当前学习进度</view> -->
 		<view class="m-content">
 			<view class="u-list" v-for="(item, index) in dataArr" :key="index">
-				<view class="u-list-title" @tap="handleCollapse(item,index)">
+				<view :class="{'u-list-title':true,'all-platform':index == 0}" @tap="handleCollapse(item,index)">
 					{{ item.title }} 
-					<view  :class="{'u-dot':true, 'active':item.isActive}"></view>
+					<view  v-if="index!=0" :class="{'u-dot':true, 'active':item.isActive}"></view>
 				</view>
-				<view :class="{'u-list-desc':true,active:item.isActive}">
+				<view :class="{'u-list-desc':true,active:item.isActive || index == 0}">
 					<view class="cell" v-for="(params, idx) in paramsArr" :key="idx">
 						<text class="cell-title">{{ params.name }}</text>
 						:  {{ item[params.key] }}
+					</view>
+					<view class="u-btn-wrapper">
+						<view class="u-btn" @tap="handleNav(item)">
+							查看详细
+						</view>
 					</view>
 				</view>
 			</view>
@@ -34,6 +37,7 @@
 			@cancel="handleCancelChoose"
 			ref="linkage"
 			themeColor="#25a5ff"></link-area>
+			
 	</view>
 </template>
 <script>
@@ -82,18 +86,9 @@ export default {
 					key:'kcmc'
 				}
 			],
-			list: [
-				{
-					title: '学习情况统计'
-				},
-				{
-					title: '学习成绩'
-				}
-			],
-			active: '0',
 			dataArr: [
 				{
-					title: '整体情况-模拟数据',
+					title: '整体情况',
 					yskszl: '10个',
 					zxsc: '20h',
 					dxcs: '15次',
@@ -106,7 +101,6 @@ export default {
 					bdmcs: '111次',
 					kcms:'20门',
 					kcmc:'课程名称',
-					isActive:true,
 				},{
 					title: '腾讯-模拟数据',
 					yskszl: '10个',
@@ -139,21 +133,16 @@ export default {
 			]
 		};
 	},
-	watch: {
-		active: {
-			immediate:true,
-			handler(val) {
-				if (val == '0') {
-				} else if (val == '1') {
-
-				}
-			}
-		}
-	},
 	mounted(){
 		this.initData()
 	},
 	methods: {
+		handleNav(item){
+			uni.navigateTo({
+				url:'./stuCourseInfo?course=1',
+				
+			})
+		},
 		handleClearData(){
 			this.startTime = '';
 			this.endTime = '';
@@ -213,5 +202,21 @@ export default {
 }
 .m-content{
 	height: auto;
+	 .u-list-title.all-platform{
+		text-align: center;
+		// color: #007aff;
+		font-weight: bold;
+	}
 }
+.u-btn-wrapper{
+	text-align: center;
+	padding: 20upx 0;
+	.u-btn{
+		margin: 0;
+		height: 60upx;
+		width: 60%;
+		font-size: 30upx;
+	}
+}
+
 </style>

@@ -2,9 +2,12 @@
 	<view class="container">
 		<view class="m-title">选择学习平台</view>
 		<view class="m-condition">
-			<text class="u-tips" @tap="handleChooseTime(true)">{{startTime || '开始时间'}}</text>
-			<text class="u-middle">至</text>
-			<text class="u-tips" @tap="handleChooseTime(false)">{{endTime || '结束时间'}}</text>
+			<view class=""></view>
+			<view class="">
+				<text class="u-tips" @tap="handleChooseTime(true)">{{startTime || '开始时间'}}</text>
+				<text class="u-middle">至</text>
+				<text class="u-tips" @tap="handleChooseTime(false)">{{endTime || '结束时间'}}</text>
+			</view>
 			<uni-tag @click="handleClearData" style="display: inline-block;width: 90upx;margin-left: 20upx;" text="清空" type="primary" size="small"></uni-tag>
 		</view>
 		<view class="m-content">
@@ -73,96 +76,14 @@ export default {
 			startTime:'',
 			endTime:'',
 			currentSelect:'',
-			trList:[
-				// {
-				// 	className:'课程名称',
-				// 	name:'张三',
-				// 	reason:'请假',
-				// 	classTime:'9:00'
-				// }
-			],
-			dataArr: [
-				// {
-				// 	name: '腾讯课堂',
-				// 	value: '1',
-				// 	logoUrl: '/static/mp-weixin/tencent.png',
-				// 	courseName:'计算机原理',
-				// 	loginTime:'3月3日 9:00',
-				// 	learningTime:'9:00-10:00',
-				// 	sd:'42',
-				// 	yd:'44',
-				// },
-				// {
-				// 	name: '钉钉',
-				// 	value: '2',
-				// 	logoUrl: '/static/mp-weixin/dingding.png',
-				// 	courseName:'思想品德修养',
-				// 	loginTime:'3月4日 9:00',
-				// 	learningTime:'9:00-10:00',
-				// 	sd:'42',
-				// 	yd:'44',
-				// },
-				// {
-				// 	name: '凤凰职教云',
-				// 	value: '3',
-				// 	logoUrl: '/static/mp-weixin/fenghuang.png',
-				// 	courseName:'计算机原理',
-				// 	loginTime:'3月5日 9:00',
-				// 	learningTime:'9:00-10:00',
-				// 	sd:'42',
-				// 	yd:'44',
-				// },
-				// {
-				// 	name: '智慧职教',
-				// 	value: '4',
-				// 	logoUrl: '/static/mp-weixin/zhihui.png',
-				// 	courseName:'数学',
-				// 	loginTime:'3月3日 9:00',
-				// 	learningTime:'9:00-10:00',
-				// 	sd:'42',
-				// 	yd:'44',
-				// },
-				// {
-				// 	name: '超星泛雅',
-				// 	value: '5',
-				// 	logoUrl: '/static/mp-weixin/chaoxing.png',
-				// 	courseName:'体育',
-				// 	loginTime:'3月4日 9:00',
-				// 	learningTime:'9:00-10:00',
-				// 	sd:'42',
-				// 	yd:'44',
-				// }
-			]
+			trList:[],
+			dataArr: []
 		};
 	},
 	mounted(){
 		this.initData()
 	},
 	methods: {
-		getDetailData(row){
-			this.$HTTP({
-				url:'/statistical/getJstkYs',
-				params:{
-					userid:uni.getStorageSync('userId'),
-					'kcid':row.kcid
-				},
-				successCallback:({data})=>{
-					if(data.code ==0){
-						this.trList = data.data.map(item=>{
-							return{
-								...item,
-								className:item.kcmc,
-								name:item.xsxm,
-								reason:item.wdyy,
-								classTime:item.sksj,
-							}
-						})
-					}else{
-						
-					}
-				}
-			})
-		},
 		handleClearData(){
 			this.startTime = '';
 			this.endTime = ''
@@ -172,8 +93,17 @@ export default {
 			this.active = false;
 		},
 		handleWatchDetail(item){
-			this.getDetailData(item)
+			// this.getDetailData(item)
 			this.active = true
+			this.trList = item.wdjh.map(list=>{
+				return{
+					...list,
+					className:list.kcmc,
+					name:list.xsxm,
+					reason:list.wdyy,
+					classTime:list.sksj,
+				}
+			})
 			// this.$refs.popup.open()
 		},
 		handleChooseTime(isStartTime){
@@ -190,6 +120,7 @@ export default {
 		handleChoose({checkArr,checkValue,defaultVal,result}){
 			this[this.currentSelect] = result;
 			this.$refs.linkage.hide()
+			this.initData()
 		},
 		initData(){
 			this.$HTTP({
@@ -212,6 +143,7 @@ export default {
 								sd:dataObj[key].sdrs,
 								yd:dataObj[key].ydrs,
 								learningTime:dataObj[key].sj,
+								wdjh:dataObj[key].wdjh || []
 							})
 						}
 					}else{

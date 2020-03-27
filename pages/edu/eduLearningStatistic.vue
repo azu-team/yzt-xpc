@@ -227,7 +227,7 @@ export default {
 				background: '#FFFFFF',
 				pixelRatio: _self.pixelRatio,
 				series: chartData.series,
-				animation: false,
+				animation: true,
 				width: _self.cWidth * _self.pixelRatio,
 				height: _self.cHeight * _self.pixelRatio,
 				dataLabel: true,
