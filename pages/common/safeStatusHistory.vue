@@ -67,7 +67,7 @@ export default {
 						let arr = data.data.list.map(item=>{
 							return{
 								...item,
-								title:new Date(item.addTime).Format('yyyy-MM-dd')
+								title:item.addTime
 							}
 						})
 						this.dataArr = arr

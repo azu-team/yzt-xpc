@@ -239,7 +239,7 @@ const typeList = [ //登录人身份
 				path: '/pages/stu/stuLearning'
 			},
 			{
-				name: '查看学习情况',
+				name: '学习情况',
 				imgUrl: '../../static/mp-weixin/imgs/4.png',
 				path: '/pages/stu/stuStatus'
 			},
@@ -319,7 +319,7 @@ const typeList = [ //登录人身份
 				path: '/pages/stu/stuLearning'
 			},
 			{
-				name: '查看学习情况',
+				name: '学习情况',
 				imgUrl: '../../static/mp-weixin/imgs/4.png',
 				path: '/pages/stu/stuStatus'
 			},

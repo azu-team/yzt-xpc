@@ -203,12 +203,18 @@ export default {
 					checked: true
 				},
 				{
-					value: '有发烧、咳嗽等症状',
+					value: '有发烧咳嗽等症状',
 					name: '有发烧、咳嗽等症状'
 				},
 				{
-					value: '其他症状',
-					name: '其他症状'
+					value: '无发烧,但有咳嗽、胸闷等症状',
+					name: '无发烧,但有咳嗽、胸闷等症状'
+				},{
+					value: '无发烧,但有其他症状',
+					name: '无发烧,但有其他症状'
+				},{
+					value: '其他',
+					name: '其他'
 				}
 			],
 			list2: [
@@ -296,7 +302,10 @@ export default {
 		this.$getLocationByAmap().then((data)=>{
 			let address = data[0].regeocodeData.addressComponent
 			this.form.field06 = address.province + address.city + address.district;
-			this.form.field05 = data[0].regeocodeData.addressComponent.city
+			// this.form.field05 = address.city
+			this.form.FIELD28 = data[0].longitude  //精度 
+			this.form.FIELD29 = data[0].latitude  //维度
+			
 		}).catch(()=>{
 			
 		});

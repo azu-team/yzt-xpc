@@ -112,7 +112,7 @@ export default {
 							return{
 								...item,
 								isPlaying:false,
-								title:new Date(item.addTime).Format('yyyy-MM-dd')
+								title:item.addTime
 							}
 						})
 						this.dataArr = arr
