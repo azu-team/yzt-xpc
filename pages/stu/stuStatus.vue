@@ -20,7 +20,7 @@
 						<text class="cell-title">{{ cell.name }}</text>
 						: {{ cell.value + cell.unit}}
 					</view>
-					<!-- <view class="u-btn-wrapper"><view class="u-btn" @tap="handleNav(item)">查看详细</view></view> -->
+					<view class="u-btn-wrapper"><view class="u-btn" @tap="handleNav(item)">查看详细</view></view>
 				</view>
 			</view>
 		</view>
@@ -41,6 +41,7 @@
 export default {
 	data() {
 		return {
+			userId:uni.getStorageSync('userId'),
 			startTime:'',
 			endTime:'',
 			currentSelect:'',
@@ -52,10 +53,20 @@ export default {
 	},
 	methods: {
 		handleNav(item){
-			// uni.navigateTo({
-			// 	url:'./stuCourseInfo?course=1',
-
-			// })
+			let obj = {
+				'lx':item.type,
+				'kssj':this.startTime,
+				'jssj':this.endTime,
+				'userid':this.userId,
+			},paramStr = []
+			for(let key in obj){
+				paramStr.push(key+'='+obj[key])
+			}
+			paramStr = paramStr.join('&')
+			
+			uni.navigateTo({
+				url:`./stuCourseInfo?${paramStr}`,
+			})
 		},
 		handleClearData(){
 			this.startTime = '';
@@ -68,12 +79,34 @@ export default {
 				params:{
 					kssj:this.startTime,
 					jssj:this.endTime,
-					userid:uni.getStorageSync('userId')
+					userid:this.userId,
+					lx:'0'
 				},
 				successCallback:({data})=>{
 					if(data.code == 0){
+						// 将标识符进行判断
+						// 	 0统计页面
+						// 	 1电子卡全部数据 
+						// 	 2电子卡腾讯 
+						// 	 3电子卡钉钉 
+						// 	 4电子卡凤凰 
+						// 	 5电子卡职教 
+						// 	 6电子卡超星
+						let typeObj = {
+							'整体情况':'1',
+							'腾讯课堂':'2',
+							'钉钉':'3',
+							'凤凰职教云':'4',
+							'智慧职教':'5',
+							'超星泛雅':'6'
+						}
 						let dataArr = data.data.splice(data.data.length - 1,1)
 						data.data.unshift(dataArr[0])
+						data.data.forEach(item=>{
+							if(typeObj[item.name]){
+								item.type = typeObj[item.name]
+							}
+						})
 						this.dataArr = data.data
 					}else{
 						uni.showToast({

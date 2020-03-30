@@ -2,63 +2,20 @@
 	<view class="container">
 		<view class="m-top">
 			<view class="top-content">
-				<view class="content-list">
-					<text class="text">姓名:</text><text>123</text>
-				</view>
-				<view class="content-list">
-					<text class="text">性别:</text><text>2222</text>
-				</view>
-				<view class="content-list">
-					<text class="text">学校:</text><text>2222</text>
-				</view>
-				<view class="content-list">
-					<text class="text">班级:</text><text>2222</text>
-				</view>
-				<view class="content-list">
-					<text class="text">联系方式:</text><text>222</text>
-				</view>
-				<view class="content-list">
-					<text class="text">查询时间:</text><text>22222</text>
+				<view class="content-list" v-for="(item,index) in userArr" :key="index">
+					<text class="text">{{item.name}}:</text><text>{{item.value}}</text>
 				</view>
 			</view>
 		</view>
-		<view class="m-list">
+		<view class="m-list" v-for="(item,index) in listArr" :key="index">
 			<view class="list-title">
-				<image class="img" src="../../static/mp-weixin/dingding.png" mode=""></image>
-				<text class="text">   智慧职校</text>
+				<image class="img" :src="item.imgUrl"  mode="" ></image>
+				<text class="text">   {{ item.name }}</text>
 			</view>
 			<view class="list-content">
-				<view class="content-list">
-					<text class="text">学习科目:</text>
-					<text>123</text>
-				</view>
-				<view class="content-list">
-					<text class="text">课堂互动次数:</text>
-					<text>123</text>
-				</view>
-				<view class="content-list">
-					<text class="text">作业提交次数:</text>
-					<text>123</text>
-				</view>
-				<view class="content-list">
-					<text class="text">未作业提交次数:</text>
-					<text>123</text>
-				</view>
-				<view class="content-list">
-					<text class="text">吃到次数:</text>
-					<text>123</text>
-				</view>
-				<view class="content-list">
-					<text class="text">课前预习次数:</text>
-					<text>123</text>
-				</view>
-				<view class="content-list">
-					<text class="text">老师表扬次数:</text>
-					<text>123</text>
-				</view>
-				<view class="content-list">
-					<text class="text">老师提醒次数:</text>
-					<text>123</text>
+				<view class="content-list" v-for="(list, idx) in item.tjjh" :key="idx">
+					<text class="text">{{ list.name }}:</text>
+					<text>{{ list.value + list.unit}}</text>
 				</view>
 			</view>
 		</view>
@@ -69,11 +26,85 @@
 	export default{
 		data(){
 			return{
-				
+				listArr:[],
+				userArr:[
+					{
+						name:'姓名',
+						value:'',
+						key:'xm',
+					},{
+						name:'性别',
+						value:'',
+						key:'xb',
+					},{
+						name:'班级名称',
+						value:'',
+						key:'bjmc',
+					},{
+						name:'学校名称',
+						value:'',
+						key:'xxmc',
+					},{
+						name:'esn号码',
+						value:'',
+						key:'esn',
+					},{
+						name:'电话',
+						value:'',
+						key:'dh',
+					},{
+						name:'查询时间',
+						value:'',
+						key:'cxsj',
+					},
+				],
+				params:{
+					lx:'',
+					kssj:'',
+					jssj:'',
+					userid:'',
+				}
 			}
 		},
 		onLoad(params) {
-			console.log(params)
+			this.params = params
+			this.getData()
+		},
+		methods:{
+			getData(){
+				this.$HTTP({
+					url:'/studentDto/getYw',
+					params:this.params,
+					successCallback:({data})=>{
+						if(data.code == 0){
+							// let dataArr = data.data.splice(data.data.length - 1,1)
+							// data.data.unshift(dataArr[0])
+							// data.data.forEach(item=>{
+							// 	if(typeObj[item.name]){
+							// 		item.type = typeObj[item.name]
+							// 	}
+							// })
+							// this.dataArr = data.data
+							let userObj = data.data.user
+							this.userArr = this.userArr.map(item=>{
+								return{
+									...item,
+									value:userObj[item.key]
+								}
+							})
+							this.listArr = data.data.list
+						}else{
+							uni.showToast({
+								title:data.msg,
+								icon:'none'
+							})
+						}
+					},
+					failCallback:(res)=>{
+				
+					}
+				})
+			}
 		}
 	}
 </script>
@@ -83,7 +114,9 @@
 		color: $uni-text-color;
 		background: #f4f8ff;
 		font-size: 28upx;
-		padding-bottom: 40upx;
+		padding-bottom: 60upx;
+		height: 100vh;
+		overflow: auto;
 	}
 	.m-top{
 		padding: 20upx 80upx;
@@ -111,6 +144,9 @@
 		padding: 20upx;
 		background-color: #FFFFFF;
 		margin: 10upx;
+		border: solid 1upx #eee;
+		box-shadow: 0 3upx #eee;
+		margin-bottom: 20upx;
 		.list-title{
 			font-size: 32upx;
 			font-weight: bold;

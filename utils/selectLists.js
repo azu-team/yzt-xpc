@@ -265,11 +265,11 @@ const typeList = [ //登录人身份
 				imgUrl: '../../static/mp-weixin/imgs/2.png',
 				path: '/pages/teacher/teaTeaching'
 			},
-			// {
-			// 	name: '查看授课情况',
-			// 	imgUrl: '../../static/mp-weixin/imgs/3.png',
-			// 	path: '/pages/teacher/teaStatistic'
-			// },
+			{
+				name: '授课情况',
+				imgUrl: '../../static/mp-weixin/imgs/3.png',
+				path: '/pages/teacher/teaStatistic'
+			},
 			{
 				name:'学生申报统计',
 				imgUrl: '../../static/mp-weixin/imgs/4.png',
@@ -337,6 +337,11 @@ const typeList = [ //登录人身份
 				name: '在线授课',
 				imgUrl: '../../static/mp-weixin/imgs/2.png',
 				path: '/pages/teacher/teaTeaching'
+			},
+			{
+				name: '授课情况',
+				imgUrl: '../../static/mp-weixin/imgs/3.png',
+				path: '/pages/teacher/teaStatistic'
 			},
 			{
 				name:'学生申报统计',

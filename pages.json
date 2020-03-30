@@ -48,6 +48,12 @@
             "style" : {
                 "navigationBarTitleText" : "查看授课情况"
             }
+        },{
+            "path" : "pages/teacher/statisticsBranch",
+            "style" : {
+                "navigationBarTitleText" : "数据列表",
+				"enablePullDownRefresh":true
+            }
         },
         {
             "path" : "pages/edu/eduTeachingStatistic",
@@ -102,7 +108,7 @@
 		{
 		    "path" : "pages/stu/stuCourseInfo",
 		    "style" : {
-		        "navigationBarTitleText" : "统计详细信息"
+		        "navigationBarTitleText" : "详细信息"
 		    }
 		}
     ],
