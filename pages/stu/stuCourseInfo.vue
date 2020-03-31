@@ -2,9 +2,17 @@
 	<view class="container">
 		<view class="m-top">
 			<view class="top-content">
-				<view class="content-list" v-for="(item,index) in userArr" :key="index">
-					<text class="text">{{item.name}}:</text><text>{{item.value}}</text>
-				</view>
+				<view class="title-1">{{dataObj.xxmc||'学校名称'}}</view>
+				<view class="title-2">可 信 教 育 身 份 “一 证 通”</view>
+				<image v-if="dataObj.tpUrl" class="img" :src="dataObj.tpUrl" mode=""></image>
+				<image v-else class="img" src="../../static/mp-weixin/imgs/avatar.png" mode=""></image>
+				<view class="name content-list"><text class="text">姓名:</text><text>{{dataObj.xm || '姓名'}}</text></view>
+				<view class="content-list"><text class="text">性别:</text><text>{{dataObj.xb || '未知'}}</text></view>
+				<view class="content-list"><text class="text">班级:</text><text>{{dataObj.bjmc}}</text></view>
+				<view class="content-list"><text class="text">电话:</text><text>{{dataObj.dh}}</text></view>
+				<view class="content-list"><text class="text">ESN号码:</text><text>{{dataObj.esn}}</text></view>
+				<view class="content-list">查询时间：{{dataObj.cxsj}}</view>
+				<view class="type">{{dataObj.zysflb || '学生卡'}}</view>
 			</view>
 		</view>
 		<view class="m-list" v-for="(item,index) in listArr" :key="index">
@@ -27,6 +35,7 @@
 		data(){
 			return{
 				listArr:[],
+				dataObj:{},
 				userArr:[
 					{
 						name:'姓名',
@@ -85,13 +94,18 @@
 							// 	}
 							// })
 							// this.dataArr = data.data
-							let userObj = data.data.user
-							this.userArr = this.userArr.map(item=>{
-								return{
-									...item,
-									value:userObj[item.key]
-								}
-							})
+							// if(data.data.user.tpUrl){
+							// 	// base64格式图片
+							// 	data.data.user.tpUrl = 'data:image/jpeg;base64,'+data.data.user.tpUrl
+							// }
+							this.dataObj = data.data.user
+							// let userObj = data.data.user
+							// this.userArr = this.userArr.map(item=>{
+							// 	return{
+							// 		...item,
+							// 		value:userObj[item.key]
+							// 	}
+							// })
 							this.listArr = data.data.list
 						}else{
 							uni.showToast({
@@ -119,24 +133,56 @@
 		overflow: auto;
 	}
 	.m-top{
-		padding: 20upx 80upx;
+		padding: 20upx 40upx;
 		.top-content{
 			 font-size: 30upx;
 			 background-color: #FFFFFF;
 			 border-radius: 20upx;
 			 border: solid 1upx #eee;
 			 box-shadow: 0 5upx 5upx #dadada;
-			 padding: 10upx 20upx;
-			 display: flex;
-			 align-items: center;
-			 flex-wrap: wrap;
+			 padding: 20upx 35upx;
+			 // display: flex;
+			 // align-items: center;
+			 // flex-wrap: wrap;
+			 position: relative;
+			 .img{
+				 width: 120rpx;
+				 height: 144rpx;
+				 position: absolute;
+				 right: 50rpx;
+				 top: 45rpx;
+				 z-index: 10;
+			 }
+			 .title-1{
+				 font-size: 32upx;
+				 font-weight: bold;
+				 color: #303030;
+			 }
+			 .title-2{
+				 font-size: 30upx;
+				 margin-top: 20upx;
+				 margin-bottom: 10upx;
+				 color: #2C2C2C;
+			 }
+			 .name.content-list{
+				 width: 100%;
+			 }
 			 .content-list{
-				 width: 50%;
-				 margin-top: 15upx;
+				 display: inline-block;
+				 width: 40%;
+				 margin-top: 10upx;
 				 color: #5F5F5F;
-				 .text{
-				 	color: #959595;
-				 }
+				 font-size: 26upx;
+			 }
+			 .type{
+				 display: inline-block;
+				 width: 50%;
+				 text-align: right;
+				 color: #6380A4;
+				 font-size: 28upx;
+			 }
+			 .text{
+			 	color: #959595;
 			 }
 		}
 	}
