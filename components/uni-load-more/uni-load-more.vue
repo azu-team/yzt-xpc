@@ -136,7 +136,7 @@
 	}
 
 	.uni-load-more__text {
-		font-size: 15px;
+		font-size: 26upx;
 	}
 
 	.uni-load-more__img {

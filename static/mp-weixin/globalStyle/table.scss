@@ -1,5 +1,5 @@
 .t-table {
-	width: 100%;
+	width: calc(100% - 2upx);
 	overflow: auto;
 	$border-color: #fff;
 	.t-title {
