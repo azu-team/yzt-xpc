@@ -5,7 +5,7 @@
 		</view>
 		<view class="list-wrapper">
 			<view class="list-item" v-for="(item, index) in moduleArr" :key="index">
-				<view class="item-wrapper" @click="handleNavTo(item)">
+				<view class="item-wrapper" @tap="handleNavTo(item)">
 					<view class="img"><image :src="item.imgUrl" mode="aspectFit"></image></view>
 					<view class="text">
 						<text>{{ item.name }}</text>
@@ -127,9 +127,11 @@ export default {
 			this.idType = 1;
 		},
 		handleNavTo(item) {
-			uni.navigateTo({
-				url: item.path
-			});
+			setTimeout(()=>{
+				uni.navigateTo({
+					url: item.path
+				});
+			},100)
 		}
 	}
 };

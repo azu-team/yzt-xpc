@@ -2,17 +2,21 @@
 	<view class="container">
 		<view class="m-top">
 			<view class="top-content">
-				<view class="title-1">{{dataObj.xxmc||'学校名称'}}</view>
-				<view class="title-2">可 信 教 育 身 份 “一 证 通”</view>
-				<image v-if="dataObj.tpUrl" class="img" :src="dataObj.tpUrl" mode=""></image>
-				<image v-else class="img" src="../../static/mp-weixin/imgs/avatar.png" mode=""></image>
-				<view class="name content-list"><text class="text">姓名:</text><text>{{dataObj.xm || '姓名'}}</text></view>
-				<view class="content-list"><text class="text">性别:</text><text>{{dataObj.xb || '未知'}}</text></view>
-				<view class="content-list"><text class="text">班级:</text><text>{{dataObj.bjmc}}</text></view>
-				<view class="content-list"><text class="text">电话:</text><text>{{dataObj.dh}}</text></view>
-				<view class="content-list"><text class="text">ESN号码:</text><text>{{dataObj.esn}}</text></view>
-				<view class="content-list">查询时间：{{dataObj.cxsj}}</view>
-				<view class="type">{{dataObj.zysflb || '学生卡'}}</view>
+				<image class="bg" src="../../static/mp-weixin/imgs/avatar_bg.png" mode=""></image>
+				<view class="top-content-wrapper">
+					<view class="title-1">{{dataObj.xxmc||'学校名称'}}</view>
+					<view class="title-2">可 信 教 育 身 份 “一 证 通”</view>
+					<!-- <image v-if="dataObj.tpUrl" class="img" :src="dataObj.tpUrl" mode=""></image> -->
+					<image  class="img" src="../../static/mp-weixin/imgs/avatar.png" mode=""></image>
+					<view class="name content-list"><text  class="text">姓名：</text><text>{{ dataObj.xm || '姓名'}}</text></view>
+					<view class="content-list"><text  class="text">性别：　 </text><text>{{ dataObj.xb || '未知'}}</text></view>
+					<view class="content-list"><text  class="text">班级：　</text><text>{{ dataObj.bjmc}}</text></view>
+					<view class="content-list"><text  class="text">电话：</text><text>{{ dataObj.dh}}</text></view>
+					<view class="content-list"><text  class="text">ESN号码：</text><text>{{ dataObj.esn}}</text></view>
+					<view class="content-list query"><text > 查询时间：　{{dataObj.cxsj}}</text></view>
+					<view class="type">{{dataObj.zysflb || '学生卡'}}</view>
+					
+				</view>
 			</view>
 		</view>
 		<view class="m-list" v-for="(item,index) in listArr" :key="index">
@@ -136,7 +140,7 @@
 		padding: 20upx 40upx;
 		.top-content{
 			 font-size: 30upx;
-			 background-color: #FFFFFF;
+			 // background-color: #FFFFFF;
 			 border-radius: 20upx;
 			 border: solid 1upx #eee;
 			 box-shadow: 0 5upx 5upx #dadada;
@@ -145,12 +149,25 @@
 			 // align-items: center;
 			 // flex-wrap: wrap;
 			 position: relative;
-			 .img{
-				 width: 120rpx;
-				 height: 144rpx;
+			 overflow: hidden;
+			 .top-content-wrapper{
+				 position: relative;
+				 z-index: 2;
+			 }
+			 .bg{
 				 position: absolute;
-				 right: 50rpx;
-				 top: 45rpx;
+				 top: 0;
+				 left: 0;
+				 width: 100%;
+				 height: 100%;
+				 z-index: 1;
+			 }
+			 .img{
+				 width: 120upx;
+				 height: 144upx;
+				 position: absolute;
+				 right: 20upx;
+				 top: 30upx;
 				 z-index: 10;
 			 }
 			 .title-1{
@@ -167,22 +184,25 @@
 			 .name.content-list{
 				 width: 100%;
 			 }
+			 .query.content-list{
+				 width: 60%;
+			 }
 			 .content-list{
 				 display: inline-block;
 				 width: 40%;
 				 margin-top: 10upx;
-				 color: #5F5F5F;
+				 color: #1E1E1E;
 				 font-size: 26upx;
 			 }
 			 .type{
 				 display: inline-block;
-				 width: 50%;
+				 width: 35%;
 				 text-align: right;
 				 color: #6380A4;
 				 font-size: 28upx;
 			 }
 			 .text{
-			 	color: #959595;
+			 	color: #8C8C8D;
 			 }
 		}
 	}

@@ -2,8 +2,8 @@
 	<view class="bg">
 		<view class="container">
 			<view class="title">
-				 填报信息
-				<view class="u-tips"  @tap="handleBack">上一步</view>
+				填报信息
+				<view class="u-tips" @tap="handleBack">上一步</view>
 			</view>
 			<view v-if="form.type <= 2">
 				<view class="m-line">
@@ -18,14 +18,14 @@
 					<view class="u-title">出生日期</view>
 					<view class="u-content">
 						<!-- <input class="u-input" type="text" v-model="form.CSRQ" placeholder="例如19790307" /> -->
-						<text @tap="showChoose('form','CSRQ')">{{form.CSRQ || '选择日期'}}</text>
-						</view>
+						<text @tap="showChoose('form', 'CSRQ')">{{ form.CSRQ || '选择日期' }}</text>
+					</view>
 				</view>
 				<view class="m-line">
 					<view class="u-title">性别</view>
 					<view class="u-content">
 						<my-select
-						    ref='form'
+							ref="form"
 							:list="sexList"
 							:clearable="false"
 							:showItemNum="5"
@@ -71,8 +71,8 @@
 				<view class="m-line">
 					<view class="u-title">数字相片</view>
 					<view class="u-content">
-						<image @tap="handleChooseImg('form','SZXP')" v-if="form.SZXP" class="img" :src="form.SZXP" mode="aspectFit"></image>
-						<view v-else><view class="u-tips" @tap="handleChooseImg('form','SZXP')">选择图片</view></view>
+						<image @tap="handleChooseImg('form', 'SZXP')" v-if="form.SZXP" class="img" :src="form.SZXP" mode="aspectFit"></image>
+						<view v-else><view class="u-tips" @tap="handleChooseImg('form', 'SZXP')">选择图片</view></view>
 					</view>
 				</view>
 				<view class="m-line">
@@ -138,88 +138,88 @@
 						</view>
 				</view> -->
 			</view>
-			<view  v-else-if="form.type == 3">
+			<view v-else-if="form.type == 3">
 				<view class="m-line">
-				    <view class="u-title">教育身份类别</view>
-				    <view class="u-content">
+					<view class="u-title">教育身份类别</view>
+					<view class="u-content">
 						<my-select
-						    :list="jsTypeList"
-						    :clearable="false"
-						    :showItemNum="10"
-						    :listShow="false"
-						    :isCanInput="false"
-						    :style_Container="'height: 2em; font-size: 28upx;'"
-						    :placeholder="'选择身份证件类型'"
-						    :selectHideType="'hideAll'"
-						    :initValue="jsTypeList[0].value"
-						    @change="handleSelectChange($event, 'ZYSFLB','jsForm')"
+							:list="jsTypeList"
+							:clearable="false"
+							:showItemNum="10"
+							:listShow="false"
+							:isCanInput="false"
+							:style_Container="'height: 2em; font-size: 28upx;'"
+							:placeholder="'选择身份证件类型'"
+							:selectHideType="'hideAll'"
+							:initValue="jsTypeList[0].value"
+							@change="handleSelectChange($event, 'ZYSFLB', 'jsForm')"
 						></my-select>
 					</view>
 				</view>
 				<view class="m-line">
-				    <view class="u-title">姓名</view>
-				    <view class="u-content"><input class="u-input" type="text" v-model="jsForm.XM" placeholder="请输入姓名" /></view>
+					<view class="u-title">姓名</view>
+					<view class="u-content"><input class="u-input" type="text" v-model="jsForm.XM" placeholder="请输入姓名" /></view>
 				</view>
 				<view class="m-line">
-				    <view class="u-title">出生日期</view>
-				    <view class="u-content">
-						<text @tap="showChoose('jsForm','CSRQ')">{{jsForm.CSRQ || '选择日期'}}</text>
+					<view class="u-title">出生日期</view>
+					<view class="u-content">
+						<text @tap="showChoose('jsForm', 'CSRQ')">{{ jsForm.CSRQ || '选择日期' }}</text>
 						<!-- <input class="u-input" type="text" v-model="jsForm.CSRQ" placeholder="例如19790307" /> -->
-						</view>
+					</view>
 				</view>
 				<view class="m-line">
-				    <view class="u-title">性别</view>
-				    <view class="u-content">
-				        <my-select
+					<view class="u-title">性别</view>
+					<view class="u-content">
+						<my-select
 							ref="jsForm"
-				            :list="sexList"
-				            :clearable="false"
-				            :showItemNum="5"
-				            :listShow="false"
-				            :isCanInput="false"
-				            :style_Container="'height: 2em; font-size: 28upx;'"
-				            :placeholder="'选择性别'"
-				            :selectHideType="'hideAll'"
-				            :initValue="formSexInitValue"
-				            @change="handleSelectChange($event, 'XB')"
-				        ></my-select>
-				    </view>
+							:list="sexList"
+							:clearable="false"
+							:showItemNum="5"
+							:listShow="false"
+							:isCanInput="false"
+							:style_Container="'height: 2em; font-size: 28upx;'"
+							:placeholder="'选择性别'"
+							:selectHideType="'hideAll'"
+							:initValue="formSexInitValue"
+							@change="handleSelectChange($event, 'XB')"
+						></my-select>
+					</view>
 				</view>
 				<view class="m-line">
-				    <view class="u-title">身份证件类型</view>
-				    <view class="u-content">
-				        <my-select
-				            :list="idCardTypeList"
-				            :clearable="false"
-				            :showItemNum="10"
-				            :listShow="false"
-				            :isCanInput="false"
-				            :style_Container="'height: 2em; font-size: 28upx;'"
-				            :placeholder="'选择身份证件类型'"
-				            :selectHideType="'hideAll'"
-				            :initValue="idCardTypeList[0].value"
-				            @change="handleSelectChange($event, 'SFZJLX')"
-				        ></my-select>
-				    </view>
+					<view class="u-title">身份证件类型</view>
+					<view class="u-content">
+						<my-select
+							:list="idCardTypeList"
+							:clearable="false"
+							:showItemNum="10"
+							:listShow="false"
+							:isCanInput="false"
+							:style_Container="'height: 2em; font-size: 28upx;'"
+							:placeholder="'选择身份证件类型'"
+							:selectHideType="'hideAll'"
+							:initValue="idCardTypeList[0].value"
+							@change="handleSelectChange($event, 'SFZJLX')"
+						></my-select>
+					</view>
 				</view>
 				<view class="m-line">
-				    <view class="u-title">身份证件号码</view>
-				    <view class="u-content"><input class="u-input" type="text" v-model="jsForm.SFZJHM" placeholder="请输入身份证件号码" /></view>
+					<view class="u-title">身份证件号码</view>
+					<view class="u-content"><input class="u-input" type="text" v-model="jsForm.SFZJHM" placeholder="请输入身份证件号码" /></view>
 				</view>
 				<view class="m-line">
-				    <view class="u-title">学校名称/教育机构名称</view>
-				    <view class="u-content"><input class="u-input" type="text" v-model="jsForm.XXMZ" placeholder="学校名称/教育机构名称" /></view>
-				</view>
-				 <view class="m-line">
-				    <view class="u-title">数字相片</view>
-				    <view class="u-content">
-				        <image @tap="handleChooseImg('jsForm','SZXP')" v-if="jsForm.SZXP" class="img" :src="jsForm.SZXP" mode="aspectFit"></image>
-				        <view v-else><view class="u-tips" @tap="handleChooseImg('jsForm','SZXP')">选择图片</view></view>
-				    </view>
+					<view class="u-title">学校名称/教育机构名称</view>
+					<view class="u-content"><input class="u-input" type="text" v-model="jsForm.XXMZ" placeholder="学校名称/教育机构名称" /></view>
 				</view>
 				<view class="m-line">
-				    <view class="u-title">手机号</view>
-				    <view class="u-content"><input class="u-input" type="text" v-model="jsForm.XXSJ" placeholder="请输入手机号" /></view>
+					<view class="u-title">数字相片</view>
+					<view class="u-content">
+						<image @tap="handleChooseImg('jsForm', 'SZXP')" v-if="jsForm.SZXP" class="img" :src="jsForm.SZXP" mode="aspectFit"></image>
+						<view v-else><view class="u-tips" @tap="handleChooseImg('jsForm', 'SZXP')">选择图片</view></view>
+					</view>
+				</view>
+				<view class="m-line">
+					<view class="u-title">手机号</view>
+					<view class="u-content"><input class="u-input" type="text" v-model="jsForm.XXSJ" placeholder="请输入手机号" /></view>
 				</view>
 				<!-- <view class="m-line">
 				    <view class="u-title">确认人员ESN</view>
@@ -236,70 +236,71 @@
 						</view>
 				</view> -->
 			</view>
-			<view  v-else-if="form.type == 4">
+			<view v-else-if="form.type == 4">
 				<view class="m-line">
-				    <view class="u-title">教育身份号</view>
-				    <view class="u-content"><input class="u-input" type="text" v-model="eduForm.ESN" placeholder="请输入教育身份号" /></view>
+					<view class="u-title">教育身份号</view>
+					<view class="u-content"><input class="u-input" type="text" v-model="eduForm.ESN" placeholder="请输入教育身份号" /></view>
 				</view>
 				<view class="m-line">
-				    <view class="u-title">教育身份类型</view>
-				    <view class="u-content">
+					<view class="u-title">教育身份类型</view>
+					<view class="u-content">
 						<my-select
-						    :list="eduTypeList"
-						    :clearable="false"
-						    :showItemNum="10"
-						    :listShow="false"
-						    :isCanInput="false"
-						    :style_Container="'height: 2em; font-size: 28upx;'"
-						    :placeholder="'选择身份证件类型'"
-						    :selectHideType="'hideAll'"
-						    :initValue="eduTypeList[0].value"
-						    @change="handleSelectChange($event, 'ZYSFLX','eduForm')"
+							:list="eduTypeList"
+							:clearable="false"
+							:showItemNum="10"
+							:listShow="false"
+							:isCanInput="false"
+							:style_Container="'height: 2em; font-size: 28upx;'"
+							:placeholder="'选择身份证件类型'"
+							:selectHideType="'hideAll'"
+							:initValue="eduTypeList[0].value"
+							@change="handleSelectChange($event, 'ZYSFLX', 'eduForm')"
 						></my-select>
 					</view>
 				</view>
 				<view class="m-line">
-				    <view class="u-title">人脸数据</view>
-				    <view class="u-content">
-				        <image @tap="handleChooseImg('eduForm','RLSJ')" v-if="eduForm.RLSJ" class="img" :src="eduForm.RLSJ" mode="aspectFit"></image>
-				        <view v-else><view class="u-tips" @tap="handleChooseImg('eduForm','RLSJ')">选择图片</view></view>
-				    </view>
+					<view class="u-title">人脸数据</view>
+					<view class="u-content">
+						<image @tap="handleChooseImg('eduForm', 'RLSJ')" v-if="eduForm.RLSJ" class="img" :src="eduForm.RLSJ" mode="aspectFit"></image>
+						<view v-else><view class="u-tips" @tap="handleChooseImg('eduForm', 'RLSJ')">选择图片</view></view>
+					</view>
 				</view>
 				<view class="m-line">
-				    <view class="u-title">PIN码</view>
-				    <view class="u-content"><input class="u-input" type="text" v-model="eduForm.PIN" placeholder="请输入PIN码" /></view>
+					<view class="u-title">PIN码</view>
+					<view class="u-content"><input class="u-input" type="text" v-model="eduForm.PIN" placeholder="请输入PIN码" /></view>
 				</view>
 			</view>
 
 			<view class="m-bottom">
-				<button class="u-btn"  @tap="handleConfirm" ><text>提交</text></button>
+				<button class="u-btn" @tap="handleConfirm"><text>提交</text></button>
 			</view>
 			<link-area
 				mode="date"
-				startYear="1970" 
+				startYear="1970"
 				endYear="2030"
-				:current="true" 
+				:current="true"
 				:disabledAfter="false"
 				@confirm="handleChoose"
 				@cancel="handleCancelChoose"
 				ref="linkage"
-				themeColor="#25a5ff"></link-area>
+				themeColor="#25a5ff"
+			></link-area>
 		</view>
 	</view>
 </template>
 <script>
 import mySelect from '../../components/xfl-select/xfl-select.vue';
-import { typeList, relationList, idTypeList, sexList ,eduTypeList,	jsTypeList} from '../../utils/selectLists.js';
-import {http_root} from '../../utils/config.js'
+import { typeList, relationList, idTypeList, sexList, eduTypeList, jsTypeList } from '../../utils/selectLists.js';
+import { http_root } from '../../utils/config.js';
 export default {
 	components: { mySelect },
-	props:{
-		type:[String,Number],
+	props: {
+		type: [String, Number]
 	},
 	data() {
 		return {
-			formSexInitValue:sexList[0].value,
-			tempFilePath:'',//临时附件路径
+			formSexInitValue: sexList[0].value,
+			tempFilePath: '', //临时附件路径
 			formStatus: '1', //表填填写的进度，1 为 身份选择  2 为信息录入 作废
 			form: {
 				//学生表单数据
@@ -345,208 +346,211 @@ export default {
 			},
 			sexList: sexList,
 			idCardTypeList: idTypeList,
-			eduTypeList:eduTypeList,
-			jsTypeList:jsTypeList,
+			eduTypeList: eduTypeList,
+			jsTypeList: jsTypeList,
 			relationList: relationList,
 			typeList: typeList,
-			timeFormName:'',
-			timeFormKey:'',
-			idTypeObj : {
-				"1":'1',
-				"2":'20',
-				"3":'2',
-				"4":'21'
+			timeFormName: '',
+			timeFormKey: '',
+			idTypeObj: {
+				'1': '1',
+				'2': '20',
+				'3': '2',
+				'4': '21'
 			}
 		};
 	},
-	mounted(){
-		this.queryUserInfo()
+	mounted() {
+		this.queryUserInfo();
 	},
 	methods: {
-		queryUserInfo(){
-			let url = '/UserAuth/getUserRz',formName = ''
-			
+		queryUserInfo() {
+			let url = '/UserAuth/getUserRz',
+				formName = '';
+
 			this.$HTTP({
 				url,
-				params:{
-					"pageNum": "",
-					"pageSize": "",
-					"ZYSFLX":this.idTypeObj[this.type],
-					"USERID": uni.getStorageSync('userId')
+				params: {
+					pageNum: '',
+					pageSize: '',
+					ZYSFLX: this.idTypeObj[this.type],
+					USERID: uni.getStorageSync('userId')
 				},
-				successCallback:({data})=>{
-					if(data.code == '0'){
-						let dataObj = data.data
-						if(this.type <= 2){
+				successCallback: ({ data }) => {
+					if (data.code == '0') {
+						let dataObj = data.data;
+						if (this.type <= 2) {
 							// XM: '', //姓名
 							// CSRQ: '', //出生日期
 							// XB: sexList[0].id, //性别
 							// SFZJHM: '', //身份证件号码
-							this.form.XM = dataObj.xm
-							this.form.CSRQ = dataObj.csrq
-							this.form.XB = dataObj.xb
-							this.form.SFZJHM = dataObj.sfzjhm
-							this.formSexInitValue = this.$tranform_code2name(sexList,dataObj.xb)
-							this.$nextTick(()=>{
+							this.form.XM = dataObj.xm;
+							this.form.CSRQ = dataObj.csrq;
+							this.form.XB = dataObj.xb;
+							this.form.SFZJHM = dataObj.sfzjhm;
+							this.formSexInitValue = this.$tranform_code2name(sexList, dataObj.xb);
+							this.$nextTick(() => {
 								this.$refs.form.init();
-							})
-						}else if(this.type == 3){
+							});
+						} else if (this.type == 3) {
 							// XM: '', //姓名
 							// CSRQ: '', //出生日期
 							// XB: sexList[0].id, //性别编码
 							// SFZJHM: '', //身份证件号码
-							this.jsForm.XM = dataObj.xm
-							this.jsForm.CSRQ = dataObj.csrq
-							this.jsForm.XB = dataObj.xb
-							this.jsForm.SFZJHM = dataObj.sfzjhm
-							this.formSexInitValue = this.$tranform_code2name(sexList,dataObj.xb)
-							this.$nextTick(()=>{
+							this.jsForm.XM = dataObj.xm;
+							this.jsForm.CSRQ = dataObj.csrq;
+							this.jsForm.XB = dataObj.xb;
+							this.jsForm.SFZJHM = dataObj.sfzjhm;
+							this.formSexInitValue = this.$tranform_code2name(sexList, dataObj.xb);
+							this.$nextTick(() => {
 								this.$refs.jsForm.init();
-							})
+							});
 						}
 					}
 				}
-			})
+			});
 		},
-		handleCancelChoose(){
-			this.$refs.linkage.hide()
+		handleCancelChoose() {
+			this.$refs.linkage.hide();
 		},
-		showChoose(timeFormName,timeFormKey){
-			this.timeFormName = timeFormName
-			this.timeFormKey = timeFormKey
-			this.$refs.linkage.show()
+		showChoose(timeFormName, timeFormKey) {
+			this.timeFormName = timeFormName;
+			this.timeFormKey = timeFormKey;
+			this.$refs.linkage.show();
 		},
-		handleChoose({checkArr,checkValue,defaultVal,result}){
-			this.$refs.linkage.hide()
+		handleChoose({ checkArr, checkValue, defaultVal, result }) {
+			this.$refs.linkage.hide();
 			// this.region = result
 			// this.form.field02 = result
-			this[this.timeFormName][this.timeFormKey] = checkArr[0].join('')
+			this[this.timeFormName][this.timeFormKey] = checkArr[0].join('');
 		},
-		handleChooseImg(formName,keyName){
+		handleChooseImg(formName, keyName) {
 			uni.chooseImage({
-				count:1,
-			  success: ({tempFilePaths,tempFiles}) => {
-				  // 图片大小小于40k TODO 图片大小不做处理，直接上传到服务器
-					  this.tempFilePath = tempFilePaths[0]
-					  this[formName][keyName] = tempFilePaths[0]
-				  // if(tempFiles[0].size < 40 * 1024 ){
-					 //  return
-					 //  uni.getFileSystemManager().readFile({
-						//   filePath:tempFilePaths[0],
-						//   encoding:'base64',
-						//   success:res=>{
-						// 	  this[formName][keyName] = 'data:image/jpeg;base64,'+ res.data
-						//   }
-					 //  })
-				  // }else{
-					 //  uni.showToast({
-					 //  	title:'文件大小要小于40k',
-						// icon:'none',
-						// duration:3000
-					 //  })
-				  // }
-			  }
-			})
+				count: 1,
+				success: ({ tempFilePaths, tempFiles }) => {
+					// 图片大小小于40k TODO 图片大小不做处理，直接上传到服务器
+					this.tempFilePath = tempFilePaths[0];
+					this[formName][keyName] = tempFilePaths[0];
+					// if(tempFiles[0].size < 40 * 1024 ){
+					//  return
+					//  uni.getFileSystemManager().readFile({
+					//   filePath:tempFilePaths[0],
+					//   encoding:'base64',
+					//   success:res=>{
+					// 	  this[formName][keyName] = 'data:image/jpeg;base64,'+ res.data
+					//   }
+					//  })
+					// }else{
+					//  uni.showToast({
+					//  	title:'文件大小要小于40k',
+					// icon:'none',
+					// duration:3000
+					//  })
+					// }
+				}
+			});
 		},
 		handleBack() {
-			this.$emit('switchStatus')
+			this.$emit('switchStatus');
 		},
 		next() {
 			uni.setStorageSync('idType', 1);
 		},
-		handleSelectChange({ index, newVal, oldVal, orignItem }, formType,formName) {
-			if(formName){
-				this[formName][formType] = orignItem.id
+		handleSelectChange({ index, newVal, oldVal, orignItem }, formType, formName) {
+			if (formName) {
+				this[formName][formType] = orignItem.id;
 				return;
 			}
 			this.form[formType] = orignItem.id;
 		},
-		saveInfo(params){
+		saveInfo(params) {
 			this.$HTTP({
-				url:'/UserAuth/createEsn',
-				params:params,
-				successCallback:({data})=>{
-					this.handleSucess(data)
+				url: '/UserAuth/createEsn',
+				params: params,
+				successCallback: ({ data }) => {
+					this.handleSucess(data);
 				},
-				completeCallback:()=>{
+				completeCallback: () => {
 					// uni.hideLoading()
 				}
-			})
+			});
 		},
-		saveInfoByFiles(url,params,fileName){
+		saveInfoByFiles(url, params, fileName) {
 			uni.showLoading({
-				title:'正在验证...'
-			})
+				title: '正在验证...'
+			});
 			uni.uploadFile({
-				url,//服务器地址
-				filePath:this.tempFilePath,//文件地址
-				name:fileName,//服务器中文件对应的key值
-				formData:params,//上传的额外参数
-				success:({data})=>{
-					uni.hideLoading()
-					data = JSON.parse(data)
-					this.handleSucess(data)
+				url, //服务器地址
+				filePath: this.tempFilePath, //文件地址
+				name: fileName, //服务器中文件对应的key值
+				formData: params, //上传的额外参数
+				success: ({ data }) => {
+					uni.hideLoading();
+					data = JSON.parse(data);
+					this.handleSucess(data);
 				},
-				fail:()=>{
-					console.log('失败了')
-					uni.hideLoading()
+				fail: () => {
+					console.log('失败了');
+					uni.hideLoading();
 				}
-			})
+			});
 		},
-		handleSucess(data){
-			if(data.code == '0'){
+		handleSucess(data) {
+			if (data.code == '0') {
 				// 接口响应成功
 				// esn 认证成功返回的esn号码
 				// uni.setStorageSync('userInfo', wxUserInfo);
 				uni.setStorageSync('idType', this.form.type);
 				uni.setStorageSync('state', data.data.jc.state);
 				uni.showToast({
-					title:'提交成功',
-					mask:true,
-					duration:1500
-				})
-				setTimeout(()=>{
+					title: '提交成功',
+					mask: true,
+					duration: 1500
+				});
+				setTimeout(() => {
 					uni.navigateBack();
-				},1500)
-			}else{
+				}, 1500);
+			} else {
 				uni.showToast({
 					title: `${data.code}:${data.msg}`,
-					icon:'none',
-					duration:3000
-				})
+					icon: 'none',
+					duration: 3000
+				});
 			}
 		},
 		handleConfirm() {
-			let url = http_root+'/UserAuth/saveTea',fileName='SZXP',params={}//默认教师、行政路径
-			if(this.form.type <= 2){
+			let url = http_root + '/UserAuth/saveTea',
+				fileName = 'SZXP',
+				params = {}; //默认教师、行政路径
+			if (this.form.type <= 2) {
 				// 学生权限，需要添加默认参数 1 学生 20 家长
-				this.form.ZYSFLB = this.form.type == 1? "1" : "20"
-				fileName = 'SZXP'
+				this.form.ZYSFLB = this.form.type == 1 ? '1' : '20';
+				fileName = 'SZXP';
 				// 上传路径区分 如果为学生和家长，路径不同
-				url = http_root+'/UserAuth/saveStu'
-				params = {...this.form}
-				delete params.type
-			}else if(this.form.type == 3){
+				url = http_root + '/UserAuth/saveStu';
+				params = { ...this.form };
+				delete params.type;
+			} else if (this.form.type == 3) {
 				params = {
 					...this.jsForm
-				}
-			}else if(this.form.type == 4){
-				this.eduForm.ZYSFLB = "21"
-				fileName = 'RLSJ'
+				};
+			} else if (this.form.type == 4) {
+				this.eduForm.ZYSFLB = '21';
+				fileName = 'RLSJ';
 				params = {
 					...this.eduForm
-				}
+				};
 			}
-			params.USERID = uni.getStorageSync('userId')
-			if(this.tempFilePath){
-				this.saveInfoByFiles(url,params,fileName)
-			}else{
+			params.USERID = uni.getStorageSync('userId');
+			if (this.tempFilePath) {
+				this.saveInfoByFiles(url, params, fileName);
+			} else {
 				this.saveInfo(params);
 			}
 			// uni.showLoading({
 			// 	title:'正在认证...'
 			// })
-			
+
 			// uni.getUserInfo({
 			// 	provider: 'weixin',
 			// 	success: res => {
@@ -577,5 +581,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import  './idConfirm.scss';
+@import './idConfirm.scss';
 </style>

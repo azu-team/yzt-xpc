@@ -58,13 +58,14 @@
 			</view>
 			<view class="m-clause">
 				<checkbox-group @change="handleCheckChange" style="display: inline-block;">
-					<checkbox   :checked="hasChecked" color="#5E5EFC" style="transform:scale(0.7)" />
+					<checkbox :checked="hasChecked" color="#5E5EFC" style="transform:scale(0.7)" />
 				</checkbox-group>
-				   我同意
-					<text class="link" @tap="watchLink('https://hao.pthink.com.cn/privacy/jszj_user.htm')">《用户协议》</text>及
-					<text class="link" @tap="watchLink('https://hao.pthink.com.cn/privacy/jszj.htm')">《隐私政策》</text>
+				我同意
+				<text class="link" @tap="watchLink('https://hao.pthink.com.cn/privacy/jszj_user.htm')">《用户协议》</text>
+				及
+				<text class="link" @tap="watchLink('https://hao.pthink.com.cn/privacy/jszj.htm')">《隐私政策》</text>
 			</view>
-			<cropper selWidth="660rpx" selHeight="660rpx" @upload="myUpload" avatarStyle="width:100vw;height:100vw;" ref='cropper' ></cropper>
+			<cropper selWidth="660rpx" selHeight="660rpx" @upload="myUpload" avatarStyle="width:100vw;height:100vw;" ref="cropper"></cropper>
 			<!-- #ifdef MP-WEIXIN -->
 			<!-- <camera device-position="front" flash="off" binderror="error" style="width: 100%; height: 300px;"></camera> -->
 			<!-- #endif -->
@@ -73,14 +74,13 @@
 </template>
 <script>
 import mySelect from '../../components/xfl-select/xfl-select.vue';
-import cropper from "./cropper.vue";
-import {http_root} from '../../utils/config.js'
+import cropper from './cropper.vue';
+import { http_root } from '../../utils/config.js';
 export default {
-	
-	components: { mySelect , cropper},
+	components: { mySelect, cropper },
 	data() {
 		return {
-			hasChecked:false,
+			hasChecked: false,
 			tempFilePath: '', //上传图片地址
 			form: {
 				SFZH: '',
@@ -111,20 +111,20 @@ export default {
 		};
 	},
 	methods: {
-		handleCheckChange(){
-			this.hasChecked = !this.hasChecked
+		handleCheckChange() {
+			this.hasChecked = !this.hasChecked;
 		},
-		watchLink(link){
+		watchLink(link) {
 			uni.navigateTo({
-				url:'../outLink/outLink?type='+link,
-			})
+				url: '../outLink/outLink?type=' + link
+			});
 		},
 		// 图片选择之后
-		myUpload({path}) {
-		  // TODO 将选择的图片上传到服务器，同时携带参数
-		  // this.sendData();
-		  console.log(path)
-		  // 图片选择之后进行上传
+		myUpload({ path }) {
+			// TODO 将选择的图片上传到服务器，同时携带参数
+			// this.sendData();
+			console.log(path);
+			// 图片选择之后进行上传
 		},
 		handleSelectChange({ index, newVal, oldVal, orignItem }) {
 			this.form.ZYSFLX = orignItem.id;
@@ -143,27 +143,27 @@ export default {
 		},
 		handleConfirm() {
 			// 确保用户隐私协议已勾选
-			if(!this.hasChecked){
+			if (!this.hasChecked) {
 				uni.showToast({
-					title:'请勾选用户隐私协议！',
-					icon:'none'
-				})
-				return
+					title: '请勾选用户隐私协议！',
+					icon: 'none'
+				});
+				return;
 			}
 			// this.$emit('switchStatus', this.form.ZYSFLX);
 			// return;
 			// 将身份类型进行转码，因为在首页的权限判断不一致
 			let idType = {
-				"1":'1',
-				"2":'20',
-				"3":'2',
-				"4":'21'
-			}
+				'1': '1',
+				'2': '20',
+				'3': '2',
+				'4': '21'
+			};
 			let params = {
 				...this.form,
 				USERID: uni.getStorageSync('userId')
-			}
-			params.ZYSFLX = idType[this.form.ZYSFLX]
+			};
+			params.ZYSFLX = idType[this.form.ZYSFLX];
 			if (!this.form.ESN) {
 				// 如果esn为空，表示注册用户
 				this.sendData(params);
@@ -177,11 +177,11 @@ export default {
 			// return;
 			uni.chooseImage({
 				count: 1,
-				sourceType:['camera'],
+				sourceType: ['camera'],
 				success: ({ tempFilePaths, tempFiles }) => {
 					// 图片大小小于40k
 					this.tempFilePath = tempFilePaths[0];
-					this.sendDataByFile(params)
+					this.sendDataByFile(params);
 					// if (tempFiles[0].size < 40 * 1024) {
 					// 	uni.getFileSystemManager().readFile({
 					// 		filePath: tempFilePaths[0],
@@ -224,34 +224,34 @@ export default {
 			// #endif
 		},
 		// 不包含附件，直接发请求,注册用户
-		sendData(params){
+		sendData(params) {
 			this.$HTTP({
 				url: '/UserAuth/registerUser',
 				params: params,
 				successCallback: ({ data }) => {
-					this.handleSuccess(data)
+					this.handleSuccess(data);
 				}
 			});
 		},
 		// 上传附件进行验证
 		sendDataByFile(params) {
 			uni.showLoading({
-				title:'正在验证',
-				icon:'none'
-			})
+				title: '正在验证',
+				icon: 'none'
+			});
 			uni.uploadFile({
-				url:http_root+'/UserAuth/register',//服务器地址
-				filePath:this.tempFilePath,//文件地址
-				name:'RLSJ',//服务器中文件对应的key值
-				formData:params,//上传的额外参数
-				success:({data})=>{
-					uni.hideLoading()
-					data = JSON.parse(data)
-					this.handleSuccess(data)
+				url: http_root + '/UserAuth/register', //服务器地址
+				filePath: this.tempFilePath, //文件地址
+				name: 'RLSJ', //服务器中文件对应的key值
+				formData: params, //上传的额外参数
+				success: ({ data }) => {
+					uni.hideLoading();
+					data = JSON.parse(data);
+					this.handleSuccess(data);
 				}
-			})
+			});
 		},
-		handleSuccess(data){
+		handleSuccess(data) {
 			if (data.code == '0') {
 				this.$emit('switchStatus', this.form.ZYSFLX);
 				return;
@@ -301,16 +301,16 @@ export default {
 .m-line .u-title {
 	width: 25%;
 }
-.m-clause{
+.m-clause {
 	text-align: center;
 	padding: 30rpx 60rpx;
 	font-size: 28rpx;
-	.link{
-		color: #5E5EFC;
+	.link {
+		color: #5e5efc;
 	}
 }
-.u-line-tips{
-	padding:0 40rpx;
+.u-line-tips {
+	padding: 0 40rpx;
 	font-size: 28rpx;
 	color: #646464;
 }
